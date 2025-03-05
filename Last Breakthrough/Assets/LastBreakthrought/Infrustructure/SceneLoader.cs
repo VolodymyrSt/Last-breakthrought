@@ -14,7 +14,7 @@ namespace LastBreakthrought.Infrustructure
             _coroutineRunner = coroutineRunner;
 
         public void Load(SceneName sceneName, Action onLoaded) => 
-            _coroutineRunner.StartCoroutine(LoadScene(sceneName, onLoaded));
+            _coroutineRunner.PerformCoroutine(LoadScene(sceneName, onLoaded));
 
         private IEnumerator LoadScene(SceneName scene, Action onLoaded)
         {

@@ -1,11 +1,10 @@
-using LastBreakthrought.Util;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace LastBreakthrought.Logic
 {
-    public class LoadingCurtain : MonoBehaviour, ICoroutineRunner
+    public class LoadingCurtain : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _curtain;
         [SerializeField] private float _fadeDuration = 1f;

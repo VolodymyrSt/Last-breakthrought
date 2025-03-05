@@ -274,7 +274,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 999
   m_TargetDisplay: 0
 --- !u!114 &7154994623555711174
 MonoBehaviour:
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curtain: {fileID: 7625834469772931580}
   _fadeDuration: 1
-  _durationAfterFadeIn: 2
+  _durationBeforeFadeIn: 2
 --- !u!225 &7625834469772931580
 CanvasGroup:
   m_ObjectHideFlags: 0

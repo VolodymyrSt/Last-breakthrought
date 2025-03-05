@@ -95,6 +95,11 @@ namespace Zenject
         {
             return FromComponentsInHierarchyBase(predicate, includeInactive);
         }
+
+        public object FromNew<T>()
+        {
+            throw new NotImplementedException();
+        }
 #endif
     }
 }

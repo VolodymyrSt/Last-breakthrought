@@ -2,7 +2,7 @@
 {
     public enum SceneName 
     {
-        BootStrapper, Menu, Main
+        BootStrapper, Menu, Gameplay
     }
 
 }

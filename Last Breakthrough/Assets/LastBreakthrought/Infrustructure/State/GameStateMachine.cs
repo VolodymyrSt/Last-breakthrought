@@ -16,7 +16,7 @@ namespace LastBreakthrought.Infrustructure.State
                 [typeof(BootStrapState)] = new BootStrapState(this, sceneLoader),
                 [typeof(LoadMenuState)] = new LoadMenuState(this, loadingCurtain, sceneLoader),
                 [typeof(LoadProgressState)] = new LoadProgressState(this),
-                [typeof(LoadGameState)] = new LoadGameState(this)
+                [typeof(LoadGameplayState)] = new LoadGameplayState(this, loadingCurtain, sceneLoader)
             };
         }
 

@@ -75,4 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _curtainPrefab: {fileID: -5848893057368753871, guid: 26abd9f69cd7f634ca9f836fa3e0b731, type: 3}
-  _coroutineRunner: {fileID: 3661225639863628162, guid: d4173d9d7d8f35742959edb8a7d3f224, type: 3}
+  _coroutineRunner: {fileID: 4760046597423868505, guid: d4173d9d7d8f35742959edb8a7d3f224, type: 3}

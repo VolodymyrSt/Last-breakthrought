@@ -5,7 +5,7 @@ namespace LastBreakthrought.Util
 {
     public interface ICoroutineRunner
     {
-        Coroutine StartCoroutine(IEnumerator coroutine);
+        Coroutine PerformCoroutine(IEnumerator coroutine);
     }
 }
 
