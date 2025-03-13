@@ -76,3 +76,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curtainPrefab: {fileID: -5848893057368753871, guid: 26abd9f69cd7f634ca9f836fa3e0b731, type: 3}
   _coroutineRunner: {fileID: 4760046597423868505, guid: d4173d9d7d8f35742959edb8a7d3f224, type: 3}
+  _playerConfigSO: {fileID: 11400000, guid: ec64d4e199954424e89a64f91056ac59, type: 2}
+  _gameConfigSO: {fileID: 11400000, guid: 63bea553ccafaa542958da8b6cfcde59, type: 2}

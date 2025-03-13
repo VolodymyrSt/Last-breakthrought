@@ -1,5 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services;
-using Unity.VisualScripting;
+﻿using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+using LastBreakthrought.Infrustructure.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -7,13 +7,13 @@ namespace LastBreakthrought.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private const float _rotationSpeed = 10f;
-        private const float _gravityMultiplier = 2f;
-        private const float _acceleration = 10f;
-        private const float _deceleration = 15f;
-
         [SerializeField] private CharacterController _characterController;
-        [SerializeField] private float _moveSpeed = 5f;
+
+        private float _moveSpeed;
+        private float _rotationSpeed;
+        private float _gravityMultiplier;
+        private float _acceleration;
+        private float _deceleration;
 
         private IInputService _inputService;
         private Camera _camera;
@@ -23,8 +23,16 @@ namespace LastBreakthrought.Player
         private float _verticalVelocity;
 
         [Inject]
-        private void Construct(IInputService inputService) =>
+        private void Construct(IInputService inputService, IConfigProviderService configProvider)
+        {
             _inputService = inputService;
+
+            _moveSpeed = configProvider.PlayerConfigSO.MoveSpeed;
+            _rotationSpeed = configProvider.PlayerConfigSO.RotationSpeed;
+            _gravityMultiplier = configProvider.PlayerConfigSO.GravityMultiplier;
+            _acceleration = configProvider.PlayerConfigSO.Acceleration;
+            _deceleration = configProvider.PlayerConfigSO.Deceleration;
+        }
 
         private void Start() => _camera = Camera.main;
 

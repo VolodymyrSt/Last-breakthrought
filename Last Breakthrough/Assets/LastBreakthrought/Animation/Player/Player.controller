@@ -95,7 +95,7 @@ AnimatorController:
   m_Name: Player
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: MowingWithDetector
+  - m_Name: MowingWithItem
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -107,7 +107,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsWithDetector
+  - m_Name: IsUsingItem
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -135,7 +135,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsWithDetector
+    m_ConditionEvent: IsUsingItem
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9055525858783856870}
@@ -175,7 +175,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: MowingWithDetector
     m_Mirror: 0
-  m_BlendParameter: MowingWithDetector
+  m_BlendParameter: MowingWithItem
   m_BlendParameterY: Moving
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -191,7 +191,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: IsWithDetector
+    m_ConditionEvent: IsUsingItem
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2483158536896366410}

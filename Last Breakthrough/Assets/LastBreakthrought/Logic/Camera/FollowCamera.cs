@@ -11,14 +11,14 @@ namespace LastBreakthrought.Logic.Camera
         [SerializeField] private float _offSetY;
 
         private Transform _followTarget;
-        private PlayerMovement _playerMovement;
+        private PlayerHandler _player;
 
         [Inject]
-        private void Construct(PlayerMovement playerMovement) => 
-            _playerMovement = playerMovement;
+        private void Construct(PlayerHandler player) => 
+            _player = player;
 
         private void Awake() => 
-            _followTarget = _playerMovement.transform;
+            _followTarget = _player.transform;
 
         private void LateUpdate() => PerformFollow();
 

@@ -1,4 +1,7 @@
-using LastBreakthrought.Infrustructure.Services;
+using LastBreakthrought.Configs.Game;
+using LastBreakthrought.Configs.Player;
+using LastBreakthrought.Infrustructure.AssetManagment;
+using LastBreakthrought.Infrustructure.Services.Input;
 using LastBreakthrought.Logic;
 using LastBreakthrought.Util;
 using UnityEngine;
@@ -11,16 +14,34 @@ namespace LastBreakthrought.Infrustructure.Installers
         [SerializeField] private LoadingCurtain _curtainPrefab;
         [SerializeField] private CoroutineRunner _coroutineRunner;
 
+        [Header("Configs")]
+        [SerializeField] private PlayerConfigSO _playerConfigSO;
+        [SerializeField] private GameConfigSO _gameConfigSO;
+
         public override void InstallBindings()
         {
             BindLoadingCurtain();
-            BindInput();
             BindCoroutineRunner();
+            BindInput();
+            BindConfigs();
+            BindAssetProvider();
 
+            BindSceneLoader();
 
-            Container.Bind<SceneLoader>().AsSingle();
             Container.Bind<Game>().AsSingle();
         }
+
+        private void BindAssetProvider() => 
+            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+
+        private void BindConfigs()
+        {
+            Container.Bind<GameConfigSO>().FromInstance(_gameConfigSO).AsSingle();
+            Container.Bind<PlayerConfigSO>().FromInstance(_playerConfigSO).AsSingle();
+        }
+
+        private void BindSceneLoader() => 
+            Container.Bind<SceneLoader>().AsSingle();
 
         private void BindCoroutineRunner()
         {
