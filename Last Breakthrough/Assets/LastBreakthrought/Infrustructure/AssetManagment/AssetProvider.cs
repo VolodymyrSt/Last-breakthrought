@@ -11,7 +11,7 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
 
         public T Instantiate<T>(string path) =>
             _instantiator.InstantiatePrefabResourceForComponent<T>(path);
-        public T Instantiate<T>(string path, Vector3 at, Transform parent) => 
+        public T Instantiate<T>(string path, Vector3 at, Transform parent) =>
             _instantiator.InstantiatePrefabResourceForComponent<T>(path, at, Quaternion.identity, parent);
 
         public GameObject Instantiate(string path) =>

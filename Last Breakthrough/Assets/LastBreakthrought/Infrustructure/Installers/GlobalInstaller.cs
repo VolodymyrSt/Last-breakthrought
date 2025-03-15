@@ -24,15 +24,11 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindCoroutineRunner();
             BindInput();
             BindConfigs();
-            BindAssetProvider();
 
             BindSceneLoader();
 
             Container.Bind<Game>().AsSingle();
         }
-
-        private void BindAssetProvider() => 
-            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
 
         private void BindConfigs()
         {

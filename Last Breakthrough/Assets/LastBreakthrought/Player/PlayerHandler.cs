@@ -1,4 +1,3 @@
-using LastBreakthrought.Configs.Player;
 using System;
 using UnityEngine;
 

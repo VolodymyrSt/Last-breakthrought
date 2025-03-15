@@ -7,10 +7,8 @@ namespace LastBreakthrought.Logic.InteractionZone
     {
         [SerializeField] private InterationZoneView _interationZoneView;
 
-        private void OnValidate()
-        {
+        private void OnValidate() => 
             GetComponent<SphereCollider>().radius = 1.25f * _interationZoneView.transform.localScale.x;
-        }
 
         private void OnTriggerEnter(Collider other)
         {

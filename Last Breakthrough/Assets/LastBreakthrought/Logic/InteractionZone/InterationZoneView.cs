@@ -10,12 +10,10 @@ namespace LastBreakthrought.Logic.InteractionZone
         public event Action OnPlayerEnter;
         public event Action OnPlayerExit;
 
-        private Vector3 _currentScale;
+        [SerializeField] private Vector3 _currentScale;
 
         private void OnValidate() => 
-            _currentScale = transform.localScale;
-
-        private void Start() => Hide();
+           _currentScale = transform.localScale;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -32,9 +30,7 @@ namespace LastBreakthrought.Logic.InteractionZone
         public void Show()
         {
             var duration = 10f;
-
             gameObject.SetActive(true);
-
             transform.DOScale(_currentScale, duration * Time.deltaTime)
                 .SetEase(Ease.Linear)
                 .Play();
@@ -47,6 +43,12 @@ namespace LastBreakthrought.Logic.InteractionZone
                 .SetEase(Ease.Linear)
                 .Play()
                 .OnComplete(() => gameObject.SetActive(false));
+        }
+
+        public void HideOnInit()
+        {
+            transform.localScale = Vector3.zero;
+            gameObject.SetActive(false);
         }
     }
 }

@@ -9,6 +9,7 @@ using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.UI.PlayerStats;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.CrashedShip;
+using LastBreakthrought.Infrustructure.AssetManagment;
 
 namespace LastBreakthrought.Infrustructure.Installers 
 {
@@ -34,6 +35,9 @@ namespace LastBreakthrought.Infrustructure.Installers
         {
             BindEventBus();
             BindConfigProviderService();
+            BindAssetProvider();
+
+            BindCrashedShipsContainer();
             BindCrashedShipFactory();
 
             BindPlayer();
@@ -50,6 +54,12 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindPlayerStats();
         }
+
+        private void BindAssetProvider() =>
+            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+
+        private void BindCrashedShipsContainer() => 
+            Container.Bind<CrashedShipsContainer>().AsSingle();
 
         private void BindCrashedShipFactory() => 
             Container.Bind<CrashedShipFactory>().AsSingle();

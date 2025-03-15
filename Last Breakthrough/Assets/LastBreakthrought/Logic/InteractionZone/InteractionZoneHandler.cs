@@ -1,5 +1,8 @@
-﻿using LastBreakthrought.UI.Windows;
+﻿using LastBreakthrought.Player;
+using LastBreakthrought.UI.Windows;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace LastBreakthrought.Logic.InteractionZone
 {
@@ -12,6 +15,8 @@ namespace LastBreakthrought.Logic.InteractionZone
         {
             _interationZoneView.OnPlayerEnter += ShowPopup;
             _interationZoneView.OnPlayerExit += HidePopup;
+
+            _interationZoneView.HideOnInit();
         }
 
         private void HidePopup() => 

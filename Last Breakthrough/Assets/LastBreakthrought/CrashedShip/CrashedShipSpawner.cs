@@ -11,10 +11,8 @@ namespace LastBreakthrought.CrashedShip
         private void Construct(CrashedShipFactory crashedShipFactory) => 
             _crashedShipFactory = crashedShipFactory;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _crashedShipFactory.SpawnAt(transform.position, transform);
-        }
     }
 }
 
