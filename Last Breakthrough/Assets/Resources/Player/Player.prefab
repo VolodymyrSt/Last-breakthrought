@@ -1107,7 +1107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98dd8a6bc14637f42b84c6b7f63c708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectorItemPrefab: {fileID: 4212058293877538114}
+  _wreckageDetectorItemPrefab: {fileID: 4212058293877538114}
   _playerAnimator: {fileID: 5778584683810721024}
 --- !u!1 &2968162813902293815
 GameObject:

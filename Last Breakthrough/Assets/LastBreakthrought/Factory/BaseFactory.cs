@@ -11,13 +11,20 @@ namespace LastBreakthrought.Factory
 
         public abstract T Create(Vector3 at, Transform parent);
 
-        public virtual void SpawnAt(Vector3 at, Transform parent)
+        public virtual T SpawnAt(Vector3 at, Transform parent)
         {
             var ship = Create(at , parent);
+            return ship;
         }
-        public virtual void Spawn()
+        public virtual T SpawnAt(RectTransform parent)
+        {
+            var ship = Create(Vector3.zero , parent);
+            return ship;
+        }
+        public virtual T Spawn()
         {
             var ship = Create(Vector3.zero, null);
+            return ship;
         }
     }
 }

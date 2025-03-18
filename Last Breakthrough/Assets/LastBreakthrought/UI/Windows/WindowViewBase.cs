@@ -4,8 +4,12 @@ namespace LastBreakthrought.UI.Windows
 {
     public abstract class WindowViewBase : MonoBehaviour
     {
-        private void Awake() => Initialize();
-        private void Start() => HideView();
+        private void Start()
+        {
+            Initialize();
+            HideView();
+        }
+
         private void OnDestroy() => Dispose();
 
         public abstract void Initialize();

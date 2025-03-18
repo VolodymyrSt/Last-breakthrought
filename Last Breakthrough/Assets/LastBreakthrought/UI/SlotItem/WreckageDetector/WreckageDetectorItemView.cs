@@ -2,9 +2,9 @@
 using TMPro;
 using UnityEngine;
 
-namespace LastBreakthrought.UI.SlotItem.DetailDetector
+namespace LastBreakthrought.UI.SlotItem.WreckageDetector
 {
-    public class DetailDetectorItemView : MonoBehaviour 
+    public class WreckageDetectorItemView : MonoBehaviour 
     {
         private const float DURATION = 0.2f;
         private const float SCALED_VALUE = 1f;

@@ -10,6 +10,9 @@ using LastBreakthrought.UI.PlayerStats;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.CrashedShip;
 using LastBreakthrought.Infrustructure.AssetManagment;
+using System.Collections.Generic;
+using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
+using LastBreakthrought.Logic.ShipMaterial;
 
 namespace LastBreakthrought.Infrustructure.Installers 
 {
@@ -28,6 +31,8 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("HomePoint")]
         [SerializeField] private HomePoint _homePointPrefab;
+         
+        [SerializeField] private List<ShipMaterialSO> _allMaterial = new List<ShipMaterialSO>();
 
         private GameObject _gameplayHub;
 
@@ -37,12 +42,15 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindConfigProviderService();
             BindAssetProvider();
 
+            BindShipMaterialGenerator();
+
             BindCrashedShipsContainer();
+
             BindCrashedShipFactory();
+            BindShipMaterialViewFactory();
 
             BindPlayer();
             BindCamera();
-
 
             BindGamePlayHub();
             BindJoyStick();
@@ -53,6 +61,15 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindTimer();
 
             BindPlayerStats();
+        }
+
+        private void BindShipMaterialViewFactory() => 
+            Container.Bind<ShipMaterialViewFactory>().AsSingle();
+
+        private void BindShipMaterialGenerator()
+        {
+            var materialGenerator = new ShipMaterialGenerator(_allMaterial);
+            Container.Bind<ShipMaterialGenerator>().FromInstance(materialGenerator);
         }
 
         private void BindAssetProvider() =>

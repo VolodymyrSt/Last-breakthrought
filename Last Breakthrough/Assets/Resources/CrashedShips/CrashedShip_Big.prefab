@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a89a8d988dee54d90d0ab15e2dceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rarity: 1
+  _maxNumberOfMaterialDiversity: 3
 --- !u!1 &5063459403249587759
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,9 +377,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <View>k__BackingField: {fileID: 7284697802747901617}
+  <CrashedShip>k__BackingField: {fileID: 1394301664531411325}
+  <ShipMaterialsContainer>k__BackingField: {fileID: 4375852942460911490}
 --- !u!224 &1302715183733448409 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6690383646984991052, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+  m_PrefabInstance: {fileID: 5678239735373361045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4375852942460911490 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8248078719996203031, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
   m_PrefabInstance: {fileID: 5678239735373361045}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5454600825833820814 stripped

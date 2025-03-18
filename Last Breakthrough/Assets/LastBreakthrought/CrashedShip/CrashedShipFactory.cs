@@ -11,10 +11,11 @@ namespace LastBreakthrought.CrashedShip
         public override ICrashedShip Create(Vector3 at, Transform parent) => 
             AssetProvider.Instantiate<CrashedShip>(AssetPath.CrashedShipPath, at, parent);
 
-        public override void SpawnAt(Vector3 at, Transform parent)
+        public override ICrashedShip SpawnAt(Vector3 at, Transform parent)
         {
             var crashedShip = Create(at, parent);
             crashedShip.OnInitialized();
+            return crashedShip;
         }
     }
 }

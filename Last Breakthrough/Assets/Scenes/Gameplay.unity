@@ -927,6 +927,10 @@ MonoBehaviour:
   _gameplayHubPrefab: {fileID: 510935494344635047, guid: 5f9b9ba5d19ac3648bf1879059728da4, type: 3}
   _joyStickPrefab: {fileID: 4362825350626713663, guid: eb833d3e2ecd8f042808b12df682cd4d, type: 3}
   _homePointPrefab: {fileID: 653350873}
+  _allMaterial:
+  - {fileID: 11400000, guid: 03962b0c00b5f5443895464d98cdacb7, type: 2}
+  - {fileID: 11400000, guid: 1e905988a4106a24895328d204652b9c, type: 2}
+  - {fileID: 11400000, guid: 6b0fdb7e05ccdbc4688bf2c8143352ec, type: 2}
 --- !u!1 &1615632577
 GameObject:
   m_ObjectHideFlags: 0

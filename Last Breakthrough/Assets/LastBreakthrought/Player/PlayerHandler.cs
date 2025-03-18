@@ -7,7 +7,7 @@ namespace LastBreakthrought.Player
     {
         public event Action<float> OnPlayerBeenAttacked;
 
-        [SerializeField] private GameObject _detectorItemPrefab;
+        [SerializeField] private GameObject _wreckageDetectorItemPrefab;
         [SerializeField] private PlayerAnimator _playerAnimator;
 
         private void OnEnable() => HideDetectorItem();
@@ -19,10 +19,10 @@ namespace LastBreakthrought.Player
             _playerAnimator.SetMoving(withItem);
 
         public void ShowDetectorItem() =>
-            _detectorItemPrefab.SetActive(true);
+            _wreckageDetectorItemPrefab.SetActive(true);
 
         public void HideDetectorItem() =>
-            _detectorItemPrefab.SetActive(false);
+            _wreckageDetectorItemPrefab.SetActive(false);
     }
 }
 
