@@ -15,16 +15,16 @@ namespace LastBreakthrought.Logic.ShipMaterial
         public List<ShipMaterialEntity> GenerateShipMaterials(ShipRarity shipRarity, int maxNumberOfMaterialDiversity)
         {
             if (maxNumberOfMaterialDiversity < (int)shipRarity)
-                throw new InvalidOperationException($"The parametr {maxNumberOfMaterialDiversity} was not correct.");
+                throw new Exception($"The parametr {maxNumberOfMaterialDiversity} was not correct.");
 
             List<ShipMaterialEntity> materialEntities = new List<ShipMaterialEntity>();
-            int numberOfMaterialDiversity = UnityEngine.Random.Range((int)shipRarity, maxNumberOfMaterialDiversity);
+            int numberOfMaterialDiversity = UnityEngine.Random.Range((int)shipRarity, maxNumberOfMaterialDiversity + 1);
 
             var selectedMaterials = GetRandomShipMaterialsData(numberOfMaterialDiversity);
 
             foreach (var material in selectedMaterials)
             {
-                int quantity = UnityEngine.Random.Range((int)shipRarity, material.MaxQuantity);
+                int quantity = UnityEngine.Random.Range((int)shipRarity, material.MaxQuantity + 1);
                 materialEntities.Add(new ShipMaterialEntity(material, quantity));
             }
 
@@ -34,12 +34,12 @@ namespace LastBreakthrought.Logic.ShipMaterial
         private List<ShipMaterialSO> GetRandomShipMaterialsData(int countOfMaterialDiversity)
         {
             if (_availableMaterials.Count < countOfMaterialDiversity)
-                throw new InvalidOperationException("Insufficient unique materials available.");
+                throw new Exception("Insufficient unique materials available.");
 
             List<ShipMaterialSO> availableMaterials = new List<ShipMaterialSO>(_availableMaterials); 
             List<ShipMaterialSO> uniqueMaterials = new List<ShipMaterialSO>();
 
-            while (uniqueMaterials.Count < countOfMaterialDiversity)
+            for (int i = 0; i < countOfMaterialDiversity; i++)
             {
                 var randomMaterial = availableMaterials[UnityEngine.Random.Range(0, availableMaterials.Count)];
 

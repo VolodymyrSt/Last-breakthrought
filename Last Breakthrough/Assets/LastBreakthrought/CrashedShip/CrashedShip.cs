@@ -14,12 +14,14 @@ namespace LastBreakthrought.CrashedShip
         private CrashedShipsContainer _shipsContainer;
         private ShipMaterialGenerator _shipMaterialGenerator;
 
-        public List<ShipMaterialEntity> ShipMaterials { get; private set; } = new ();
+        public List<ShipMaterialEntity> Materials { get; private set; } = new ();
 
         private void OnValidate()
         {
-            if (_maxNumberOfMaterialDiversity <= (int)_rarity)
-                _maxNumberOfMaterialDiversity = (int)_rarity + 1;
+            if (_maxNumberOfMaterialDiversity < (int)_rarity)
+                _maxNumberOfMaterialDiversity = (int)_rarity;
+            if (_maxNumberOfMaterialDiversity > Constants.MaxNumberOfShipMaterialsInOneWindow)
+                _maxNumberOfMaterialDiversity = Constants.MaxNumberOfShipMaterialsInOneWindow;
         }
 
         [Inject]
@@ -32,7 +34,7 @@ namespace LastBreakthrought.CrashedShip
         public void OnInitialized()
         {
             _shipsContainer.CrashedShips.Add(this);
-            ShipMaterials = _shipMaterialGenerator.GenerateShipMaterials(_rarity, _maxNumberOfMaterialDiversity);
+            Materials = _shipMaterialGenerator.GenerateShipMaterials(_rarity, _maxNumberOfMaterialDiversity);
         }
 
         public Vector3 GetPosition() => 

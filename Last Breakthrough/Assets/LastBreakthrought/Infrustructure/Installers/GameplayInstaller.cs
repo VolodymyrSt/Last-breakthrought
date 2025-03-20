@@ -13,6 +13,8 @@ using LastBreakthrought.Infrustructure.AssetManagment;
 using System.Collections.Generic;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.Logic.ShipMaterial;
+using Zenject.SpaceFighter;
+using LastBreakthrought.NPC.Enemy.Factory;
 
 namespace LastBreakthrought.Infrustructure.Installers 
 {
@@ -48,6 +50,7 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
+            BindEnemyFactory();
 
             BindPlayer();
             BindCamera();
@@ -63,8 +66,13 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindPlayerStats();
         }
 
+        private void BindEnemyFactory()
+        {
+            Container.Bind<EnemyFactory>().AsSingle();
+        }
+
         private void BindShipMaterialViewFactory() => 
-            Container.Bind<ShipMaterialViewFactory>().AsSingle();
+            Container.Bind<ShipMaterialUIFactory>().AsSingle();
 
         private void BindShipMaterialGenerator()
         {

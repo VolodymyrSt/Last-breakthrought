@@ -1,0 +1,254 @@
+fileFormatVersion: 2
+guid: 9cbca15fca8ba4d4fbddec1742291dd7
+AssetOrigin:
+  serializedVersion: 1
+  productId: 289042
+  packageName: MonsterPack3D
+  packageVersion: 1.0
+  assetPath: Assets/MonsterPack3D/Meshes/Bat.fbx
+  uploadId: 696663
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bat
+    second: {fileID: 2100000, guid: e7fee83f9a0e6804fac0381365649937, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Bat(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mesh
+      parentName: Bat(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eyes
+      parentName: mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: fluffy
+      parentName: mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot
+      parentName: mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing
+      parentName: mesh
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: root
+      parentName: Bat(Clone)
+      position: {x: -4.4408918e-17, y: 0, z: 8.8817837e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: root
+      position: {x: -2.938365e-10, y: 0.11182189, z: -0.04431961}
+      rotation: {x: 0.07994327, y: 0.22948462, z: 0.31910905, w: 0.9160324}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: body
+      position: {x: 0.011930166, y: 0.047152348, z: 0.03731583}
+      rotation: {x: -0.22176173, y: 0.82858175, z: 0.41268808, w: -0.3065332}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot_01_L
+      parentName: body
+      position: {x: -0.089443, y: -2.6645352e-17, z: -2.6645352e-17}
+      rotation: {x: 0.7712756, y: 0.37531316, z: -0.22244224, w: -0.46345818}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot_02_L
+      parentName: foot_01_L
+      position: {x: -0.04577897, y: 1.0998146e-17, z: 1.7716839e-10}
+      rotation: {x: 0.49865013, y: 0.5013463, z: -0.49865013, w: 0.5013463}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot_01_R
+      parentName: body
+      position: {x: -0.004025265, y: -0.06773178, z: 0.058277335}
+      rotation: {x: -0.37531316, y: 0.7712756, z: 0.46345818, w: -0.22244224}
+      scale: {x: 1, y: 1, z: 1}
+    - name: foot_02_R
+      parentName: foot_01_R
+      position: {x: 0.045778964, y: -0.00000004829566, z: 1.6369483e-12}
+      rotation: {x: 0.49865013, y: 0.5013463, z: -0.49865013, w: 0.5013463}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_root
+      parentName: body
+      position: {x: 0.05103398, y: 0.03583993, z: -0.033146743}
+      rotation: {x: -0.22176173, y: 0.82858175, z: 0.41268808, w: -0.3065332}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_01_L
+      parentName: wing_root
+      position: {x: -0.028545042, y: -0.0027157064, z: 0.061013382}
+      rotation: {x: 0.9237379, y: -0.2339355, z: -0.30095005, w: -0.037571266}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_02_L
+      parentName: wing_01_L
+      position: {x: -0.098666325, y: 4.0979762e-17, z: -3.9321857e-17}
+      rotation: {x: -0.020385427, y: -0.30610493, z: -0.06282381, w: 0.94970393}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_03_L
+      parentName: wing_02_L
+      position: {x: -0.072804205, y: -1.7763568e-17, z: -4.522214e-18}
+      rotation: {x: -0.00006351247, y: -0.10210846, z: 0.00034181957, w: 0.99477327}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_04_L
+      parentName: wing_03_L
+      position: {x: -0.061808657, y: 4.5014606e-18, z: -7.119536e-18}
+      rotation: {x: 5.0867378e-20, y: -0.042231783, z: -0.000866987, w: 0.9991075}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_05_L
+      parentName: wing_04_L
+      position: {x: -0.06568372, y: -6.221892e-18, z: -4.031905e-17}
+      rotation: {x: 0.000013361427, y: -0.017762786, z: 0.0004889188, w: 0.99984217}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_06_L
+      parentName: wing_05_L
+      position: {x: -0.06632345, y: -4.2389367e-18, z: 3.5337334e-17}
+      rotation: {x: 0.6908399, y: -0.038421918, z: 0.5226272, w: 0.4981213}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_01_R
+      parentName: wing_root
+      position: {x: -0.028544957, y: -0.0027157234, z: -0.061013397}
+      rotation: {x: 0.92409676, y: -0.24084935, z: 0.2944904, w: 0.03622315}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_02_R
+      parentName: wing_01_R
+      position: {x: -0.09866697, y: -3.5739182e-17, z: -3.293896e-17}
+      rotation: {x: 0.020853655, y: 0.31295514, z: -0.062626, w: 0.94747144}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_03_R
+      parentName: wing_02_R
+      position: {x: -0.07280334, y: -1.3035537e-17, z: -3.357259e-17}
+      rotation: {x: 0.00007276425, y: 0.124464475, z: 0.0005610195, w: 0.9922239}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_04_R
+      parentName: wing_03_R
+      position: {x: -0.0618093, y: 8.09969e-18, z: -3.727667e-17}
+      rotation: {x: 9.156129e-20, y: 0.04223227, z: -0.000867473, w: 0.9991075}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_05_R
+      parentName: wing_04_R
+      position: {x: -0.065683864, y: 2.452681e-17, z: -2.8898e-17}
+      rotation: {x: -0.000013382911, y: 0.017767671, z: 0.00048930524, w: 0.99984205}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing_06_R
+      parentName: wing_05_R
+      position: {x: -0.06632284, y: -1.3068761e-17, z: 4.220257e-17}
+      rotation: {x: -0.03841911, y: -0.69084287, z: -0.4981215, w: 0.5226233}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

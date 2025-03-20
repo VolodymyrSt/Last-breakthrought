@@ -9,10 +9,9 @@ namespace LastBreakthrought.UI.ShipMaterial
         [SerializeField] private Image _shipMaterialImage;
         [SerializeField] private TextMeshProUGUI _quantityText;
 
-        public void Setup(Sprite sprite, int quantity)
-        {
+        public void SetImage(Sprite sprite) => 
             _shipMaterialImage.sprite = sprite;
+        public void SetQuantity(int quantity) => 
             _quantityText.text = quantity.ToString();
-        }
     }
 }
