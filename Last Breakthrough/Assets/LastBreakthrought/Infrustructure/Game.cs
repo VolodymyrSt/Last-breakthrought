@@ -1,5 +1,6 @@
 ﻿using LastBreakthrought.Infrustructure.State;
 using LastBreakthrought.Logic;
+using Zenject;
 
 namespace LastBreakthrought.Infrustructure
 {
@@ -7,9 +8,9 @@ namespace LastBreakthrought.Infrustructure
     {
         public GameStateMachine StateMachine { get; private set; }
 
-        public Game(LoadingCurtain loadingCurtain, SceneLoader sceneLoader)
+        public Game(LoadingCurtain loadingCurtain, SceneLoader sceneLoader, DiContainer container)
         {
-            StateMachine = new GameStateMachine(loadingCurtain, sceneLoader);
+            StateMachine = new GameStateMachine(loadingCurtain, sceneLoader, container);
         }
     }
 }

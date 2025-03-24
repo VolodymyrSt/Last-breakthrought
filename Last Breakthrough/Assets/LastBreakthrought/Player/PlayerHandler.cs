@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LastBreakthrought.Player
 {
-    public class PlayerHandler : MonoBehaviour, IDamagable
+    public class PlayerHandler : MonoBehaviour, IDamagable, IEnemyTarget
     {
         public event Action<float> OnPlayerBeenAttacked;
 
@@ -11,6 +11,8 @@ namespace LastBreakthrought.Player
         [SerializeField] private PlayerAnimator _playerAnimator;
 
         private void OnEnable() => HideDetectorItem();
+
+        public Vector3 GetPosition() => transform.position;
 
         public void ApplyDamage(float damage) => 
             OnPlayerBeenAttacked.Invoke(damage);

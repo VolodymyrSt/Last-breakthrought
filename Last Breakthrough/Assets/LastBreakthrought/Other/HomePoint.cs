@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace LastBreakthrought.Other 
+namespace LastBreakthrought.Other
 {
     public class HomePoint : MonoBehaviour
     {

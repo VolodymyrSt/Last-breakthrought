@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace LastBreakthrought.Infrustructure.State
+﻿namespace LastBreakthrought.Infrustructure.State
 {
     public class BootStrapState : IState
     {
@@ -13,20 +11,12 @@ namespace LastBreakthrought.Infrustructure.State
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter()
-        {
-            Debug.Log("BootStrapState enterd");
+        public void Enter() => 
             _sceneLoader.Load(SceneName.BootStrapper, EnterMenuState);
-        }
 
-        private void EnterMenuState()
-        {
+        private void EnterMenuState() => 
             _gameStateMachine.Enter<LoadMenuState>();
-        }
 
-        public void Exit()
-        {
-
-        }
+        public void Exit(){}
     }
 }

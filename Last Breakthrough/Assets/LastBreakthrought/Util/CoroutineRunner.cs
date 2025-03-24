@@ -7,8 +7,8 @@ namespace LastBreakthrought.Util
     {
         public Coroutine PerformCoroutine(IEnumerator coroutine) => 
             StartCoroutine(coroutine);
-        public Coroutine HandleStopCoroutine(Coroutine coroutine) => 
-            HandleStopCoroutine(coroutine);
+        public void HandleStopCoroutine(Coroutine coroutine) => 
+            StopCoroutine(coroutine);
     }
 }
 

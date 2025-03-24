@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Configs.Game;
+﻿using LastBreakthrought.Configs.Enemy;
+using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Configs.Player;
 
 namespace LastBreakthrought.Infrustructure.Services.ConfigProvider
@@ -7,5 +8,6 @@ namespace LastBreakthrought.Infrustructure.Services.ConfigProvider
     {
         PlayerConfigSO PlayerConfigSO { get; }
         GameConfigSO GameConfigSO { get; }
+        EnemyConfigHolderSO EnemyConfigHolderSO { get; }
     }
 }

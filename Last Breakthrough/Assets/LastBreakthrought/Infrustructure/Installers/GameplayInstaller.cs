@@ -13,8 +13,8 @@ using LastBreakthrought.Infrustructure.AssetManagment;
 using System.Collections.Generic;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.Logic.ShipMaterial;
-using Zenject.SpaceFighter;
 using LastBreakthrought.NPC.Enemy.Factory;
+using Unity.AI.Navigation;
 
 namespace LastBreakthrought.Infrustructure.Installers 
 {
@@ -33,7 +33,10 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("HomePoint")]
         [SerializeField] private HomePoint _homePointPrefab;
-         
+
+        [Header("Other")]
+        [SerializeField] private NavMeshSurface _navMeshSurface;
+
         [SerializeField] private List<ShipMaterialSO> _allMaterial = new List<ShipMaterialSO>();
 
         private GameObject _gameplayHub;
@@ -43,6 +46,9 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindEventBus();
             BindConfigProviderService();
             BindAssetProvider();
+
+            BindSpawnersContainer();
+            BindNavMeshSurface();
 
             BindShipMaterialGenerator();
 
@@ -66,10 +72,14 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindPlayerStats();
         }
 
-        private void BindEnemyFactory()
-        {
+        private void BindSpawnersContainer() =>
+            Container.Bind<SpawnersContainer>().AsSingle().NonLazy();
+
+        private void BindNavMeshSurface() =>
+            Container.Bind<NavMeshSurface>().FromInstance(_navMeshSurface).NonLazy();
+
+        private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
-        }
 
         private void BindShipMaterialViewFactory() => 
             Container.Bind<ShipMaterialUIFactory>().AsSingle();

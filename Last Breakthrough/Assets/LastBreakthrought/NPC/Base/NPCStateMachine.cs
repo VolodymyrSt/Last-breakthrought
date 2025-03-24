@@ -40,12 +40,13 @@ namespace LastBreakthrought.NPC.Base
 
         public void AddTransition(INPCState from, INPCState to, Func<bool> predicate)
         {
-            if (!_transitions.TryGetValue(from.GetType(), out List<Transition> transition))
+            if (!_transitions.TryGetValue(from.GetType(), out List<Transition> transitions))
             {
-                _transitions[from.GetType()] = new List<Transition>();
+                transitions = new List<Transition>();
+                _transitions[from.GetType()] = transitions;
             }
 
-            _transitions[from.GetType()].Add(new Transition(to, predicate));
+            transitions.Add(new Transition(to, predicate));
         }
 
         public void AddAnyTransition(INPCState to, Func<bool> predicate) => 
@@ -66,8 +67,8 @@ namespace LastBreakthrought.NPC.Base
 
         private class Transition 
         {
-            public INPCState To { get; private set; }
-            public Func<bool> Condition { get; private set; }
+            public INPCState To { get; }
+            public Func<bool> Condition { get; }
 
             public Transition(INPCState to, Func<bool> predicate)
             {

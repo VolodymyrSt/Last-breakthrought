@@ -4,6 +4,6 @@ namespace LastBreakthrought.NPC.Enemy
 {
     public interface IEnemy
     {
-        void OnSpawned(BoxCollider wanderingZone);
+        void OnSpawned(BoxCollider wanderingZone, string id);
     }
 }

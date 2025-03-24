@@ -1,3 +1,4 @@
+using LastBreakthrought.Other;
 using UnityEngine;
 using Zenject;
 
@@ -8,10 +9,13 @@ namespace LastBreakthrought.CrashedShip
         private CrashedShipFactory _crashedShipFactory;
 
         [Inject]
-        private void Construct(CrashedShipFactory crashedShipFactory) => 
+        private void Construct(CrashedShipFactory crashedShipFactory, SpawnersContainer spawnersContainer)
+        {
             _crashedShipFactory = crashedShipFactory;
+            spawnersContainer.AddCrashedShipSpawner(this);
+        }
 
-        private void Awake() => 
+        public void SpawnCrashedShip() => 
             _crashedShipFactory.SpawnAt(transform.position, transform);
     }
 }

@@ -6,11 +6,15 @@ using UnityEngine.AI;
 
 namespace LastBreakthrought.NPC.Enemy
 {
-    public class WanderingState : INPCState
+    public class EnemyWanderingState : INPCState
     {
         private const string IS_WALKING = "isWalking";
         private const float NAVMESH_SAMPLE_RANGE = 2f;
+        private const float MIN_WAIT_TIME = 1f;
+        private const float MAX_WAIT_TIME = 3f;
+        private const float MOVEMENT_TIME_OUT = 5f;
 
+        private readonly EnemyBase _enemy;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
@@ -18,17 +22,18 @@ namespace LastBreakthrought.NPC.Enemy
 
         private Coroutine _wanderingCoroutine;
 
-        private float _minWaitTime = 1f;
-        private float _maxWaitTime = 3f;
-        private float _movementTimeout = 5f;
-        private float _wanderingSpeed = 1.5f;
+        private float _wanderingSpeed;
 
-        public WanderingState(ICoroutineRunner coroutineRunner, NavMeshAgent agent, BoxCollider wanderingZone, Animator animator)
+        public EnemyWanderingState(EnemyBase enemy ,ICoroutineRunner coroutineRunner, NavMeshAgent agent, BoxCollider wanderingZone
+            , Animator animator, float wanderingSpeed)
         {
             _coroutineRunner = coroutineRunner;
+            _enemy = enemy;
             _agent = agent;
             _wanderingZone = wanderingZone;
             _animator = animator;
+
+            _wanderingSpeed = wanderingSpeed;
         }
 
         public void Enter()
@@ -36,6 +41,17 @@ namespace LastBreakthrought.NPC.Enemy
             _agent.isStopped = false;
             _agent.speed = _wanderingSpeed;
             _wanderingCoroutine = _coroutineRunner.PerformCoroutine(StartWandering());
+        }
+
+        public void Update() => 
+            _enemy.TryToFindTarget();
+
+        public void Exit() 
+        {
+            if (_wanderingCoroutine != null)
+                _coroutineRunner.HandleStopCoroutine(_wanderingCoroutine);
+
+            SetWalkingAnimation(false);
         }
 
         private IEnumerator StartWandering()
@@ -56,11 +72,10 @@ namespace LastBreakthrought.NPC.Enemy
             }
         }
 
-
         private IEnumerator WaitForDestinationReached()
         {
             float elapsedTime = 0f;
-            while (elapsedTime < _movementTimeout)
+            while (elapsedTime < MOVEMENT_TIME_OUT)
             {
                 if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
                 {
@@ -102,20 +117,11 @@ namespace LastBreakthrought.NPC.Enemy
 
         private IEnumerator WaitBeforeNext()
         {
-            float waitTime = Random.Range(_minWaitTime, _maxWaitTime);
+            float waitTime = Random.Range(MIN_WAIT_TIME, MAX_WAIT_TIME);
             yield return new WaitForSeconds(waitTime);
         }
 
         private void SetWalkingAnimation(bool isMoving) => 
             _animator.SetBool(IS_WALKING, isMoving);
-
-        public void Update(){ }
-        public void Exit() 
-        {
-            if (_wanderingCoroutine != null)
-                _coroutineRunner.HandleStopCoroutine(_wanderingCoroutine);
-
-            _agent.ResetPath();
-        }
     }
 }

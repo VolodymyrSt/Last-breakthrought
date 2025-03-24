@@ -78,3 +78,4 @@ MonoBehaviour:
   _coroutineRunner: {fileID: 4760046597423868505, guid: d4173d9d7d8f35742959edb8a7d3f224, type: 3}
   _playerConfigSO: {fileID: 11400000, guid: ec64d4e199954424e89a64f91056ac59, type: 2}
   _gameConfigSO: {fileID: 11400000, guid: 63bea553ccafaa542958da8b6cfcde59, type: 2}
+  _enemyConfigHolderSO: {fileID: 11400000, guid: 6449f2adb0d4d1d428dcd7990ca03c3c, type: 2}

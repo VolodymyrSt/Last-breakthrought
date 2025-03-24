@@ -19,7 +19,6 @@ namespace LastBreakthrought.Infrustructure.State
 
         public void Enter()
         {
-            Debug.Log("LoadMenuState enterd");
             _loadingCurtain.Procced(); 
             _sceneLoader.Load(SceneName.Menu, null);
         }

@@ -1,6 +1,9 @@
 ﻿using LastBreakthrought.Logic;
+using LastBreakthrought.Other;
 using System;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
+using Zenject;
 
 namespace LastBreakthrought.Infrustructure.State
 {
@@ -9,14 +12,14 @@ namespace LastBreakthrought.Infrustructure.State
         private readonly Dictionary<Type, IState> _states;
         private IState _currentStates;
 
-        public GameStateMachine(LoadingCurtain loadingCurtain, SceneLoader sceneLoader)
+        public GameStateMachine(LoadingCurtain loadingCurtain, SceneLoader sceneLoader,
+            DiContainer container)
         {
             _states = new Dictionary<Type, IState>()
             {
                 [typeof(BootStrapState)] = new BootStrapState(this, sceneLoader),
                 [typeof(LoadMenuState)] = new LoadMenuState(this, loadingCurtain, sceneLoader),
-                [typeof(LoadProgressState)] = new LoadProgressState(this),
-                [typeof(LoadGameplayState)] = new LoadGameplayState(this, loadingCurtain, sceneLoader)
+                [typeof(LoadGameplayState)] = new LoadGameplayState(this, loadingCurtain, sceneLoader, container)
             };
         }
 
