@@ -339,7 +339,7 @@ MonoBehaviour:
   _healthHandler: {fileID: 7643675266275782808}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   _attackUpOffset: 1
   _attackForwardOffset: 1
 --- !u!1 &3462358787775253608
@@ -564,6 +564,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2791573582626313662}
     m_Modifications:
+    - target: {fileID: 297680249966128300, guid: cfdaf9009eaf6284bb2e89504bc24020, type: 3}
+      propertyPath: _layerMask.m_Bits
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 474825259339910810, guid: cfdaf9009eaf6284bb2e89504bc24020, type: 3}
       propertyPath: m_Name
       value: Golem

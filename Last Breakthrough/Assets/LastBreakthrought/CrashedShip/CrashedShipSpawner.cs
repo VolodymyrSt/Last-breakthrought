@@ -1,4 +1,4 @@
-using LastBreakthrought.Other;
+using LastBreakthrought.Infrustructure;
 using UnityEngine;
 using Zenject;
 
@@ -9,10 +9,10 @@ namespace LastBreakthrought.CrashedShip
         private CrashedShipFactory _crashedShipFactory;
 
         [Inject]
-        private void Construct(CrashedShipFactory crashedShipFactory, SpawnersContainer spawnersContainer)
+        private void Construct(CrashedShipFactory crashedShipFactory, Game game)
         {
             _crashedShipFactory = crashedShipFactory;
-            spawnersContainer.AddCrashedShipSpawner(this);
+            game.SpawnersContainer.AddCrashedShipSpawner(this);
         }
 
         public void SpawnCrashedShip() => 

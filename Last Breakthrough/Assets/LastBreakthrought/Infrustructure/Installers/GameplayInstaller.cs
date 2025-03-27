@@ -15,6 +15,7 @@ using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.NPC.Enemy.Factory;
 using Unity.AI.Navigation;
+using LastBreakthrought.NPC.Robot.Factory;
 
 namespace LastBreakthrought.Infrustructure.Installers 
 {
@@ -57,6 +58,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
             BindEnemyFactory();
+            BindRobotsFactory();
 
             BindPlayer();
             BindCamera();
@@ -72,14 +74,27 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindPlayerStats();
         }
 
-        private void BindSpawnersContainer() =>
-            Container.Bind<SpawnersContainer>().AsSingle().NonLazy();
+        private void BindSpawnersContainer()
+        {
+            var spawnersContainer = new SpawnersContainer();
+            Container.Resolve<Game>().SpawnersContainer = spawnersContainer;
+            Container.Bind<SpawnersContainer>().FromInstance(spawnersContainer).AsSingle();
+        }
 
-        private void BindNavMeshSurface() =>
-            Container.Bind<NavMeshSurface>().FromInstance(_navMeshSurface).NonLazy();
+        private void BindNavMeshSurface()
+        {
+            Container.Resolve<Game>().NavMeshSurface = _navMeshSurface;
+            Container.Bind<NavMeshSurface>().FromInstance(_navMeshSurface);
+        }
 
         private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
+
+        private void BindRobotsFactory()
+        {
+            Container.Bind<RobotMinerFactory>().AsSingle();
+            Container.Bind<RobotTransporterFactory>().AsSingle();
+        }
 
         private void BindShipMaterialViewFactory() => 
             Container.Bind<ShipMaterialUIFactory>().AsSingle();

@@ -1,8 +1,4 @@
 ﻿using LastBreakthrought.Logic;
-using LastBreakthrought.Other;
-using Unity.AI.Navigation;
-using UnityEngine;
-using Zenject;
 
 namespace LastBreakthrought.Infrustructure.State
 {
@@ -11,30 +7,30 @@ namespace LastBreakthrought.Infrustructure.State
         private readonly GameStateMachine _gameStateMachine;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly SceneLoader _sceneLoader;
-        private readonly DiContainer _container;
+        private readonly Game _game;
 
-        public LoadGameplayState(GameStateMachine gameStateMachine, LoadingCurtain loadingCurtain, SceneLoader sceneLoader
-            , DiContainer container)
+        public LoadGameplayState(GameStateMachine gameStateMachine, LoadingCurtain loadingCurtain
+            , SceneLoader sceneLoader, Game game)
         {
             _gameStateMachine = gameStateMachine;
             _loadingCurtain = loadingCurtain;
             _sceneLoader = sceneLoader;
-            _container = container;
+            _game = game;
         }
 
         public void Enter()
         {
             _loadingCurtain.Procced();
-            _sceneLoader.Load(SceneName.Gameplay, OnLoaded);
+            _sceneLoader.Load(SceneName.Gameplay, InitWorld);
         }
 
-        private void OnLoaded()
+        private void InitWorld()
         {
-            var spawnersContainer = _container.Resolve<SpawnersContainer>();
+            var spawnersContainer = _game.SpawnersContainer;
 
             spawnersContainer.SpawnAllCrashedShips();
 
-            _container.Resolve<NavMeshSurface>().BuildNavMesh();
+            //_game.NavMeshSurface.BuildNavMesh();
 
             spawnersContainer.SpawnAllEnemies();
         }

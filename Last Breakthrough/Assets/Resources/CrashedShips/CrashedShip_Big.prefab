@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rarity: 3
   _maxNumberOfMaterialDiversity: 3
+  _crashedShipWindowHandler: {fileID: 3116041191286753706}
 --- !u!1 &5063459403249587759
 GameObject:
   m_ObjectHideFlags: 0

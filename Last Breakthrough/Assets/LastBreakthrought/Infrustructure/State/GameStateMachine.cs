@@ -13,13 +13,13 @@ namespace LastBreakthrought.Infrustructure.State
         private IState _currentStates;
 
         public GameStateMachine(LoadingCurtain loadingCurtain, SceneLoader sceneLoader,
-            DiContainer container)
+            Game game)
         {
             _states = new Dictionary<Type, IState>()
             {
                 [typeof(BootStrapState)] = new BootStrapState(this, sceneLoader),
                 [typeof(LoadMenuState)] = new LoadMenuState(this, loadingCurtain, sceneLoader),
-                [typeof(LoadGameplayState)] = new LoadGameplayState(this, loadingCurtain, sceneLoader, container)
+                [typeof(LoadGameplayState)] = new LoadGameplayState(this, loadingCurtain, sceneLoader, game)
             };
         }
 

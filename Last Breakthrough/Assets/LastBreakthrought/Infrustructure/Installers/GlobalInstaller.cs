@@ -32,8 +32,11 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindSceneLoader();
 
-            Container.Bind<Game>().AsSingle();
+            BindGame();
         }
+
+        private void BindGame() => 
+            Container.Bind<Game>().AsSingle().NonLazy();
 
         private void BindConfigs()
         {

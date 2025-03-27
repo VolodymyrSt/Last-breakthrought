@@ -1,0 +1,132 @@
+using LastBreakthrought.NPC.Base;
+using LastBreakthrought.NPC.Enemy;
+using LastBreakthrought.Util;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace LastBreakthrought.NPC.Robot.States
+{
+    public class RobotWanderingState : INPCState
+    {
+        private const string IS_RIDING = "isRiding";
+        private const float NAVMESH_SAMPLE_RANGE = 2f;
+        private const float MIN_WAIT_TIME = 1f;
+        private const float MAX_WAIT_TIME = 3f;
+        private const float MOVEMENT_TIME_OUT = 5f;
+
+        private readonly RobotBase _robot;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly NavMeshAgent _agent;
+        private readonly BoxCollider _wanderingZone;
+        private readonly RobotBattary _robotBattary;
+        private readonly Animator _animator;
+
+        private Coroutine _wanderingCoroutine;
+
+        private float _wanderingSpeed;
+
+        public RobotWanderingState(RobotBase robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
+            Animator animator, BoxCollider wanderingZone, RobotBattary robotBattary, float wanderingSpeed)
+        {
+            _robot = robot;
+            _coroutineRunner = coroutineRunner;
+            _agent = agent;
+            _animator = animator;
+            _wanderingZone = wanderingZone;
+            _robotBattary = robotBattary;
+            _wanderingSpeed = wanderingSpeed;
+        }
+
+        public void Enter()
+        {
+            _agent.isStopped = false;
+            _agent.speed = _wanderingSpeed;
+            _wanderingCoroutine = _coroutineRunner.PerformCoroutine(StartWandering());
+        }
+
+        public void Update() 
+        {
+            _robotBattary.DecreaseCapacity();
+            _robotBattary.CheckIfCapacityIsRechedLimit();
+        }
+
+        public void Exit()
+        {
+            if (_wanderingCoroutine != null)
+                _coroutineRunner.HandleStopCoroutine(_wanderingCoroutine);
+
+            SetRidingAnimation(false);
+        }
+
+        private IEnumerator StartWandering()
+        {
+            while (true)
+            {
+                Vector3 destination = GetRandomPositionForNavMesh();
+                if (destination != Vector3.negativeInfinity)
+                {
+                    _agent.SetDestination(destination);
+                    SetRidingAnimation(true);
+
+                    yield return WaitForDestinationReached();
+                    SetRidingAnimation(false);
+                }
+
+                yield return WaitBeforeNext();
+            }
+        }
+
+        private IEnumerator WaitForDestinationReached()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < MOVEMENT_TIME_OUT)
+            {
+                if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+                {
+                    if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
+                        yield break;
+                }
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            _agent.ResetPath();
+        }
+
+        private Vector3 GetRandomPositionForNavMesh()
+        {
+            Vector3 randomPoint = GetRandomPoint();
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, NAVMESH_SAMPLE_RANGE, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+
+            return Vector3.negativeInfinity;
+        }
+
+        private Vector3 GetRandomPoint()
+        {
+            Vector3 localPosition = new Vector3(
+                Random.Range(-_wanderingZone.size.x / 2, _wanderingZone.size.x / 2),
+                0,
+                Random.Range(-_wanderingZone.size.z / 2, _wanderingZone.size.z / 2)
+            );
+
+            localPosition += _wanderingZone.center;
+            return _wanderingZone.transform.TransformPoint(localPosition);
+        }
+
+        private IEnumerator WaitBeforeNext()
+        {
+            float waitTime = Random.Range(MIN_WAIT_TIME, MAX_WAIT_TIME);
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        private void SetRidingAnimation(bool isMoving) =>
+            _animator.SetBool(IS_RIDING, isMoving);
+    }
+}

@@ -7,8 +7,12 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
     {
         public static string CrashedShipPath = "CrashedShips/CrashedShip_Big";
         public static string ShipMaterialViewPath = "ShipMaterial/ShipMaterial";
+
         public static string GolemPath = "NPC/Enemies/Golem";
         public static string BatPath = "NPC/Enemies/Bat";
+
+        public static string RobotMinerPath = "NPC/Robots/RobotMiner";
+        public static string RobotTransporterPath = "NPC/Robots/RobotTransporter";
 
         public static string GetRandomEnemyPath()
         {

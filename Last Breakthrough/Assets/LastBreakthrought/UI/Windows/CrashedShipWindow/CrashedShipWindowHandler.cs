@@ -66,7 +66,7 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
             }
         }
 
-        public void MineEntireMaterial() //just 
+        public void UpdateEntireMaterial()
         {
             foreach (var unminedShipMaterial in UnminedShipMaterialsContainer.Materials)
             {
@@ -77,6 +77,8 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
                 newShipMaterialUI.InitMined(unminedShipMaterial.MaterialEntity);
                 newShipMaterialUI.Quantity = unminedShipMaterial.Quantity;
 
+                MinedShipMaterialsContainer.Materials.Add(newShipMaterialUI);
+                UnminedShipMaterialsContainer.Materials.Remove(unminedShipMaterial);
                 Destroy(unminedShipMaterial.gameObject);
                 break;
             }

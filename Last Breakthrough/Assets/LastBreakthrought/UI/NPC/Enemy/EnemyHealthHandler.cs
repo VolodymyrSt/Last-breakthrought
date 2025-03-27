@@ -27,8 +27,8 @@ namespace LastBreakthrought.UI.NPC.Enemy
         public void Init(float maxHealth)
         {
             _maxHealth = maxHealth;
+            _enemyHealthView.InitSlider(maxHealth);
             Health = _maxHealth;
-            _enemyHealthView.Init(maxHealth);
         }
     }
 }

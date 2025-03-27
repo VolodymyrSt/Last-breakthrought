@@ -15,4 +15,5 @@ MonoBehaviour:
   <Id>k__BackingField: Steel
   <Name>k__BackingField: Steel
   <Sprite>k__BackingField: {fileID: 21300000, guid: 28d4ae22f97eb01479baff7ff5ec411d, type: 3}
+  <Craft>k__BackingField: {fileID: 11400000, guid: efe10ef9804f76240beaa2e551b1446e, type: 2}
   <MaxQuantity>k__BackingField: 5

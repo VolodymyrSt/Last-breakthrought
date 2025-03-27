@@ -185,7 +185,7 @@ MonoBehaviour:
   _healthHandler: {fileID: 8586693016544211674}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   _attackUpOffset: 1
   _attackForwardOffset: 0.5
 --- !u!1 &4088975464888441716
@@ -619,6 +619,10 @@ PrefabInstance:
     - target: {fileID: 8849511650101658559, guid: 62e7504d08c54bf42b3a8fa592812add, type: 3}
       propertyPath: _forwardOffset
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849511650101658559, guid: 62e7504d08c54bf42b3a8fa592812add, type: 3}
+      propertyPath: _layerMask.m_Bits
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

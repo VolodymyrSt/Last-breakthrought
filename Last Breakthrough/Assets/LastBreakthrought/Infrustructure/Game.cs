@@ -1,6 +1,7 @@
 ﻿using LastBreakthrought.Infrustructure.State;
 using LastBreakthrought.Logic;
-using Zenject;
+using LastBreakthrought.Other;
+using Unity.AI.Navigation;
 
 namespace LastBreakthrought.Infrustructure
 {
@@ -8,9 +9,10 @@ namespace LastBreakthrought.Infrustructure
     {
         public GameStateMachine StateMachine { get; private set; }
 
-        public Game(LoadingCurtain loadingCurtain, SceneLoader sceneLoader, DiContainer container)
-        {
-            StateMachine = new GameStateMachine(loadingCurtain, sceneLoader, container);
-        }
+        public SpawnersContainer SpawnersContainer { get; set; }
+        public NavMeshSurface NavMeshSurface { get; set; }
+
+        public Game(LoadingCurtain loadingCurtain, SceneLoader sceneLoader) => 
+            StateMachine = new GameStateMachine(loadingCurtain, sceneLoader, this);
     }
 }

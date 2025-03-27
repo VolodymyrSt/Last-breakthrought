@@ -7,7 +7,7 @@ namespace LastBreakthrought.UI.NPC.Enemy
     {
         [SerializeField] private Slider _healthSlider;
 
-        public void Init(float maxHealth) =>
+        public void InitSlider(float maxHealth) =>
             _healthSlider.maxValue = maxHealth;
 
         public void UpdateHealthView(float currentHealth) =>

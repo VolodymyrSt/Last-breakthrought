@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.NPC.Enemy.Factory;
+﻿using LastBreakthrought.Infrustructure;
+using LastBreakthrought.NPC.Enemy.Factory;
 using LastBreakthrought.Other;
 using UnityEngine;
 using Zenject;
@@ -12,10 +13,10 @@ namespace LastBreakthrought.NPC.Enemy
         private EnemyFactory _enemyFactory;
 
         [Inject]
-        private void Construct(EnemyFactory enemyFactory, SpawnersContainer spawnersContainer)
+        private void Construct(EnemyFactory enemyFactory, Game game)
         {
             _enemyFactory = enemyFactory;
-            spawnersContainer.AddEnemySpawner(this);
+            game.SpawnersContainer.AddEnemySpawner(this);
         }
 
         public void SpawnEnemy()

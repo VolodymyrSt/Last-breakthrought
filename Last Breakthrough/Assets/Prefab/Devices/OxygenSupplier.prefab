@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5618843281159339535}
+  - component: {fileID: 4215301890069698785}
   m_Layer: 0
   m_Name: OxygenSupplier
   m_TagString: Untagged
@@ -34,6 +35,27 @@ Transform:
   - {fileID: 8279616685011151119}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4215301890069698785
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239536376630223447}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6, y: 1.4, z: 1.6}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1 &2156813190841610321
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +203,6 @@ GameObject:
   - component: {fileID: 2866642142404312807}
   - component: {fileID: 4251297640373524138}
   - component: {fileID: 2132591329300247185}
-  - component: {fileID: 2133017030878786671}
   m_Layer: 0
   m_Name: roofmodule_cargo_A
   m_TagString: Untagged
@@ -257,27 +278,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2133017030878786671
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2726774939361159979}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0.00000008940697, y: 0.04, z: 0}
 --- !u!1 &3241648042727687336
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +707,14 @@ PrefabInstance:
     - target: {fileID: 1970893652055926515, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_Radius
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414861530233010020, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _currentScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414861530233010020, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _currentScale.z
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2414861530233010020, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: _layerMask.m_Bits
