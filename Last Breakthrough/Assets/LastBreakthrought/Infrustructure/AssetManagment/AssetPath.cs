@@ -14,6 +14,9 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
         public static string RobotMinerPath = "NPC/Robots/RobotMiner";
         public static string RobotTransporterPath = "NPC/Robots/RobotTransporter";
 
+        public static string RobotMinerControlPath = "RobotControl/RobotMinerControl";
+        public static string RobotTransporterControlPath = "RobotControl/RobotTransporterControl";
+
         public static string GetRandomEnemyPath()
         {
             var randomPath = UnityEngine.Random.Range(1, 3);

@@ -13,18 +13,23 @@ namespace LastBreakthrought.UI.Timer
         private readonly TimerView _timerView;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IEventBus _eventBus;
+        private readonly Light _light;
 
+        private bool _isTimeRunUp;
         private int _currentDays;
         private int _currentMinutes;
         private int _currentSeconds;
 
-        private bool _isTimeRunUp;
+        private float _maxLightIntensity = 1f;
+        private float _minLightIntensity = 0f;
+        private bool _isDay = true;
 
-        public TimerController(TimerView timerView, ICoroutineRunner coroutineRunner, IEventBus eventBus, IConfigProviderService configProvider)
+        public TimerController(TimerView timerView, ICoroutineRunner coroutineRunner, IEventBus eventBus, IConfigProviderService configProvider, Light light)
         {
             _timerView = timerView;
             _coroutineRunner = coroutineRunner;
             _eventBus = eventBus;
+            _light = light;
 
             _currentDays = configProvider.GameConfigSO.StartedDay;
             _currentMinutes = configProvider.GameConfigSO.StartedMinute;
@@ -32,6 +37,8 @@ namespace LastBreakthrought.UI.Timer
 
             _timerView.UpdateDay(_currentDays);
             _timerView.UpdateClock(_currentMinutes, _currentSeconds);
+
+            _light.intensity = _maxLightIntensity;
         }
 
         public void Initialize()
@@ -52,12 +59,30 @@ namespace LastBreakthrought.UI.Timer
                 {
                     _currentSeconds = 0;
                     ChangeTime();
+
                 }
+                UpdateLight();
 
                 _timerView.UpdateClock(_currentMinutes, _currentSeconds);
 
                 if (_isTimeRunUp) yield break;
             }
+        }
+
+        private void UpdateLight()
+        {
+            if (_isDay)
+            {
+                _light.intensity -= Time.deltaTime;
+                if (_light.intensity == _minLightIntensity)
+                    _isDay = false;
+            }
+            else
+            {
+                _light.intensity += Time.deltaTime;
+                if (_light.intensity == _maxLightIntensity)
+                    _isDay = true;
+            }      
         }
 
         private void ChangeTime()

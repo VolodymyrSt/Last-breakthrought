@@ -16,8 +16,10 @@ using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.NPC.Enemy.Factory;
 using Unity.AI.Navigation;
 using LastBreakthrought.NPC.Robot.Factory;
+using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
+using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel.RobotControls.Factory;
 
-namespace LastBreakthrought.Infrustructure.Installers 
+namespace LastBreakthrought.Infrustructure.Installers
 {
     public class GameplayInstaller : MonoInstaller
     {
@@ -37,6 +39,7 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
+        [SerializeField] private Light _light;
 
         [SerializeField] private List<ShipMaterialSO> _allMaterial = new List<ShipMaterialSO>();
 
@@ -57,22 +60,28 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
+            BindRobotControlsUIFactory();
             BindEnemyFactory();
             BindRobotsFactory();
-
             BindPlayer();
             BindCamera();
 
             BindGamePlayHub();
             BindJoyStick();
 
+            //UI
             BindHomePoint();
             BindHomeDistanceInformer();
+            BindRobotMenuPanel();
 
+            BindLight();
             BindTimer();
 
             BindPlayerStats();
         }
+
+        private void BindLight() => 
+            Container.Bind<Light>().FromInstance(_light).AsSingle();
 
         private void BindSpawnersContainer()
         {
@@ -98,6 +107,12 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindShipMaterialViewFactory() => 
             Container.Bind<ShipMaterialUIFactory>().AsSingle();
+
+        private void BindRobotControlsUIFactory()
+        {
+            Container.Bind<RobotMinerControlUIFactory>().AsSingle();
+            Container.Bind<RobotTransporterControlUIFactory>().AsSingle();
+        }
 
         private void BindShipMaterialGenerator()
         {
@@ -143,6 +158,14 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<HomeDistanceView>().FromInstance(homeDistanceView).AsSingle();
 
             Container.BindInterfacesAndSelfTo<HomeDistanceCounter>().AsSingle().NonLazy();
+        }
+
+        private void BindRobotMenuPanel()
+        {
+            var robotMenuPanelView = _gameplayHub.GetComponentInChildren<RobotMenuPanelView>();
+            Container.Bind<RobotMenuPanelView>().FromInstance(robotMenuPanelView).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<RobotMenuPanelHandler>().AsSingle().NonLazy();
         }
 
         private void BindJoyStick()

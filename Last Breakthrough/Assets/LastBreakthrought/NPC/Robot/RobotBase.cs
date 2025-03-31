@@ -1,10 +1,13 @@
+using LastBreakthrought.Configs.Robot;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.NPC.Robot.States;
 using LastBreakthrought.Player;
 using LastBreakthrought.Util;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -14,53 +17,75 @@ namespace LastBreakthrought.NPC.Robot
     public class RobotBase : MonoBehaviour, IRobot, IDamagable
     {
         [Header("Base:")]
-        [SerializeField] private NavMeshAgent _agent;
-        [SerializeField] private Animator _animator;
+        [SerializeField] protected NavMeshAgent Agent;
+        [SerializeField] protected Animator Animator;
 
-        private RobotBattary _battary;
+        protected RobotBattary Battary;
+        protected NPCStateMachine StateMachine;
+        protected PlayerHandler PlayerHandler;
+        protected ICoroutineRunner CoroutineRunner;
+        protected RobotConfigSO RobotData;
+        protected IEventBus EventBus;
 
-        private NPCStateMachine _stateMachine;
-        private PlayerHandler _playerHandler;
-        private ICoroutineRunner _coroutineRunner;
+        protected RobotWanderingState RobotWanderingState;
+        protected RobotFollowingPlayerState RobotFollowingPlayerState;
+        protected RobotRechargingState RobotRechargingState;
+
         private IConfigProviderService _configProvider;
         private List<RobotChargingPlace> _chargingPlaces;
 
+        protected bool IsWanderingState { get; set; }
+        protected bool IsFollowingState { get; set; }
+
         [Inject]
-        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService)
+        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService, IEventBus eventBus)
         {
-            _playerHandler = playerHandler;
-            _coroutineRunner = coroutineRunner;
+            PlayerHandler = playerHandler;
+            CoroutineRunner = coroutineRunner;
+            EventBus = eventBus;
             _configProvider = configProviderService;
         }
 
-        public void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces)
+        public virtual void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
         {
-            _stateMachine = new NPCStateMachine();
-            _battary = new RobotBattary(10f);
             _chargingPlaces = chargingPlaces;
+            RobotData = _configProvider.RobotConfigHolderSO.GetRobotDataById(id);
 
-            var wandering = new RobotWanderingState(this, _coroutineRunner, _agent, _animator, wanderingZone, _battary, 1.5f);
-            var followingPlayer = new RobotFollowingPlayerState(this, _coroutineRunner, _agent, _playerHandler, _animator, _battary, 1.5f);
-            var recharging = new RobotRechargingState(this, _coroutineRunner, _agent, _playerHandler, _animator, _battary, 1.5f);
+            Battary = new RobotBattary(RobotData.MaxBattaryCapacity, RobotData.CapacityLimit);
+            StateMachine = new NPCStateMachine();
 
-            _stateMachine.AddTransition(wandering, recharging, () => _battary.NeedToBeRecharged);
-            _stateMachine.AddTransition(recharging, wandering, () => !_battary.NeedToBeRecharged);
-
-            _stateMachine.EnterInState(wandering);
+            RobotWanderingState = new RobotWanderingState(CoroutineRunner, Agent, Animator, wanderingZone, Battary, RobotData.WandaringSpeed);
+            RobotFollowingPlayerState = new RobotFollowingPlayerState(Agent, PlayerHandler, Animator, Battary, RobotData.GeneralSpeed);
+            RobotRechargingState = new RobotRechargingState(this, Agent, Animator, Battary, RobotData.GeneralSpeed);
         }
 
-        private void Update()
+        private void Update() => StateMachine.Tick();
+
+        public void ApplyDamage(float damage){}
+
+        public void SetFollowingPlayerState()
         {
-            _stateMachine.Tick();
-            Debug.Log($"{_battary.Capacity}");
+            if (Battary.NeedToBeRecharged) return;
+
+            IsFollowingState = true;
+            IsWanderingState = false;
+            //StateMachine.EnterInState(RobotFollowingPlayerState);
         }
 
-        public void ApplyDamage(float damage)
+        public void SetWanderingState()
         {
+            if (Battary.NeedToBeRecharged) return;
 
+            IsWanderingState = true;
+            IsFollowingState = false;
+            //StateMachine.EnterInState(RobotWanderingState);
         }
 
-        public RobotChargingPlace GetAvelableCharingPlace()
+        public RobotConfigSO GetRobotData() => RobotData;
+
+        public RobotBattary GetRobotBattary() => Battary;
+
+        public RobotChargingPlace FindAvelableCharingPlace()
         {
             foreach (var chargingPlace in _chargingPlaces)
                 if (!chargingPlace.IsOccupiad)
@@ -68,55 +93,7 @@ namespace LastBreakthrought.NPC.Robot
 
             return null;
         }
-    }
 
-    public class RobotBattary
-    {
-        private const float INCREASE_CAPACITY_DELTA = 2f;
-        private const float DECREASE_CAPACITY_DELTA = 1f;
-        private const float CAPACITY_LIMIT = 3f;
-
-        private float _maxCapacity;
-        private float _currentCapacity;
-        public float Capacity 
-        { 
-            get => _currentCapacity; 
-            private set 
-            { 
-                _currentCapacity = value;
-                
-                if (_currentCapacity > _maxCapacity)
-                    _currentCapacity = _maxCapacity;
-
-                if (_currentCapacity < 0)
-                    _currentCapacity = 0;
-            } 
-        }
-        public bool NeedToBeRecharged { get; set; }
-
-        public RobotBattary(float maxCapacity)
-        {
-            _maxCapacity = maxCapacity;
-            _currentCapacity = _maxCapacity;
-            NeedToBeRecharged = false;
-        }
-
-        public void CheckIfCapacityIsRechedLimit()
-        {
-            if (Capacity <= CAPACITY_LIMIT)
-                NeedToBeRecharged = true;
-        }
-        public bool IsCapacityFull()
-        {
-            if (Capacity == _maxCapacity)
-                return true;
-            return false;
-        }
-
-        public void DecreaseCapacity() => 
-            Capacity -= DECREASE_CAPACITY_DELTA * Time.deltaTime;
-
-        public void IncreaseCapacity() => 
-            Capacity += INCREASE_CAPACITY_DELTA * Time.deltaTime;
+        public void DoNothing() { }
     }
 }

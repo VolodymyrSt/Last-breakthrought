@@ -1,7 +1,5 @@
 ﻿using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.NPC.Base;
-using LastBreakthrought.Player;
-using LastBreakthrought.Util;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,13 +7,11 @@ namespace LastBreakthrought.NPC.Robot.States
 {
     public class RobotRechargingState : INPCState
     {
-        private const string IS_RIDING = "isRiding";
+        private const string IS_Moving = "isMoving";
         private const float STOP_DISTANCE = 1f;
 
         private readonly RobotBase _robot;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly NavMeshAgent _agent;
-        private readonly PlayerHandler _playerHandler;
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
 
@@ -24,13 +20,11 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private bool _isRechedChargingPlace = false;
 
-        public RobotRechargingState(RobotBase robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            PlayerHandler playerHandler, Animator animator, RobotBattary robotBattary, float followingSpeed)
+        public RobotRechargingState(RobotBase robot, NavMeshAgent agent, Animator animator,
+            RobotBattary robotBattary, float followingSpeed)
         {
             _robot = robot;
-            _coroutineRunner = coroutineRunner;
             _agent = agent;
-            _playerHandler = playerHandler;
             _animator = animator;
             _robotBattary = robotBattary;
             _followingSpeed = followingSpeed;
@@ -41,33 +35,41 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.isStopped = false;
             _agent.speed = _followingSpeed;
             _agent.stoppingDistance = STOP_DISTANCE;
-            _animator.SetBool(IS_RIDING, true);
+            _animator.SetBool(IS_Moving, true);
 
-            _chargingPlace = _robot.GetAvelableCharingPlace();
+            _chargingPlace = _robot.FindAvelableCharingPlace();
             _chargingPlace.IsOccupiad = true;
         }
 
-        public void Exit() => 
-            _animator.SetBool(IS_RIDING, false);
+        public void Exit() { }
 
         public void Update()
         {
             if (!_isRechedChargingPlace)
             {
                 _agent.SetDestination(_chargingPlace.GetChargingPosition());
-
-                if (_agent.remainingDistance <= STOP_DISTANCE && !_agent.pathPending)
-                    _isRechedChargingPlace = true;
+                CheckIfRobotRechedChargingPlace();
+                _animator.SetBool(IS_Moving, false);
             }
             else
+                PerformRecharging();
+        }
+
+        private void CheckIfRobotRechedChargingPlace()
+        {
+            if (_agent.remainingDistance <= STOP_DISTANCE && !_agent.pathPending)
+                _isRechedChargingPlace = true;
+        }
+
+        private void PerformRecharging()
+        {
+            _robotBattary.IncreaseCapacity();
+
+            if (_robotBattary.IsCapacityFull())
             {
-                _robotBattary.IncreaseCapacity();
-                if (_robotBattary.IsCapacityFull())
-                {
-                    _robotBattary.NeedToBeRecharged = false;
-                    _chargingPlace.IsOccupiad = false;
-                    _isRechedChargingPlace = false;
-                }
+                _robotBattary.NeedToBeRecharged = false;
+                _chargingPlace.IsOccupiad = false;
+                _isRechedChargingPlace = false;
             }
         }
     }

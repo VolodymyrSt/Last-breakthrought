@@ -269,6 +269,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Crashed Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 2541842681310067613, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2749877812345742661, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Name
       value: UnminedBackground

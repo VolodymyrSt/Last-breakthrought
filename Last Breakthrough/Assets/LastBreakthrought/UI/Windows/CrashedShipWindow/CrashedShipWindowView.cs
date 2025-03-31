@@ -8,9 +8,6 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
             Handler.CreateUnminedShipMaterialsView();
         }
 
-        public override void Dispose()
-        {
-
-        }
+        public override void Dispose(){}
     }
 }

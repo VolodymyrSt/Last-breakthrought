@@ -9,27 +9,24 @@ namespace LastBreakthrought.NPC.Robot.States
 {
     public class RobotWanderingState : INPCState
     {
-        private const string IS_RIDING = "isRiding";
+        private const string IS_MOVING = "isMoving";
         private const float NAVMESH_SAMPLE_RANGE = 2f;
         private const float MIN_WAIT_TIME = 1f;
         private const float MAX_WAIT_TIME = 3f;
         private const float MOVEMENT_TIME_OUT = 5f;
 
-        private readonly RobotBase _robot;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly NavMeshAgent _agent;
         private readonly BoxCollider _wanderingZone;
         private readonly RobotBattary _robotBattary;
         private readonly Animator _animator;
+        private readonly float _wanderingSpeed;
 
         private Coroutine _wanderingCoroutine;
 
-        private float _wanderingSpeed;
-
-        public RobotWanderingState(RobotBase robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
+        public RobotWanderingState(ICoroutineRunner coroutineRunner, NavMeshAgent agent,
             Animator animator, BoxCollider wanderingZone, RobotBattary robotBattary, float wanderingSpeed)
         {
-            _robot = robot;
             _coroutineRunner = coroutineRunner;
             _agent = agent;
             _animator = animator;
@@ -127,6 +124,6 @@ namespace LastBreakthrought.NPC.Robot.States
         }
 
         private void SetRidingAnimation(bool isMoving) =>
-            _animator.SetBool(IS_RIDING, isMoving);
+            _animator.SetBool(IS_MOVING, isMoving);
     }
 }

@@ -1,5 +1,7 @@
-﻿using LastBreakthrought.Logic.ShipMaterial;
+﻿using DG.Tweening;
+using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
+using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
 using LastBreakthrought.UI.ShipMaterial;
 using UnityEngine;
 using Zenject;
@@ -13,13 +15,17 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
         [field: SerializeField] public ShipMaterialsContainer MinedShipMaterialsContainer { get; private set; }
 
         private ShipMaterialUIFactory _shipMaterialUIFactory;
+        private RobotMenuPanelHandler _robotMenuPanelHandler;
 
         private RectTransform _unminedShipMaterialsContainerTransform;
         private RectTransform _minedShipMaterialsContainerTransform;
 
         [Inject]
-        private void Construct(ShipMaterialUIFactory shipMaterialUIFactory) =>
+        private void Construct(ShipMaterialUIFactory shipMaterialUIFactory, RobotMenuPanelHandler robotMenuPanelHandler)
+        {
             _shipMaterialUIFactory = shipMaterialUIFactory;
+            _robotMenuPanelHandler = robotMenuPanelHandler; 
+        }
 
         private void OnEnable()
         {
@@ -27,7 +33,13 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
             _minedShipMaterialsContainerTransform = MinedShipMaterialsContainer.GetComponent<RectTransform>();
         }
 
-        public override void ActivateWindow() => View.ShowView();
+        public override void ActivateWindow()
+        {
+            View.ShowView();
+            _robotMenuPanelHandler.View.Open();
+            _robotMenuPanelHandler.InformAllRobotsAboutCrashedShip(CrashedShip);
+        }
+
         public override void DeactivateWindow() => View.HideView();
 
         public void CreateUnminedShipMaterialsView()
