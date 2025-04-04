@@ -69,7 +69,6 @@ namespace LastBreakthrought.NPC.Robot
 
             IsFollowingState = true;
             IsWanderingState = false;
-            //StateMachine.EnterInState(RobotFollowingPlayerState);
         }
 
         public void SetWanderingState()
@@ -78,8 +77,9 @@ namespace LastBreakthrought.NPC.Robot
 
             IsWanderingState = true;
             IsFollowingState = false;
-            //StateMachine.EnterInState(RobotWanderingState);
         }
+
+        public virtual void DoWork() { }
 
         public RobotConfigSO GetRobotData() => RobotData;
 

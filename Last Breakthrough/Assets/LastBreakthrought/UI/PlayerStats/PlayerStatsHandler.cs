@@ -3,6 +3,7 @@ using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Player;
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace LastBreakthrought.UI.PlayerStats
@@ -43,14 +44,13 @@ namespace LastBreakthrought.UI.PlayerStats
             if (_isOxygenCharging)
             {
                 _playerStatsModel.UpdateOxygen();
-                _playerStatsModel.UpdateHealth();
+                RegenerateHealth();
                 return;
             }
 
             if (_playerStatsModel.CurrentOxygen > 0)
             {
                 _playerStatsModel.DecreaseOxygen();
-
                 _playerStatsModel.UpdateOxygen();
 
                 RegenerateHealth();
@@ -58,7 +58,6 @@ namespace LastBreakthrought.UI.PlayerStats
             else
             {
                 _playerStatsModel.DecreaseHealth();
-
                 _playerStatsModel.UpdateHealth();
             }
         }
@@ -74,7 +73,7 @@ namespace LastBreakthrought.UI.PlayerStats
 
         private void RegenerateHealth()
         {
-            if (_playerStatsModel.CanRegenerate()) return;
+            if (!_playerStatsModel.CanRegenerate()) return;
 
             _playerStatsModel.IncreaseHealth();
 
@@ -83,7 +82,7 @@ namespace LastBreakthrought.UI.PlayerStats
 
         private void UpdateStatsAfterAttack(float arg1)
         {
-            _playerStatsModel.CurrentHealth -= arg1;
+            _playerStatsModel.CurrentHealth = Mathf.Max(_playerStatsModel.CurrentHealth - arg1, 0);
 
             _playerStatsModel.UpdateHealth();
         }

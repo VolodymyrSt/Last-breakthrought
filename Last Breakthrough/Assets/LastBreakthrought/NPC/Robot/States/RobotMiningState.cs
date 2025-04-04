@@ -64,6 +64,7 @@ namespace LastBreakthrought.NPC.Robot.States
             if (isArrived && !_isMining)
             {
                 _isMining = true;
+                _animator.SetBool(IS_Moving, false);
                 _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
             }
 
@@ -77,7 +78,6 @@ namespace LastBreakthrought.NPC.Robot.States
             
             while (_robot.CrashedShip.Materials.Count > 0)
             {
-                _animator.SetBool(IS_Moving, false);
                 _animator.SetBool(IS_MINING, true);
 
                 yield return new WaitForSecondsRealtime(MINING_TIME);

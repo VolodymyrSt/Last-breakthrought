@@ -15,10 +15,10 @@ namespace LastBreakthrought.Logic.ShipDetail
     [Serializable]
     public class ShipDetailEntity
     {
-        public ShipMaterialSO Data { get; }
+        public ShipDetailSO Data { get; }
         public int Quantity { get; set; }
 
-        public ShipDetailEntity(ShipMaterialSO data, int quantity)
+        public ShipDetailEntity(ShipDetailSO data, int quantity)
         {
             Data = data;
             Quantity = quantity;

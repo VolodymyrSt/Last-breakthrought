@@ -1,5 +1,4 @@
 using LastBreakthrought.Logic.ChargingPlace;
-using LastBreakthrought.NPC.Robot;
 using LastBreakthrought.NPC.Robot.Factory;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
 using System.Collections.Generic;
@@ -31,11 +30,9 @@ namespace LastBreakthrought.Logic.RobotFactory
             var robotMiner = _robotMinerFactory.CreateRobot(_robotSpawnPoint.position, _robotSpawnPoint,
                 _robotWanderingZone, _chargingPlaces);
 
-            var robot = robotMiner as RobotMiner;
-
             _robotMenuPanelHandler.AddRobotMinerControlUI(robotMiner.GetRobotData(),
                 robotMiner.GetRobotBattary(), robotMiner.SetFollowingPlayerState
-                , robotMiner.SetWanderingState, mineAction: robot.SetMiningState);
+                , robotMiner.SetWanderingState, mineAction: robotMiner.DoWork);
         }
 
         public void CreateRobotTransporter()
@@ -45,7 +42,7 @@ namespace LastBreakthrought.Logic.RobotFactory
 
             _robotMenuPanelHandler.AddRobotTransporterControlUI(robotTransporter.GetRobotData(),
                 robotTransporter.GetRobotBattary(), robotTransporter.SetFollowingPlayerState,
-                robotTransporter.SetWanderingState, transportAction: robotTransporter.DoNothing);
+                robotTransporter.SetWanderingState, transportAction: robotTransporter.DoWork);
         }
     }
 }

@@ -37,7 +37,6 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
         {
             View.ShowView();
             _robotMenuPanelHandler.View.Open();
-            _robotMenuPanelHandler.InformAllRobotsAboutCrashedShip(CrashedShip);
         }
 
         public override void DeactivateWindow() => View.HideView();
@@ -46,36 +45,6 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
         {
             foreach (var unminedShipMaterial in CrashedShip.Materials)
                 CreateUnminedShipMaterialAndInit(unminedShipMaterial);
-        }
-
-        public void MineOneMaterial()
-        {
-            bool isMaterialNew = true;
-
-            foreach (var unminedShipMaterial in UnminedShipMaterialsContainer.Materials)
-            {
-                if (UnminedShipMaterialsContainer.Materials.Count < 0)
-                    break;
-
-                foreach (var minedShipMaterial in MinedShipMaterialsContainer.Materials)
-                {
-                    if (MinedShipMaterialsContainer.Materials.Count < 0)
-                        break;
-
-                    if (unminedShipMaterial.MaterialEntity.Data.Id == minedShipMaterial.MaterialEntity.Data.Id)
-                    {
-                        IncreaseMinedShipMaterial(unminedShipMaterial, minedShipMaterial);
-                        isMaterialNew = false;
-                        break;
-                    }
-                }
-
-                if (isMaterialNew)
-                {
-                    CreateNewMinedShipMaterialAndInit(unminedShipMaterial);
-                    break;
-                }
-            }
         }
 
         public void UpdateEntireMaterial()
@@ -96,35 +65,17 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
             }
         }
 
-        private void IncreaseMinedShipMaterial(ShipMaterialHandler unminedShipMaterial, ShipMaterialHandler minedShipMaterial)
+        public void RemoveMinedMaterialFromWindow()
         {
-            unminedShipMaterial.Quantity--;
-
-            if (unminedShipMaterial.Quantity <= 0)
+            if (MinedShipMaterialsContainer.Materials.Count > 0)
             {
-                UnminedShipMaterialsContainer.Materials.Remove(unminedShipMaterial);
-                Destroy(unminedShipMaterial.gameObject);
+                foreach (var minedMaterial in MinedShipMaterialsContainer.Materials)
+                {
+                    MinedShipMaterialsContainer.Materials.Remove(minedMaterial);
+                    Destroy(minedMaterial.gameObject);
+                    break;
+                }
             }
-
-            minedShipMaterial.Quantity++;
-        }
-
-        private void CreateNewMinedShipMaterialAndInit(ShipMaterialHandler unminedShipMaterial)
-        {
-            unminedShipMaterial.Quantity--;
-
-            if (unminedShipMaterial.Quantity <= 0)
-            {
-                UnminedShipMaterialsContainer.Materials.Remove(unminedShipMaterial);
-                Destroy(unminedShipMaterial.gameObject);
-            }
-
-            var newShipMaterialUI = _shipMaterialUIFactory.SpawnAt(_minedShipMaterialsContainerTransform);
-
-            newShipMaterialUI.Quantity = 1;
-            newShipMaterialUI.InitMined(unminedShipMaterial.MaterialEntity);
-
-            MinedShipMaterialsContainer.Materials.Add(newShipMaterialUI);
         }
 
         private void CreateUnminedShipMaterialAndInit(ShipMaterialEntity unminedShipMaterial)

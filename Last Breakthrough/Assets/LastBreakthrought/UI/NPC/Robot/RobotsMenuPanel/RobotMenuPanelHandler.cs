@@ -39,21 +39,20 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 
         public void AddRobotMinerControlUI(RobotConfigSO robotData, RobotBattary battary, Action followAction, Action goHomeAction, Action mineAction)
         {
-            var robotControl = _robotMinerControlUIFactory.Create(View.GetContainer(),
+            var robotMinerControl = _robotMinerControlUIFactory.Create(View.GetContainer(),
                 robotData, battary, followAction, goHomeAction, mineAction);
 
-            _robotControls.Add(robotControl);
+            View.OnNewItemAdded(robotMinerControl.transform);
+            _robotControls.Add(robotMinerControl);
         }
         
         public void AddRobotTransporterControlUI(RobotConfigSO robotData, RobotBattary battary, Action followAction, Action goHomeAction, Action transportAction)
         {
-            var robotControl = _robotTransporterControlUIFactory.Create(View.GetContainer(),
+            var robotTransporterControl = _robotTransporterControlUIFactory.Create(View.GetContainer(),
                 robotData, battary, followAction, goHomeAction, transportAction);
 
-            _robotControls.Add(robotControl);
+            View.OnNewItemAdded(robotTransporterControl.transform);
+            _robotControls.Add(robotTransporterControl);
         }
-
-        public void InformAllRobotsAboutCrashedShip(ICrashedShip crashedShip) => 
-            _eventBus.Invoke(new OnAllRobotsInformedAboutCrashedShipSignal(crashedShip));
     }
 }

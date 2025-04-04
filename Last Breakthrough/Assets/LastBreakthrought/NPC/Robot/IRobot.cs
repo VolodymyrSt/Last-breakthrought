@@ -13,5 +13,6 @@ namespace LastBreakthrought.NPC.Robot
         RobotConfigSO GetRobotData();
         RobotBattary GetRobotBattary();
         void DoNothing();
+        void DoWork();
     }
 }

@@ -1,6 +1,9 @@
 ﻿using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 {
@@ -14,10 +17,17 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         [SerializeField] private Button _openClosedRobotsMenuButton;
 
         private bool _isMenuOpen = false;
+        private IEventBus _eventBus;
+
+        [Inject]
+        private void Construct(IEventBus eventBus) => 
+            _eventBus = eventBus;
 
         public void Init()
         {
             _openClosedRobotsMenuButton.onClick.AddListener(() => PerformOpenAndClose());
+            _eventBus.SubscribeEvent<OnInventoryMenuOpenedSignal>(CheckIfNeedToBeClose);
+
             _root.localScale = Vector3.zero;
             _root.gameObject.SetActive(false);
         }
@@ -26,14 +36,25 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 
         public void Open()
         {
+            _eventBus.Invoke(new OnRobotMenuOpenedSignal());
+
             _root.gameObject.SetActive(true);
             _root.DOScale(1f, ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
-                .Play().OnComplete(() => _isMenuOpen = true);
+                .Play().OnComplete(() =>
+                {
+                    _isMenuOpen = true;
+                    UpdateChildrenScale();
+                });
+        }
 
-            //to prevent from 0 scale
+        public void OnNewItemAdded(Transform newItem) =>
+            newItem.localScale = _isMenuOpen ? Vector3.one : Vector3.zero;
+
+        public void UpdateChildrenScale()
+        {
             foreach (Transform item in _content)
-                item.transform.localScale = Vector3.one;
+                item.localScale = _isMenuOpen? Vector3.one : Vector3.zero;
         }
 
         private void PerformOpenAndClose()
@@ -54,6 +75,12 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
                     _root.gameObject.SetActive(false);
                     _isMenuOpen = false;
                 });
+        }
+
+        private void CheckIfNeedToBeClose(OnInventoryMenuOpenedSignal signal)
+        {
+            if (_isMenuOpen)
+                Close();
         }
     }
 }

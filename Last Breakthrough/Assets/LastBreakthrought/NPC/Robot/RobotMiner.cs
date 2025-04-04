@@ -9,26 +9,26 @@ namespace LastBreakthrought.NPC.Robot
 {
     public class RobotMiner : RobotBase
     {
-        private RobotMiningState _robotMiningState;
-
         public ICrashedShip CrashedShip { get; private set; } = null;
+
+        private RobotMiningState _robotMiningState;
 
         public override void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
-            EventBus.SubscribeEvent<OnAllRobotsInformedAboutCrashedShipSignal>(SetCrashedShip);
 
             _robotMiningState = new RobotMiningState(this, CoroutineRunner, Agent, Animator, Battary, RobotData.GeneralSpeed);
 
-
             StateMachine.AddTransition(_robotMiningState, RobotWanderingState, () => CrashedShip == null && IsWanderingState);
             StateMachine.AddTransition(_robotMiningState, RobotFollowingPlayerState, () => CrashedShip == null && IsFollowingState);
+            StateMachine.AddTransition(_robotMiningState, RobotWanderingState, () => CrashedShip == null && !IsFollowingState && !IsWanderingState);
 
             StateMachine.AddTransition(_robotMiningState, RobotRechargingState, () => Battary.NeedToBeRecharged);
 
             StateMachine.AddTransition(RobotRechargingState, _robotMiningState, () => !Battary.NeedToBeRecharged && CrashedShip != null);
             StateMachine.AddTransition(RobotRechargingState, RobotWanderingState, () => !Battary.NeedToBeRecharged && CrashedShip == null && IsWanderingState);
             StateMachine.AddTransition(RobotRechargingState, RobotFollowingPlayerState, () => !Battary.NeedToBeRecharged && CrashedShip == null && IsFollowingState);
+            StateMachine.AddTransition(RobotRechargingState, RobotWanderingState, () => !Battary.NeedToBeRecharged && CrashedShip == null && !IsFollowingState && !IsWanderingState);
 
             StateMachine.AddTransition(RobotFollowingPlayerState, RobotRechargingState, () => Battary.NeedToBeRecharged);
             StateMachine.AddTransition(RobotWanderingState, RobotRechargingState, () => Battary.NeedToBeRecharged);
@@ -38,18 +38,18 @@ namespace LastBreakthrought.NPC.Robot
 
             StateMachine.EnterInState(RobotWanderingState);
         }
-
-        public void SetCrashedShip(OnAllRobotsInformedAboutCrashedShipSignal signal) => CrashedShip = signal.CrashedShip;
-        public void ClearCrashedShip() => CrashedShip = null;
-
-        public void SetMiningState()
+        public override void DoWork()
         {
+            if (CrashedShip != null) return;
+
+            CrashedShip = PlayerHandler.GetSeekedCrashedShip();
+
             if (Battary.NeedToBeRecharged || CrashedShip == null) return;
 
             StateMachine.EnterInState(_robotMiningState);
         }
 
-        private void OnDestroy() => 
-            EventBus.UnSubscribeEvent<OnAllRobotsInformedAboutCrashedShipSignal>(SetCrashedShip);
+        public void ClearCrashedShip() => 
+            CrashedShip = null;
     }
 }

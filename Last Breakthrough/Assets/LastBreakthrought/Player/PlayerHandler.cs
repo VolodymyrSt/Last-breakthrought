@@ -1,3 +1,4 @@
+using LastBreakthrought.CrashedShip;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace LastBreakthrought.Player
 
         [SerializeField] private GameObject _wreckageDetectorItemPrefab;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private CrashedShipSeeker _crashedShipSeeker;
 
         private void OnEnable() => HideDetectorItem();
 
@@ -25,6 +27,9 @@ namespace LastBreakthrought.Player
 
         public void HideDetectorItem() =>
             _wreckageDetectorItemPrefab.SetActive(false);
+
+        public ICrashedShip GetSeekedCrashedShip() =>
+            _crashedShipSeeker.FoundCrashedShip;
     }
 }
 

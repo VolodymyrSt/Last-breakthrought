@@ -18,6 +18,10 @@ using Unity.AI.Navigation;
 using LastBreakthrought.NPC.Robot.Factory;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel.RobotControls.Factory;
+using LastBreakthrought.Logic.ShipDetail;
+using LastBreakthrought.Logic.MaterialRecycler;
+using LastBreakthrought.UI.Inventory;
+using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -36,6 +40,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("HomePoint")]
         [SerializeField] private HomePoint _homePointPrefab;
+
+        [Header("RecyceMachine")]
+        [SerializeField] private RecycleMachine _recycleMachine;
 
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
@@ -60,11 +67,15 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
+            BindShipDetailViewFactory();
             BindRobotControlsUIFactory();
             BindEnemyFactory();
             BindRobotsFactory();
             BindPlayer();
             BindCamera();
+
+            BindShipDetailsContainer();
+            BindRecycleMachine();
 
             BindGamePlayHub();
             BindJoyStick();
@@ -73,6 +84,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindHomePoint();
             BindHomeDistanceInformer();
             BindRobotMenuPanel();
+            BindDetailInventoryMenuPanel();
 
             BindLight();
             BindTimer();
@@ -89,6 +101,11 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Resolve<Game>().SpawnersContainer = spawnersContainer;
             Container.Bind<SpawnersContainer>().FromInstance(spawnersContainer).AsSingle();
         }
+        private void BindRecycleMachine() => 
+            Container.Bind<RecycleMachine>().FromInstance(_recycleMachine).AsSingle();
+
+        private void BindShipDetailsContainer() => 
+            Container.Bind<ShipDetailsContainer>().AsSingle();
 
         private void BindNavMeshSurface()
         {
@@ -107,6 +124,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindShipMaterialViewFactory() => 
             Container.Bind<ShipMaterialUIFactory>().AsSingle();
+        private void BindShipDetailViewFactory() =>
+            Container.Bind<ShipDetailUIFactory>().AsSingle();
+
 
         private void BindRobotControlsUIFactory()
         {
@@ -166,6 +186,14 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<RobotMenuPanelView>().FromInstance(robotMenuPanelView).AsSingle();
 
             Container.BindInterfacesAndSelfTo<RobotMenuPanelHandler>().AsSingle().NonLazy();
+        }
+
+        private void BindDetailInventoryMenuPanel()
+        {
+            var view = _gameplayHub.GetComponentInChildren<DetailInventoryMenuPanelView>();
+            Container.Bind<DetailInventoryMenuPanelView>().FromInstance(view).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<DetailInventoryMenuPanelHandler>().AsSingle().NonLazy();
         }
 
         private void BindJoyStick()

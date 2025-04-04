@@ -1020,6 +1020,7 @@ GameObject:
   - component: {fileID: 771115034464346713}
   - component: {fileID: 5778584683810721024}
   - component: {fileID: -3993696538639634542}
+  - component: {fileID: 5595304493116836607}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1109,6 +1110,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wreckageDetectorItemPrefab: {fileID: 4212058293877538114}
   _playerAnimator: {fileID: 5778584683810721024}
+  _crashedShipSeeker: {fileID: 5595304493116836607}
+--- !u!114 &5595304493116836607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2926364450461060415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b9e06e9b2f37843a4e6e2414b62722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crashedShipLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _seekRange: 2
 --- !u!1 &2968162813902293815
 GameObject:
   m_ObjectHideFlags: 0

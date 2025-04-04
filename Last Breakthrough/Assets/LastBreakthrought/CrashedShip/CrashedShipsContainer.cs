@@ -28,5 +28,7 @@ namespace LastBreakthrought.CrashedShip
 
             return closestShip.GetPosition();
         }
+
+        public bool IsEmpty() => CrashedShips.Count <= 0;
     }
 }

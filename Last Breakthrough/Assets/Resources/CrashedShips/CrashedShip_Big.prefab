@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7502079322896169036}
   - component: {fileID: 1394301664531411325}
-  m_Layer: 0
+  - component: {fileID: 6105546570227250400}
+  m_Layer: 8
   m_Name: CrashedShip_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +52,27 @@ MonoBehaviour:
   _rarity: 3
   _maxNumberOfMaterialDiversity: 3
   _crashedShipWindowHandler: {fileID: 3116041191286753706}
+--- !u!65 &6105546570227250400
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34116782492270044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.1, y: 1, z: 4.06}
+  m_Center: {x: 0, y: 0, z: 0.79}
 --- !u!1 &5063459403249587759
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,8 +82,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4491862576439262048}
-  - component: {fileID: 1047356238345664483}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CrashedShipVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,27 +105,6 @@ Transform:
   - {fileID: 6780625234726665497}
   m_Father: {fileID: 7502079322896169036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1047356238345664483
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5063459403249587759}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 2.13
-  m_Center: {x: 0.09, y: -1.21, z: 0}
 --- !u!1001 &3329384396264948853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,9 +169,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5084123479967944025, guid: 2516ad3012264c049865a86004453ab1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5392761002254774025, guid: 2516ad3012264c049865a86004453ab1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6871271665331932611, guid: 2516ad3012264c049865a86004453ab1, type: 3}
       propertyPath: m_Name
       value: Trash1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871271665331932611, guid: 2516ad3012264c049865a86004453ab1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -191,6 +203,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7502079322896169036}
     m_Modifications:
+    - target: {fileID: 450351248623780158, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 536124716660967523, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -231,6 +247,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2754093797850305654, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045043981680083045, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307694579933960222, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7307694579933960222, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -242,6 +270,10 @@ PrefabInstance:
     - target: {fileID: 9222179623648291438, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_Name
       value: InteractionZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222179623648291438, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -261,9 +293,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7502079322896169036}
     m_Modifications:
+    - target: {fileID: 396187545853984027, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 529182764231213994, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Name
       value: UnminedShipMaterialContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 529182764231213994, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 680176980118754098, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 948597882736516926, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 957008932913531148, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048413240078657537, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2192826294668814675, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_text
@@ -277,9 +333,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnminedBackground
       objectReference: {fileID: 0}
+    - target: {fileID: 2749877812345742661, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133014787994856441, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632631852329723230, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4706705707062000057, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Name
       value: CrashedShipWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706705707062000057, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6380483446178931122, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525973272747704906, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6690383646984991052, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Pivot.x
@@ -360,6 +440,10 @@ PrefabInstance:
     - target: {fileID: 6690383646984991052, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6993759201187268572, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -493,6 +577,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cf57458dea4059a4dac4d5491aad34e2, type: 3}
       propertyPath: m_Name
       value: Spaceship_FernandoTheFlamingo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cf57458dea4059a4dac4d5491aad34e2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

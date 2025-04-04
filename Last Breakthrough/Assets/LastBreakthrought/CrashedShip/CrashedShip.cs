@@ -1,6 +1,7 @@
 ﻿using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Windows.CrashedShipWindow;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,7 @@ namespace LastBreakthrought.CrashedShip
 {
     public class CrashedShip : MonoBehaviour, ICrashedShip
     {
+        private const float DESCTRUCTION_TIME = 5f;
         [SerializeField] private ShipRarity _rarity;
         [SerializeField] private int _maxNumberOfMaterialDiversity;
         [SerializeField] private CrashedShipWindowHandler _crashedShipWindowHandler;
@@ -17,6 +19,7 @@ namespace LastBreakthrought.CrashedShip
         private ShipMaterialGenerator _shipMaterialGenerator;
 
         public List<ShipMaterialEntity> Materials { get; private set; } = new ();
+        public List<ShipMaterialEntity> MinedMaterials { get; private set; } = new ();
 
         private void OnValidate()
         {
@@ -59,6 +62,7 @@ namespace LastBreakthrought.CrashedShip
                 {
                     minedMaterial = unminedShipMaterial;
                     _crashedShipWindowHandler.UpdateEntireMaterial();
+                    MinedMaterials.Add(unminedShipMaterial);
                     Materials.Remove(unminedShipMaterial);
                     break;
                 }
@@ -66,8 +70,12 @@ namespace LastBreakthrought.CrashedShip
             return minedMaterial;
         }
 
-        public void DestroySelf()
+        public void RemoveMinedMaterialView() => 
+            _crashedShipWindowHandler.RemoveMinedMaterialFromWindow();
+
+        public IEnumerator DestroySelf()
         {
+            yield return new WaitForSecondsRealtime(DESCTRUCTION_TIME);
             _shipsContainer.CrashedShips.Remove(this);
             Destroy(gameObject);
         }
