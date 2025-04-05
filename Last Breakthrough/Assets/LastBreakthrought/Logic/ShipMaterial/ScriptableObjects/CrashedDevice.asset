@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b797fbcb5aee0aa4f8ee3fa91cc3e129, type: 3}
-  m_Name: Carbon
+  m_Name: CrashedDevice
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: carbon
-  <Name>k__BackingField: Carbon
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 2db3e1d2cc6ebcf4c987ce397de80e42, type: 3}
-  <CraftDetail>k__BackingField: {fileID: 11400000, guid: cf95bdaa2c79ee646bee6be6f4bfc1b5, type: 2}
-  <MaxQuantity>k__BackingField: 7
+  <Id>k__BackingField: CrashedDevice
+  <Name>k__BackingField: CrashedDevice
+  <Sprite>k__BackingField: {fileID: 21300000, guid: bbcc001bc1a18d049b7409f855eb9814, type: 3}
+  <CraftDetail>k__BackingField: {fileID: 11400000, guid: 48ab10e48bc542849a76a10511b82d64, type: 2}
+  <MaxQuantity>k__BackingField: 5

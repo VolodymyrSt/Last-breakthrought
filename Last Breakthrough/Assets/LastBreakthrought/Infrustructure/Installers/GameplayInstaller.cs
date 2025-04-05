@@ -22,6 +22,7 @@ using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.MaterialRecycler;
 using LastBreakthrought.UI.Inventory;
 using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
+using LastBreakthrought.Logic.RobotFactory;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -44,6 +45,9 @@ namespace LastBreakthrought.Infrustructure.Installers
         [Header("RecyceMachine")]
         [SerializeField] private RecycleMachine _recycleMachine;
 
+        [Header("RecyceMachine")]
+        [SerializeField] private RobotFactoryMachine _robotFactoryMachine;
+
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
         [SerializeField] private Light _light;
@@ -65,16 +69,18 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindCrashedShipsContainer();
 
+            BindRobotFactoryMachine();
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
             BindShipDetailViewFactory();
             BindRobotControlsUIFactory();
             BindEnemyFactory();
             BindRobotsFactory();
+
             BindPlayer();
             BindCamera();
 
-            BindShipDetailsContainer();
+            BindDetailsContainer();
             BindRecycleMachine();
 
             BindGamePlayHub();
@@ -101,11 +107,18 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Resolve<Game>().SpawnersContainer = spawnersContainer;
             Container.Bind<SpawnersContainer>().FromInstance(spawnersContainer).AsSingle();
         }
+
+        private void BindRobotFactoryMachine()
+        {
+            Container.Resolve<Game>().RobotFactoryMachine = _robotFactoryMachine;
+            Container.Bind<RobotFactoryMachine>().FromInstance(_robotFactoryMachine).AsSingle();
+        }
+
         private void BindRecycleMachine() => 
             Container.Bind<RecycleMachine>().FromInstance(_recycleMachine).AsSingle();
 
-        private void BindShipDetailsContainer() => 
-            Container.Bind<ShipDetailsContainer>().AsSingle();
+        private void BindDetailsContainer() => 
+            Container.Bind<DetailsContainer>().AsSingle();
 
         private void BindNavMeshSurface()
         {

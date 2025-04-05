@@ -245,38 +245,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0.6, z: 0}
---- !u!1 &154758590
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 154758591}
-  m_Layer: 0
-  m_Name: CrashedShip&&EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &154758591
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154758590}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 306022501}
-  m_Father: {fileID: 1064705176}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &158649608
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,12 +448,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306022500}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 154758591}
+  m_Father: {fileID: 1064705176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &306022502
 MonoBehaviour:
@@ -955,6 +923,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!224 &592130306 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1618260956212810157, guid: 5caefd46179f78b489560291f81143fa, type: 3}
+  m_PrefabInstance: {fileID: 2038110174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &603313351
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,12 +953,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603313351}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 898599840}
+  m_Father: {fileID: 992027932}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &603313353
 MonoBehaviour:
@@ -1505,38 +1478,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &898599839
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 898599840}
-  m_Layer: 0
-  m_Name: CrashedShip&&EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &898599840
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 898599839}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 603313352}
-  m_Father: {fileID: 992027932}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &916441610 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8724773485183884742, guid: 5caefd46179f78b489560291f81143fa, type: 3}
@@ -1578,7 +1519,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 252951797}
-  - {fileID: 898599840}
+  - {fileID: 603313352}
   m_Father: {fileID: 824407693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1062779050
@@ -1684,7 +1625,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1098302070}
-  - {fileID: 154758591}
+  - {fileID: 306022501}
   m_Father: {fileID: 824407693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1073394985
@@ -2044,6 +1985,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 536124716660967523, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
   m_PrefabInstance: {fileID: 1262401992}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1396273104 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3496490993983306769, guid: 5caefd46179f78b489560291f81143fa, type: 3}
+  m_PrefabInstance: {fileID: 2038110174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1595377592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,12 +2074,16 @@ MonoBehaviour:
   _joyStickPrefab: {fileID: 4362825350626713663, guid: eb833d3e2ecd8f042808b12df682cd4d, type: 3}
   _homePointPrefab: {fileID: 653350873}
   _recycleMachine: {fileID: 1803083177}
+  _robotFactoryMachine: {fileID: 2120927439}
   _navMeshSurface: {fileID: 909529707992568550}
   _light: {fileID: 469821621}
   _allMaterial:
   - {fileID: 11400000, guid: 03962b0c00b5f5443895464d98cdacb7, type: 2}
   - {fileID: 11400000, guid: 1e905988a4106a24895328d204652b9c, type: 2}
   - {fileID: 11400000, guid: 6b0fdb7e05ccdbc4688bf2c8143352ec, type: 2}
+  - {fileID: 11400000, guid: 600e421fdf0a93647a9322940f73cce9, type: 2}
+  - {fileID: 11400000, guid: dc76f2b2a12205b4ea8155a16e80fe29, type: 2}
+  - {fileID: 11400000, guid: fdb265c6266d9c0408dccc74a650c290, type: 2}
 --- !u!1 &1632244291
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3852,8 @@ MonoBehaviour:
   <Handler>k__BackingField: {fileID: 2038110179}
   _createRobotMinerButton: {fileID: 916441610}
   _createRobotTransporterButton: {fileID: 1120048691}
+  _neededDetailsForMinerCreateContainer: {fileID: 592130306}
+  _neededDetailsForTransporterCreateContainer: {fileID: 1396273104}
 --- !u!114 &2038110179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3915,7 +3867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <View>k__BackingField: {fileID: 2038110178}
-  _robotFactoryMachine: {fileID: 2120927439}
+  <RobotFactoryMachine>k__BackingField: {fileID: 2120927439}
 --- !u!4 &2073070231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6197373955563232269, guid: 1cfcae483142d254785c25830b858a9a, type: 3}
@@ -4002,6 +3954,8 @@ MonoBehaviour:
   - {fileID: 1844653910}
   - {fileID: 392716327}
   - {fileID: 1062779052}
+  _neededDetailsToCreateMiner: {fileID: 11400000, guid: b1d6f6ceeaa9cf74f8a1184782981dfe, type: 2}
+  _neededDetailsToCreateTransporter: {fileID: 11400000, guid: b1b49ed9fcc2be84283a982b88b6c1fe, type: 2}
 --- !u!4 &430219267775406354
 Transform:
   m_ObjectHideFlags: 0

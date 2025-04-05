@@ -1,19 +1,19 @@
-using UnityEngine;
 using LastBreakthrought.Logic.RobotFactory;
+using UnityEngine;
 
 namespace LastBreakthrought.UI.Windows.RobotFactoryWindow 
 {
     public class RobotFactoryWindowHandler : WindowHandler<RobotFactoryWindowView>
     {
-        [SerializeField] private RobotFactoryMachine _robotFactoryMachine;
+        [field:SerializeField] public RobotFactoryMachine RobotFactoryMachine { get; private set; }
 
         public override void ActivateWindow() => View.ShowView();
         public override void DeactivateWindow() => View.HideView();
 
         public void CreateMiner() =>
-            _robotFactoryMachine.CreateRobotMiner();
+            RobotFactoryMachine.CreateRobotMiner();
         public void CreateTransporter() =>
-            _robotFactoryMachine.CreateRobotTransporter();
+            RobotFactoryMachine.CreateRobotTransporter();
     }
 }
 

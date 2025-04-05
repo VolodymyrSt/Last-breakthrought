@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a89a8d988dee54d90d0ab15e2dceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rarity: 3
-  _maxNumberOfMaterialDiversity: 3
+  _rarity: 4
+  _maxNumberOfMaterialDiversity: 6
   _crashedShipWindowHandler: {fileID: 3116041191286753706}
 --- !u!65 &6105546570227250400
 BoxCollider:

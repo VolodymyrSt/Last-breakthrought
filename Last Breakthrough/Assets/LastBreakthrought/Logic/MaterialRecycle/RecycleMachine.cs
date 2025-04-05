@@ -1,7 +1,6 @@
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Inventory;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,14 +8,13 @@ namespace LastBreakthrought.Logic.MaterialRecycler
 {
     public class RecycleMachine : MonoBehaviour
     {
-        private ShipDetailsContainer _shipDetailsContainer;
-        public List<ShipDetailEntity> ShipDetails { get; set; } = new List<ShipDetailEntity>();
+        private DetailsContainer _detailsContainer;
         private DetailInventoryMenuPanelHandler _detailInventory;
 
         [Inject]
-        private void Construct(ShipDetailsContainer shipDetailsContainer, DetailInventoryMenuPanelHandler detailInventoryMenuPanelHandler)
+        private void Construct(DetailsContainer shipDetailsContainer, DetailInventoryMenuPanelHandler detailInventoryMenuPanelHandler)
         {
-            _shipDetailsContainer = shipDetailsContainer;
+            _detailsContainer = shipDetailsContainer;
             _detailInventory = detailInventoryMenuPanelHandler;
         }
 
@@ -24,12 +22,12 @@ namespace LastBreakthrought.Logic.MaterialRecycler
         {
             bool isNewDetail = true;
 
-            foreach (var detail in ShipDetails)
+            foreach (var detail in _detailsContainer.Details)
             {
                 if (shipMaterialEntity.Data.CraftDetail.Id == detail.Data.Id)
                 {
                     detail.Quantity += shipMaterialEntity.Quantity;
-                    _detailInventory.UpdateShipDetailsView(shipMaterialEntity);
+                    _detailInventory.UpdateInventoryDetails(shipMaterialEntity);
                     isNewDetail = false;
                     break;
                 }
@@ -38,7 +36,7 @@ namespace LastBreakthrought.Logic.MaterialRecycler
             if (isNewDetail)
             {
                 var detail = _detailInventory.CreateNewShipDetailAndInit(shipMaterialEntity);
-                ShipDetails.Add(detail.DetailEntity);
+                _detailsContainer.Details.Add(detail.DetailEntity);
             }
         }
 

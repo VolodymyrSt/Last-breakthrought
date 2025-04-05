@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b797fbcb5aee0aa4f8ee3fa91cc3e129, type: 3}
-  m_Name: Carbon
+  m_Name: Bulb
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: carbon
-  <Name>k__BackingField: Carbon
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 2db3e1d2cc6ebcf4c987ce397de80e42, type: 3}
-  <CraftDetail>k__BackingField: {fileID: 11400000, guid: cf95bdaa2c79ee646bee6be6f4bfc1b5, type: 2}
-  <MaxQuantity>k__BackingField: 7
+  <Id>k__BackingField: Bulb
+  <Name>k__BackingField: Bulb
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 7aca93e8b3127884290f30d6d7d7fca1, type: 3}
+  <CraftDetail>k__BackingField: {fileID: 11400000, guid: 8c987c80acb41114380a72e8f5faedbe, type: 2}
+  <MaxQuantity>k__BackingField: 5

@@ -39,6 +39,7 @@ namespace LastBreakthrought.NPC.Robot
 
             StateMachine.AddTransition(_robotTransportingMaterialsState, RobotWanderingState, () => TransportedMaterials.Count <= 0 && IsWanderingState && !HasLoadedMaterials);
             StateMachine.AddTransition(_robotTransportingMaterialsState, RobotFollowingPlayerState, () => TransportedMaterials.Count <= 0 && IsFollowingState && !HasLoadedMaterials);
+            StateMachine.AddTransition(_robotTransportingMaterialsState, _robotLoadingUpMaterialsState, () => TransportedMaterials.Count <= 0 && !HasLoadedMaterials);//
             StateMachine.AddTransition(_robotTransportingMaterialsState, RobotWanderingState, () => TransportedMaterials.Count <= 0 && !IsFollowingState && !IsWanderingState && !HasLoadedMaterials);
 
             StateMachine.AddTransition(_robotLoadingUpMaterialsState, RobotRechargingState, () => Battary.NeedToBeRecharged);
