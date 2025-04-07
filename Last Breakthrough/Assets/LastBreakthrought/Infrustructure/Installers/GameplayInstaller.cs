@@ -23,6 +23,7 @@ using LastBreakthrought.Logic.MaterialRecycler;
 using LastBreakthrought.UI.Inventory;
 using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
 using LastBreakthrought.Logic.RobotFactory;
+using Assets.LastBreakthrought.UI.Massage;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -48,11 +49,12 @@ namespace LastBreakthrought.Infrustructure.Installers
         [Header("RecyceMachine")]
         [SerializeField] private RobotFactoryMachine _robotFactoryMachine;
 
+        [Header("Materials")]
+        [SerializeField] private ShipMaterialHolderSO _shipMaterialHolder;
+
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
         [SerializeField] private Light _light;
-
-        [SerializeField] private List<ShipMaterialSO> _allMaterial = new List<ShipMaterialSO>();
 
         private GameObject _gameplayHub;
 
@@ -91,6 +93,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindHomeDistanceInformer();
             BindRobotMenuPanel();
             BindDetailInventoryMenuPanel();
+            BindMassageHandler();
 
             BindLight();
             BindTimer();
@@ -129,6 +132,14 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
 
+        private void BindMassageHandler()
+        {
+            var massageView = _gameplayHub.GetComponentInChildren<MassageView>();
+            Container.Bind<MassageView>().FromInstance(massageView).AsSingle();
+
+            Container.Bind<MassageHandler>().AsSingle();
+        }
+
         private void BindRobotsFactory()
         {
             Container.Bind<RobotMinerFactory>().AsSingle();
@@ -149,7 +160,7 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindShipMaterialGenerator()
         {
-            var materialGenerator = new ShipMaterialGenerator(_allMaterial);
+            var materialGenerator = new ShipMaterialGenerator(_shipMaterialHolder.AllMaterials);
             Container.Bind<ShipMaterialGenerator>().FromInstance(materialGenerator);
         }
 

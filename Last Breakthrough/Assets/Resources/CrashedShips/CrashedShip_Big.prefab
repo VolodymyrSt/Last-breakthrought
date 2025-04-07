@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rarity: 4
-  _maxNumberOfMaterialDiversity: 6
+  _maxNumberOfMaterialDiversity: 8
   _crashedShipWindowHandler: {fileID: 3116041191286753706}
 --- !u!65 &6105546570227250400
 BoxCollider:

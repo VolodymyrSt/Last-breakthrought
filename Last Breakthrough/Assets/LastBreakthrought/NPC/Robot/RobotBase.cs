@@ -1,3 +1,4 @@
+using Assets.LastBreakthrought.UI.Massage;
 using LastBreakthrought.Configs.Robot;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Infrustructure.Services.EventBus;
@@ -26,6 +27,7 @@ namespace LastBreakthrought.NPC.Robot
         protected ICoroutineRunner CoroutineRunner;
         protected RobotConfigSO RobotData;
         protected IEventBus EventBus;
+        protected MassageHandler MassageHandler;
 
         protected RobotWanderingState RobotWanderingState;
         protected RobotFollowingPlayerState RobotFollowingPlayerState;
@@ -38,12 +40,14 @@ namespace LastBreakthrought.NPC.Robot
         protected bool IsFollowingState { get; set; }
 
         [Inject]
-        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService, IEventBus eventBus)
+        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService,
+            IEventBus eventBus, MassageHandler massageHandler)
         {
             PlayerHandler = playerHandler;
             CoroutineRunner = coroutineRunner;
             EventBus = eventBus;
             _configProvider = configProviderService;
+            MassageHandler = massageHandler;
         }
 
         public virtual void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
@@ -65,7 +69,11 @@ namespace LastBreakthrought.NPC.Robot
 
         public void SetFollowingPlayerState()
         {
-            if (Battary.NeedToBeRecharged) return;
+            if (Battary.NeedToBeRecharged)
+            {
+                MassageHandler.ShowMassage("Robot battary is too low");
+                return;
+            }
 
             IsFollowingState = true;
             IsWanderingState = false;
@@ -73,7 +81,11 @@ namespace LastBreakthrought.NPC.Robot
 
         public void SetWanderingState()
         {
-            if (Battary.NeedToBeRecharged) return;
+            if (Battary.NeedToBeRecharged)
+            {
+                MassageHandler.ShowMassage("Robot battary is too low");
+                return;
+            }
 
             IsWanderingState = true;
             IsFollowingState = false;

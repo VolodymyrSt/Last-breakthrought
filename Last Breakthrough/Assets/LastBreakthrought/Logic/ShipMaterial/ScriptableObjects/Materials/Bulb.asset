@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b797fbcb5aee0aa4f8ee3fa91cc3e129, type: 3}
-  m_Name: Leather
+  m_Name: Bulb
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Leather
-  <Name>k__BackingField: Leather
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 4a3a0940c1cb73f4eb445dda098919ad, type: 3}
-  <CraftDetail>k__BackingField: {fileID: 11400000, guid: 43f5f06c65ada264693ff24db72897c4, type: 2}
-  <MaxQuantity>k__BackingField: 10
+  <Id>k__BackingField: Bulb
+  <Name>k__BackingField: Bulb
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 7aca93e8b3127884290f30d6d7d7fca1, type: 3}
+  <CraftDetail>k__BackingField: {fileID: 11400000, guid: 8c987c80acb41114380a72e8f5faedbe, type: 2}
+  <MaxQuantity>k__BackingField: 3

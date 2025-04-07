@@ -1,11 +1,8 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
 using LastBreakthrought.Logic.ShipDetail;
-using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Inventory.ShipDetail;
-using LastBreakthrought.UI.ShipMaterial;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 namespace LastBreakthrought.UI.Inventory
@@ -49,16 +46,21 @@ namespace LastBreakthrought.UI.Inventory
         {
             foreach (var neededDetail in neededDetails)
             {
-                foreach (var existedDetailView in _view.DetailsContainerUI.Details)
+                for (var i = 0; i < _view.DetailsContainerUI.Details.Count; i++)
                 {
-                    if (existedDetailView.DetailEntity.Data.Id == neededDetail.Data.Id)
-                    {
-                        existedDetailView.Quantity -= neededDetail.Quantity;
+                    var existedDetailView = _view.DetailsContainerUI.Details[i];
 
-                        if (existedDetailView.Quantity <= 0)
+                    if (existedDetailView != null)
+                    {
+                        if (existedDetailView.DetailEntity.Data.Id == neededDetail.Data.Id)
                         {
-                            Object.Destroy(existedDetailView);
-                            _view.DetailsContainerUI.Details.Remove(existedDetailView);
+                            existedDetailView.Quantity -= neededDetail.Quantity;
+
+                            if (existedDetailView.Quantity <= 0)
+                            {
+                                existedDetailView.SelfDesctroy();
+                                _view.DetailsContainerUI.Details.Remove(existedDetailView);
+                            }
                         }
                     }
                 }

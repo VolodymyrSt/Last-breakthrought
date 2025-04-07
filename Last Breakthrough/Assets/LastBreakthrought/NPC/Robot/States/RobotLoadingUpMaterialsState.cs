@@ -112,7 +112,8 @@ namespace LastBreakthrought.NPC.Robot.States
                 else
                     _robot.ClearCrashedShip();
 
-                _robot.HasLoadedMaterials = true;
+                if (_robot.TransportedMaterials.Count != 0)
+                    _robot.HasLoadedMaterials = true;
             }
         }
     }

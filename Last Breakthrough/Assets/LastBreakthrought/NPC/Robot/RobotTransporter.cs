@@ -62,15 +62,44 @@ namespace LastBreakthrought.NPC.Robot
 
         public override void DoWork()
         {
-            if (CrashedShip != null) return;
+            if (CrashedShip != null)
+            {
+                MassageHandler.ShowMassage("Robot is already transporting");
+                return;
+            }
 
             CrashedShip = PlayerHandler.GetSeekedCrashedShip();
 
-            if (Battary.NeedToBeRecharged || CrashedShip == null || CrashedShip.MinedMaterials.Count <= 0) return;
+            if (!IsRobotReady()) return;
 
             StateMachine.EnterInState(_robotLoadingUpMaterialsState);
         }
 
         public void ClearCrashedShip() => CrashedShip = null;
+
+        private bool IsRobotReady()
+        {
+            if (Battary.NeedToBeRecharged)
+            {
+                MassageHandler.ShowMassage("Robot battary is too low");
+                return false;
+            }
+            if (CrashedShip == null)
+            {
+                MassageHandler.ShowMassage("Robot don`t have a target crashed ship");
+                return false;
+            }
+            if (CrashedShip.MinedMaterials.Count <= 0)
+            {
+                MassageHandler.ShowMassage("Crashed ship doesn`t have mined materials");
+                return false;
+            }
+            if (HasLoadedMaterials)
+            {
+                MassageHandler.ShowMassage("Robot has transported material");
+                return false;
+            }
+            return true;
+        }
     }
 }

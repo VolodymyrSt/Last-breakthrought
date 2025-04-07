@@ -1,8 +1,5 @@
-﻿using LastBreakthrought.Player;
-using LastBreakthrought.UI.Windows;
-using System;
+﻿using LastBreakthrought.UI.Windows;
 using UnityEngine;
-using Zenject;
 
 namespace LastBreakthrought.Logic.InteractionZone
 {

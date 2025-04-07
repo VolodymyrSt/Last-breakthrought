@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b797fbcb5aee0aa4f8ee3fa91cc3e129, type: 3}
-  m_Name: Steel
+  m_Name: Aluminum
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Steel
-  <Name>k__BackingField: Steel
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 28d4ae22f97eb01479baff7ff5ec411d, type: 3}
-  <CraftDetail>k__BackingField: {fileID: 11400000, guid: efe10ef9804f76240beaa2e551b1446e, type: 2}
-  <MaxQuantity>k__BackingField: 5
+  <Id>k__BackingField: Aluminum
+  <Name>k__BackingField: Aluminum
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 44a0fec2296388d4d93bba89791663af, type: 3}
+  <CraftDetail>k__BackingField: {fileID: 11400000, guid: 422c38c3bb8e6dc49b2b2679b1e69b56, type: 2}
+  <MaxQuantity>k__BackingField: 2

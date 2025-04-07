@@ -35,5 +35,8 @@ namespace LastBreakthrought.UI.Inventory.ShipDetail
 
             _shipDetailView.SetImage(shipDetail.Data.Sprite);
         }
+
+        public void SelfDesctroy() =>
+            Destroy(gameObject);
     }
 }

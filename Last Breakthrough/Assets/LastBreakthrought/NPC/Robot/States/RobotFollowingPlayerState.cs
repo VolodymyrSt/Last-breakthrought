@@ -41,6 +41,11 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.SetDestination(_playerHandler.GetPosition());
 
+            if (_agent.remainingDistance < STOP_DISTANCE + 0.01f)
+                _animator.SetBool(IS_MOVING, false);
+            else
+                _animator.SetBool(IS_MOVING, true);
+
             _robotBattary.DecreaseCapacity();
             _robotBattary.CheckIfCapacityIsRechedLimit();
         }

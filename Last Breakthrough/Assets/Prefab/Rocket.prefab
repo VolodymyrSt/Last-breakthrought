@@ -1085,13 +1085,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946861698718977322}
+  - component: {fileID: 3608071131732716303}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &946861698718977322
 Transform:
   m_ObjectHideFlags: 0
@@ -1100,7 +1101,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8610563111087933370}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1110,6 +1111,19 @@ Transform:
   - {fileID: 8767679855356322825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3608071131732716303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8610563111087933370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4ea85b9e369e943aeff2003f66714d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _neededDetailsToRepairRocket: {fileID: 11400000, guid: fc91d0817001be44198d89986bb07dc4, type: 2}
 --- !u!1 &9105322212902445569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1222,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3468380275628976037, guid: a7402580e0e38864d9b0c003dbec9033, type: 3}
+      propertyPath: <Rocket>k__BackingField
+      value: 
+      objectReference: {fileID: 3608071131732716303}
     - target: {fileID: 7113907254719815381, guid: a7402580e0e38864d9b0c003dbec9033, type: 3}
       propertyPath: m_Name
       value: RocketWindow
@@ -1353,7 +1371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4038241092573339507, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_VersionIndex
-      value: 4855
+      value: 4921
       objectReference: {fileID: 0}
     - target: {fileID: 8801299576575021029, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: _window

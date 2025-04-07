@@ -1,3 +1,4 @@
+using Assets.LastBreakthrought.UI.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
@@ -28,19 +29,22 @@ namespace LastBreakthrought.Logic.RobotFactory
         private RobotMenuPanelHandler _robotMenuPanelHandler;
         private DetailsContainer _detailsContainer;
         private DetailInventoryMenuPanelHandler _detailInventory;
+        private MassageHandler _massageHandler;
 
         private int _currentMinersCount = 0;
         private int _currentTransportersCount = 0;
 
         [Inject]
         private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory,
-            RobotMenuPanelHandler robotMenuPanelHandler, DetailsContainer detailsContainer, DetailInventoryMenuPanelHandler detailInventory)
+            RobotMenuPanelHandler robotMenuPanelHandler, DetailsContainer detailsContainer
+            , DetailInventoryMenuPanelHandler detailInventory, MassageHandler massage)
         {
             _robotMinerFactory = robotFactory;
             _robotTransporterFactory = robotTransporterFactory;
             _robotMenuPanelHandler = robotMenuPanelHandler;
             _detailsContainer = detailsContainer;
             _detailInventory = detailInventory;
+            _massageHandler = massage;
         }
 
         public void CreateStartedRobotsAtTheBeginning()
@@ -60,14 +64,10 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateMiner();
                 }
                 else
-                {
-                    //show massage
-                }
+                    _massageHandler.ShowMassage("You cann`t create because you don`t have right details");
             }
             else
-            {
-                //show massage
-            }
+                _massageHandler.ShowMassage("You can only have three miners");
         }
 
         public void CreateRobotTransporter()
@@ -76,17 +76,15 @@ namespace LastBreakthrought.Logic.RobotFactory
             {
                 if (_detailsContainer.IsSearchedDetailsAllFound(GetDetailsToCreateTransporter()))
                 {
+                    _detailsContainer.GiveDetails(GetDetailsToCreateTransporter());
+                    _detailInventory.UpdateInventoryDetails(GetDetailsToCreateTransporter());
                     CreateTransporter();
                 }
                 else
-                {
-                    //show massage
-                }
+                    _massageHandler.ShowMassage("You cann`t create because you don`t have right details");
             }
             else
-            {
-                //show massage
-            }
+                _massageHandler.ShowMassage("You can only have three transporters");
         }
 
         public List<ShipDetailEntity> GetDetailsToCreateMiner() =>
