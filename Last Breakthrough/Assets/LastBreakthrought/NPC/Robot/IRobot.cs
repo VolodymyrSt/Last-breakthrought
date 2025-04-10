@@ -12,7 +12,7 @@ namespace LastBreakthrought.NPC.Robot
         void SetWanderingState();
         RobotConfigSO GetRobotData();
         RobotBattary GetRobotBattary();
-        void DoNothing();
         void DoWork();
+        RobotHealth GetRobotHealth();
     }
 }

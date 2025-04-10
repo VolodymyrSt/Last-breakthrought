@@ -30,6 +30,7 @@ namespace LastBreakthrought.UI.Inventory
         {
             _openClosedInventoryMenuButton.onClick.AddListener(() => PerformOpenAndClose());
             _eventBus.SubscribeEvent<OnRobotMenuOpenedSignal>(CheckIfNeedToBeClose);
+            _eventBus.SubscribeEvent<OnMapMenuOpenedSignal>(CheckIfNeedToBeClose);
 
             _root.localScale = Vector3.zero;
             _root.gameObject.SetActive(false);
@@ -50,9 +51,6 @@ namespace LastBreakthrought.UI.Inventory
                     UpdateChildrenScale();
                 });
         }
-
-        public void OnNewItemAdded(Transform newItem) =>
-            newItem.localScale = _isMenuOpen ? Vector3.one : Vector3.zero;
 
         public void UpdateChildrenScale()
         {
@@ -81,6 +79,11 @@ namespace LastBreakthrought.UI.Inventory
         }
 
         private void CheckIfNeedToBeClose(OnRobotMenuOpenedSignal signal)
+        {
+            if (_isMenuOpen)
+                Close();
+        }
+        private void CheckIfNeedToBeClose(OnMapMenuOpenedSignal signal)
         {
             if (_isMenuOpen)
                 Close();

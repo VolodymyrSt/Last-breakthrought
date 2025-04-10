@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.LastBreakthrought.UI.Massage
+namespace LastBreakthrought.Infrustructure.Services.Massage
 {
     public class MassageView : MonoBehaviour
     {

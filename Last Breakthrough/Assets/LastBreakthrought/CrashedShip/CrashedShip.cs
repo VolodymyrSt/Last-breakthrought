@@ -1,5 +1,8 @@
-﻿using LastBreakthrought.Logic.ShipMaterial;
+﻿using LastBreakthrought.Infrustructure.Services.Massage;
+using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
+using LastBreakthrought.UI.Map;
+using LastBreakthrought.UI.Other.Marker;
 using LastBreakthrought.UI.Windows.CrashedShipWindow;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,15 +14,23 @@ namespace LastBreakthrought.CrashedShip
     public class CrashedShip : MonoBehaviour, ICrashedShip
     {
         private const float DESCTRUCTION_TIME = 5f;
+
+        [Header("Setting:")]
         [SerializeField] private ShipRarity _rarity;
         [SerializeField] private int _maxNumberOfMaterialDiversity;
         [SerializeField] private CrashedShipWindowHandler _crashedShipWindowHandler;
 
         private CrashedShipsContainer _shipsContainer;
         private ShipMaterialGenerator _shipMaterialGenerator;
+        private MapMenuPanelHandler _mapMenuPanel;
+        private ICrashedShipMarker _marker;
+        private IMassageHandlerService _massageHandler;
 
         public List<ShipMaterialEntity> Materials { get; private set; } = new ();
         public List<ShipMaterialEntity> MinedMaterials { get; private set; } = new ();
+
+        private List<ShipMaterialEntity> _materials;
+        private bool _isMarked = false;
 
         private void OnValidate()
         {
@@ -30,16 +41,20 @@ namespace LastBreakthrought.CrashedShip
         }
 
         [Inject]
-        private void Construct(CrashedShipsContainer shipsContainer, ShipMaterialGenerator materialGenerator)
+        private void Construct(CrashedShipsContainer shipsContainer, ShipMaterialGenerator materialGenerator, MapMenuPanelHandler mapMenuPanel, IMassageHandlerService massageHandler)
         {
             _shipsContainer = shipsContainer;
             _shipMaterialGenerator = materialGenerator;
+            _mapMenuPanel = mapMenuPanel;
+            _massageHandler = massageHandler;
         }
 
         public void OnInitialized()
         {
             _shipsContainer.CrashedShips.Add(this);
             Materials = _shipMaterialGenerator.GenerateShipMaterials(_rarity, _maxNumberOfMaterialDiversity);
+
+            _materials = new List<ShipMaterialEntity>(Materials);
         }
 
         private void Update()
@@ -73,11 +88,25 @@ namespace LastBreakthrought.CrashedShip
         public void RemoveMinedMaterialView() => 
             _crashedShipWindowHandler.RemoveMinedMaterialFromWindow();
 
+        public void AddItselfAsMarker()
+        {
+            if (!_isMarked)
+            {
+                _isMarked = true;
+                _marker = _mapMenuPanel.Add(this);
+            }
+            else
+                _massageHandler.ShowMassage("This ship is already marked");
+        }
+
         public IEnumerator DestroySelf()
         {
             yield return new WaitForSecondsRealtime(DESCTRUCTION_TIME);
             _shipsContainer.CrashedShips.Remove(this);
+            _marker?.SelfDestroy();
             Destroy(gameObject);
         }
+
+        public List<ShipMaterialEntity> GetMaterialsForMarker() => _materials;
     }
 }

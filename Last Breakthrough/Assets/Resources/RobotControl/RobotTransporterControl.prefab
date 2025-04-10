@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.7882353, b: 0.7882353, a: 1}
+    m_HighlightedColor: {r: 0.7529412, g: 0.99215686, b: 0.8039216, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.7882353, b: 0.7882353, a: 1}
+    m_HighlightedColor: {r: 0.7529412, g: 0.99215686, b: 0.8039216, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.7882353, b: 0.7882353, a: 1}
+    m_HighlightedColor: {r: 0.7529412, g: 0.99215686, b: 0.8039216, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1285,15 +1285,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battarySlider: {fileID: 6667034802834996980}
+  _healthSlider: {fileID: 2694545748947764050}
   _followButton: {fileID: 203841958362242838}
   _homeButton: {fileID: 3967407042257631186}
   _doWorkButton: {fileID: 8096543550718873323}
-  _diselectedColor:
-    serializedVersion: 2
-    rgba: 4291423999
-  _selectedColor:
-    serializedVersion: 2
-    rgba: 4291166151
 --- !u!1 &3834300273666394211
 GameObject:
   m_ObjectHideFlags: 0

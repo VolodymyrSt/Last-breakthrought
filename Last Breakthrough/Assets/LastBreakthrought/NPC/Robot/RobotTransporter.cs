@@ -57,6 +57,12 @@ namespace LastBreakthrought.NPC.Robot
             StateMachine.AddTransition(RobotWanderingState, RobotFollowingPlayerState, () => IsFollowingState);
             StateMachine.AddTransition(RobotFollowingPlayerState, RobotWanderingState, () => IsWanderingState);
 
+            StateMachine.AddTransition(_robotLoadingUpMaterialsState, RobotDestroyedState, () => IsRobotDestroyed);
+            StateMachine.AddTransition(_robotTransportingMaterialsState, RobotDestroyedState, () => IsRobotDestroyed);
+
+            StateMachine.AddTransition(RobotDestroyedState, _robotLoadingUpMaterialsState, () => CrashedShip != null && !HasLoadedMaterials);
+            StateMachine.AddTransition(RobotDestroyedState, _robotTransportingMaterialsState, () => !IsRobotDestroyed && HasLoadedMaterials);
+
             StateMachine.EnterInState(RobotWanderingState);
         }
 
@@ -64,7 +70,10 @@ namespace LastBreakthrought.NPC.Robot
         {
             if (CrashedShip != null)
             {
-                MassageHandler.ShowMassage("Robot is already transporting");
+                if (IsRobotDestroyed)
+                    MassageHandler.ShowMassage("Robot is destroyed");
+                else
+                    MassageHandler.ShowMassage("Robot is already transporting");
                 return;
             }
 

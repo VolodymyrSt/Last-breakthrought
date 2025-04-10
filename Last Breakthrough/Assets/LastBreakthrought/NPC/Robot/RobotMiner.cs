@@ -1,6 +1,7 @@
 ﻿using LastBreakthrought.CrashedShip;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Logic.ChargingPlace;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.NPC.Robot.States;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,13 +37,19 @@ namespace LastBreakthrought.NPC.Robot
             StateMachine.AddTransition(RobotWanderingState, RobotFollowingPlayerState, () => IsFollowingState);
             StateMachine.AddTransition(RobotFollowingPlayerState, RobotWanderingState, () => IsWanderingState);
 
+            StateMachine.AddTransition(_robotMiningState, RobotDestroyedState, () => IsRobotDestroyed);
+            StateMachine.AddTransition(RobotDestroyedState, _robotMiningState, () => !IsRobotDestroyed && CrashedShip != null);
+
             StateMachine.EnterInState(RobotWanderingState);
         }
         public override void DoWork()
         {
             if (CrashedShip != null)
             {
-                MassageHandler.ShowMassage("Robot is already minning");
+                if (IsRobotDestroyed)
+                    MassageHandler.ShowMassage("Robot is destroyed");
+                else
+                    MassageHandler.ShowMassage("Robot is already minning");
                 return;
             }
 

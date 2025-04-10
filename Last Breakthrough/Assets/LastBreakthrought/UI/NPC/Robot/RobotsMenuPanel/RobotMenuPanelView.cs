@@ -27,6 +27,7 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         {
             _openClosedRobotsMenuButton.onClick.AddListener(() => PerformOpenAndClose());
             _eventBus.SubscribeEvent<OnInventoryMenuOpenedSignal>(CheckIfNeedToBeClose);
+            _eventBus.SubscribeEvent<OnMapMenuOpenedSignal>(CheckIfNeedToBeClose);
 
             _root.localScale = Vector3.zero;
             _root.gameObject.SetActive(false);
@@ -78,6 +79,12 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         }
 
         private void CheckIfNeedToBeClose(OnInventoryMenuOpenedSignal signal)
+        {
+            if (_isMenuOpen)
+                Close();
+        }
+
+        private void CheckIfNeedToBeClose(OnMapMenuOpenedSignal signal)
         {
             if (_isMenuOpen)
                 Close();

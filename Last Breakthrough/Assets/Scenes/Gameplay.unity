@@ -545,7 +545,7 @@ PrefabInstance:
       objectReference: {fileID: 1184303542}
     - target: {fileID: 2279221801457980021, guid: fdb8cb4dbf64f1f49a19265ad0c498ed, type: 3}
       propertyPath: m_VersionIndex
-      value: 5428
+      value: 5491
       objectReference: {fileID: 0}
     - target: {fileID: 3098730640767662630, guid: fdb8cb4dbf64f1f49a19265ad0c498ed, type: 3}
       propertyPath: m_Mesh
@@ -3218,6 +3218,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1640414363}
+    - target: {fileID: 4038241092573339507, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_VersionIndex
+      value: 4858
+      objectReference: {fileID: 0}
     - target: {fileID: 8432361503821651646, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_LocalScale.x
       value: 4.5
@@ -3230,6 +3234,18 @@ PrefabInstance:
       propertyPath: _windowHandler
       value: 
       objectReference: {fileID: 2038110179}
+    - target: {fileID: 8801299576575021029, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _detactionZoneRadious
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801299576575021029, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _activationZoneRadious
+      value: 5.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990642432767178260, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Radius
+      value: 5.625
+      objectReference: {fileID: 0}
     - target: {fileID: 9222179623648291438, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_Name
       value: InteractionZone
@@ -4014,6 +4030,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 766940640}
+    - target: {fileID: 4038241092573339507, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_VersionIndex
+      value: 4858
+      objectReference: {fileID: 0}
     - target: {fileID: 8432361503821651646, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -4026,6 +4046,18 @@ PrefabInstance:
       propertyPath: _windowHandler
       value: 
       objectReference: {fileID: 358027210}
+    - target: {fileID: 8801299576575021029, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _detactionZoneRadious
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801299576575021029, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: _activationZoneRadious
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990642432767178260, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
+      propertyPath: m_Radius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9222179623648291438, guid: f5e78a944750efd4d9e53b32713fc5d1, type: 3}
       propertyPath: m_Name
       value: InteractionZone
@@ -7208,7 +7240,7 @@ PrefabInstance:
       objectReference: {fileID: 1899171575}
     - target: {fileID: 5592661462035660319, guid: 61a2c2ca316c21b4ebce27c7315015aa, type: 3}
       propertyPath: m_VersionIndex
-      value: 4888
+      value: 4951
       objectReference: {fileID: 0}
     - target: {fileID: 5618843281159339535, guid: 61a2c2ca316c21b4ebce27c7315015aa, type: 3}
       propertyPath: m_LocalPosition.x

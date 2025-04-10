@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace LastBreakthrought.Infrustructure.AssetManagment
 {
@@ -18,6 +17,8 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
 
         public static string RobotMinerControlPath = "RobotControl/RobotMinerControl";
         public static string RobotTransporterControlPath = "RobotControl/RobotTransporterControl";
+
+        public static string CrashedShipMarker = "CrashedShips/Marker/CrashedShipMarker";
 
         public static string GetRandomEnemyPath()
         {

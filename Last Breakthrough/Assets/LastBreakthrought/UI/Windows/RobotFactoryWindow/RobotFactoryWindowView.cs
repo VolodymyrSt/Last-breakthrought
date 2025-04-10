@@ -1,4 +1,5 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
+using LastBreakthrought.Logic.ShipDetail;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -15,11 +16,11 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
         [SerializeField] private RectTransform _neededDetailsForMinerCreateContainer;
         [SerializeField] private RectTransform _neededDetailsForTransporterCreateContainer;
 
-        private ShipDetailUIFactory _shipDetailUIFactory;
+        private ShipDetailsGeneratorUI _shipDetailsGeneratorUI;
 
         [Inject]
-        private void Construct(ShipDetailUIFactory shipDetailUIFactory) => 
-            _shipDetailUIFactory = shipDetailUIFactory;
+        private void Construct(ShipDetailsGeneratorUI shipDetailsGeneratorUI) =>
+            _shipDetailsGeneratorUI = shipDetailsGeneratorUI;
 
         public override void Initialize()
         {
@@ -29,22 +30,16 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             _createRobotTransporterButton.onClick.AddListener(() =>
                 Handler.CreateTransporter());
 
-            InitNeededDetailsForCreatingRobots();
+            GenerateRequiredDetailsForCreatingRobots();
         }
 
-        private void InitNeededDetailsForCreatingRobots()
+        private void GenerateRequiredDetailsForCreatingRobots()
         {
-            foreach (var neededDetail in Handler.RobotFactoryMachine.GetDetailsToCreateMiner())
-            {
-                var neededDitalView = _shipDetailUIFactory.SpawnAt(_neededDetailsForMinerCreateContainer);
-                neededDitalView.Init(neededDetail);
-            }
+            var requiredDetailForMiner = Handler.RobotFactoryMachine.GetDetailsToCreateMiner();
+            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetailForMiner, _neededDetailsForMinerCreateContainer);
 
-            foreach (var neededDetail in Handler.RobotFactoryMachine.GetDetailsToCreateTransporter())
-            {
-                var neededDitalView = _shipDetailUIFactory.SpawnAt(_neededDetailsForTransporterCreateContainer);
-                neededDitalView.Init(neededDetail);
-            }
+            var requiredDetailForTransporter = Handler.RobotFactoryMachine.GetDetailsToCreateTransporter();
+            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetailForTransporter, _neededDetailsForTransporterCreateContainer);
         }
 
         public override void Dispose()

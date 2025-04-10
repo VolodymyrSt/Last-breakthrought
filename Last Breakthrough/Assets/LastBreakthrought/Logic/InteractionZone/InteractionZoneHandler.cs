@@ -5,6 +5,7 @@ namespace LastBreakthrought.Logic.InteractionZone
 {
     public class InteractionZoneHandler : MonoBehaviour
     {
+        [Header("Base")]
         [SerializeField] private InterationZoneView _interationZoneView;
         [SerializeField] private WindowHandlerBase _windowHandler;
 
@@ -16,11 +17,16 @@ namespace LastBreakthrought.Logic.InteractionZone
             _interationZoneView.HideOnInit();
         }
 
-        private void HidePopup() => 
-            _windowHandler.DeactivateWindow();
+        public void Disactivate()
+        {
+            gameObject.SetActive(false);
+            HidePopup();
+        }
 
-        private void ShowPopup() => 
-            _windowHandler.ActivateWindow();
+        public void Activate() => gameObject.SetActive(true);
+
+        private void HidePopup() =>  _windowHandler.DeactivateWindow();
+        private void ShowPopup() =>  _windowHandler.ActivateWindow();
 
         private void OnDisable()
         {

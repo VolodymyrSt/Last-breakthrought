@@ -9,7 +9,7 @@ namespace LastBreakthrought.Logic.ShipDetail
     {
         public List<DetailEntity> NeededDetails = new();
 
-        public List<ShipDetailEntity> GetNeededShipDetails()
+        public List<ShipDetailEntity> GetRequiredShipDetails()
         {
             List <ShipDetailEntity> neededDetails = new ();
 

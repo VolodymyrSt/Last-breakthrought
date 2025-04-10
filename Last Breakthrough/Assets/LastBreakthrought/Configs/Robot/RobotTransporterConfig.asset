@@ -16,3 +16,4 @@ MonoBehaviour:
   <GeneralSpeed>k__BackingField: 2.5
   <MaxBattaryCapacity>k__BackingField: 150
   <CapacityLimit>k__BackingField: 3
+  <MaxHealth>k__BackingField: 100

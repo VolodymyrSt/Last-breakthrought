@@ -10,7 +10,6 @@ using LastBreakthrought.UI.PlayerStats;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.CrashedShip;
 using LastBreakthrought.Infrustructure.AssetManagment;
-using System.Collections.Generic;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.NPC.Enemy.Factory;
@@ -23,7 +22,9 @@ using LastBreakthrought.Logic.MaterialRecycler;
 using LastBreakthrought.UI.Inventory;
 using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
 using LastBreakthrought.Logic.RobotFactory;
-using Assets.LastBreakthrought.UI.Massage;
+using LastBreakthrought.UI.Map;
+using LastBreakthrought.UI.Other.Marker;
+using LastBreakthrought.Infrustructure.Services.Massage;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -78,6 +79,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindRobotControlsUIFactory();
             BindEnemyFactory();
             BindRobotsFactory();
+            BindCrashedShipMarkerFactory();
 
             BindPlayer();
             BindCamera();
@@ -88,12 +90,15 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindGamePlayHub();
             BindJoyStick();
 
+            BindShipDetailsGeneratorUI();
+
             //UI
             BindHomePoint();
             BindHomeDistanceInformer();
             BindRobotMenuPanel();
             BindDetailInventoryMenuPanel();
             BindMassageHandler();
+            BindMapMenuPanel();
 
             BindLight();
             BindTimer();
@@ -123,6 +128,9 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindDetailsContainer() => 
             Container.Bind<DetailsContainer>().AsSingle();
 
+        private void BindShipDetailsGeneratorUI() =>
+            Container.Bind<ShipDetailsGeneratorUI>().AsSingle();
+
         private void BindNavMeshSurface()
         {
             Container.Resolve<Game>().NavMeshSurface = _navMeshSurface;
@@ -132,12 +140,15 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
 
+        private void BindCrashedShipMarkerFactory() =>
+            Container.Bind<CrashedShipMarkerFactoryUI>().AsSingle();
+
         private void BindMassageHandler()
         {
             var massageView = _gameplayHub.GetComponentInChildren<MassageView>();
             Container.Bind<MassageView>().FromInstance(massageView).AsSingle();
 
-            Container.Bind<MassageHandler>().AsSingle();
+            Container.Bind<IMassageHandlerService>().To<MassageHandlerService>().AsSingle();
         }
 
         private void BindRobotsFactory()
@@ -194,6 +205,14 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<TimerView>().FromInstance(timerView).AsSingle();
 
             Container.BindInterfacesAndSelfTo<TimerController>().AsSingle().NonLazy();
+        }
+
+        private void BindMapMenuPanel()
+        {
+            var mapView = _gameplayHub.GetComponentInChildren<MapMenuPanelView>();
+            Container.Bind<MapMenuPanelView>().FromInstance(mapView).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<MapMenuPanelHandler>().AsSingle().NonLazy();
         }
 
         private void BindHomeDistanceInformer()

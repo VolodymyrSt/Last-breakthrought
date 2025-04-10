@@ -1,4 +1,4 @@
-using Assets.LastBreakthrought.UI.Massage;
+using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
@@ -29,7 +29,7 @@ namespace LastBreakthrought.Logic.RobotFactory
         private RobotMenuPanelHandler _robotMenuPanelHandler;
         private DetailsContainer _detailsContainer;
         private DetailInventoryMenuPanelHandler _detailInventory;
-        private MassageHandler _massageHandler;
+        private IMassageHandlerService _massageHandler;
 
         private int _currentMinersCount = 0;
         private int _currentTransportersCount = 0;
@@ -37,7 +37,7 @@ namespace LastBreakthrought.Logic.RobotFactory
         [Inject]
         private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory,
             RobotMenuPanelHandler robotMenuPanelHandler, DetailsContainer detailsContainer
-            , DetailInventoryMenuPanelHandler detailInventory, MassageHandler massage)
+            , DetailInventoryMenuPanelHandler detailInventory, IMassageHandlerService massage)
         {
             _robotMinerFactory = robotFactory;
             _robotTransporterFactory = robotTransporterFactory;
@@ -88,18 +88,18 @@ namespace LastBreakthrought.Logic.RobotFactory
         }
 
         public List<ShipDetailEntity> GetDetailsToCreateMiner() =>
-            _neededDetailsToCreateMiner.GetNeededShipDetails();
+            _neededDetailsToCreateMiner.GetRequiredShipDetails();
 
         public List<ShipDetailEntity> GetDetailsToCreateTransporter() =>
-            _neededDetailsToCreateTransporter.GetNeededShipDetails();
+            _neededDetailsToCreateTransporter.GetRequiredShipDetails();
 
         private void CreateMiner()
         {
             var robotMiner = _robotMinerFactory.CreateRobot(_robotSpawnPoint.position, _robotSpawnPoint,
                                     _robotWanderingZone, _chargingPlaces);
 
-            _robotMenuPanelHandler.AddRobotMinerControlUI(robotMiner.GetRobotData(),
-                robotMiner.GetRobotBattary(), robotMiner.SetFollowingPlayerState
+            _robotMenuPanelHandler.AddRobotMinerControlUI(robotMiner.GetRobotData(), 
+                robotMiner.GetRobotBattary(), robotMiner.GetRobotHealth(), robotMiner.SetFollowingPlayerState
                 , robotMiner.SetWanderingState, mineAction: robotMiner.DoWork);
 
             _currentMinersCount++;
@@ -111,7 +111,7 @@ namespace LastBreakthrought.Logic.RobotFactory
                                     _robotSpawnPoint, _robotWanderingZone, _chargingPlaces);
 
             _robotMenuPanelHandler.AddRobotTransporterControlUI(robotTransporter.GetRobotData(),
-                robotTransporter.GetRobotBattary(), robotTransporter.SetFollowingPlayerState,
+                robotTransporter.GetRobotBattary(), robotTransporter.GetRobotHealth(), robotTransporter.SetFollowingPlayerState,
                 robotTransporter.SetWanderingState, transportAction: robotTransporter.DoWork);
 
             _currentTransportersCount++;

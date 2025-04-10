@@ -1,4 +1,5 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
+using LastBreakthrought.Logic.ShipDetail;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -13,26 +14,18 @@ namespace LastBreakthrought.UI.Windows
         [Header("Container")]
         [SerializeField] private RectTransform _neededDetailsForRocketContainer;
 
-        private ShipDetailUIFactory _shipDetailUIFactory;
+        private ShipDetailsGeneratorUI _shipDetailsGeneratorUI;
 
         [Inject]
-        private void Construct(ShipDetailUIFactory shipDetailUIFactory) =>
-            _shipDetailUIFactory = shipDetailUIFactory;
+        private void Construct(ShipDetailsGeneratorUI shipDetailsGeneratorUI) =>
+            _shipDetailsGeneratorUI = shipDetailsGeneratorUI;
 
         public override void Initialize()
         {
             _repairButton.onClick.AddListener(() => Handler.Rocket.TryToRepair());
 
-            InitNeededDetailsForRocket();
-        }
-
-        private void InitNeededDetailsForRocket()
-        {
-            foreach (var neededDetail in Handler.Rocket.GetDetailsToRepairRocket())
-            {
-                var neededDitalView = _shipDetailUIFactory.SpawnAt(_neededDetailsForRocketContainer);
-                neededDitalView.Init(neededDetail);
-            }
+            var requiredDetails = Handler.Rocket.GetDetailsToRepairRocket();
+            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetails, _neededDetailsForRocketContainer);
         }
 
         public override void Dispose() => 

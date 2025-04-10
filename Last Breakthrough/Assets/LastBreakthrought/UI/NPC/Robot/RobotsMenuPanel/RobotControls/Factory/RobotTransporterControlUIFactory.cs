@@ -15,10 +15,10 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel.RobotControls.Factory
             AssetProvider.Instantiate<RobotControlHandlerUI>(AssetPath.RobotTransporterControlPath, at, parent);
 
         public RobotControlHandlerUI Create(RectTransform parent, RobotConfigSO robotData, RobotBattary battary,
-            Action followAction, Action goHomeAction, Action transportAction)
+           RobotHealth robotHealth, Action followAction, Action goHomeAction, Action transportAction)
         {
             var robotControl = Create(Vector3.zero, parent);
-            robotControl.Init(robotData, battary, followAction, goHomeAction, transportAction);
+            robotControl.Init(robotData, battary, robotHealth, followAction, goHomeAction, transportAction);
             return robotControl;
         }
     }

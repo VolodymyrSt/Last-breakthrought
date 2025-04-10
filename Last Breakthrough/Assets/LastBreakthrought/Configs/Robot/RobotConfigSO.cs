@@ -1,4 +1,3 @@
-using LastBreakthrought.Configs.Enemy;
 using System;
 using UnityEngine;
 
@@ -11,6 +10,7 @@ namespace LastBreakthrought.Configs.Robot
         [field: SerializeField, Range(0, 5)] public float GeneralSpeed { get; private set; }
         [field: SerializeField, Range(0, 150)] public float MaxBattaryCapacity { get; private set; }
         [field: SerializeField, Range(0, 10)] public float CapacityLimit { get; private set; }
+        [field: SerializeField, Range(1, 100)] public float MaxHealth { get; private set; }
     }
 }
 
