@@ -1,6 +1,8 @@
 ﻿using LastBreakthrought.CrashedShip;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.MaterialRecycler;
+using LastBreakthrought.Logic.Mechanisms;
+using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.NPC.Robot.States;
 using System.Collections.Generic;
@@ -83,6 +85,9 @@ namespace LastBreakthrought.NPC.Robot
 
             StateMachine.EnterInState(_robotLoadingUpMaterialsState);
         }
+
+        public override List<MechanismEntity> GetRequiredMechanismsToRepair() =>
+            RequireMechanismsProvider.Holder.RepairRobotTransporter.GetRequiredShipDetails();
 
         public void ClearCrashedShip() => CrashedShip = null;
 

@@ -1,11 +1,9 @@
-using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
-using NUnit.Framework;
 using System;
 using UnityEngine;
 
 namespace LastBreakthrought.Logic.ShipDetail
 {
-    [CreateAssetMenu(fileName = "New Material", menuName = "DelailForShip")]
+    [CreateAssetMenu(fileName = "New Detail", menuName = "DetailForShip")]
     public class ShipDetailSO : ScriptableObject
     {
         [field: SerializeField] public string Id { get; private set; }

@@ -1,4 +1,5 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
+using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,20 +13,20 @@ namespace LastBreakthrought.UI.Windows
         [SerializeField] private Button _repairButton;
 
         [Header("Container")]
-        [SerializeField] private RectTransform _neededDetailsForRocketContainer;
+        [SerializeField] private RectTransform _neededMechanismsForRocketContainer;
 
-        private ShipDetailsGeneratorUI _shipDetailsGeneratorUI;
+        private MechanismsGeneratorUI _mechanismsGeneratorUI;
 
         [Inject]
-        private void Construct(ShipDetailsGeneratorUI shipDetailsGeneratorUI) =>
-            _shipDetailsGeneratorUI = shipDetailsGeneratorUI;
+        private void Construct(MechanismsGeneratorUI mechanismsGeneratorUI) =>
+            _mechanismsGeneratorUI = mechanismsGeneratorUI;
 
         public override void Initialize()
         {
             _repairButton.onClick.AddListener(() => Handler.Rocket.TryToRepair());
 
-            var requiredDetails = Handler.Rocket.GetDetailsToRepairRocket();
-            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetails, _neededDetailsForRocketContainer);
+            var requiredMechanisms = Handler.Rocket.GetDMechanismsToRepairRocket();
+            _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanisms, _neededMechanismsForRocketContainer);
         }
 
         public override void Dispose() => 

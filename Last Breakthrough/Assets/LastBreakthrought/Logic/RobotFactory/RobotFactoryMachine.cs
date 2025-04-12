@@ -1,5 +1,6 @@
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
+using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
 using LastBreakthrought.UI.Inventory;
@@ -20,31 +21,29 @@ namespace LastBreakthrought.Logic.RobotFactory
         [SerializeField] private BoxCollider _robotWanderingZone;
         [SerializeField] private List<RobotChargingPlace> _chargingPlaces;
 
-        [Header("DetailsForRobotsCreating:")]
-        [SerializeField] private RequireDetailsForCreating _neededDetailsToCreateMiner;
-        [SerializeField] private RequireDetailsForCreating _neededDetailsToCreateTransporter;
-
         private RobotMinerFactory _robotMinerFactory;
         private RobotTransporterFactory _robotTransporterFactory;
         private RobotMenuPanelHandler _robotMenuPanelHandler;
-        private DetailsContainer _detailsContainer;
-        private DetailInventoryMenuPanelHandler _detailInventory;
+        private MechanismsContainer _mechanismsContainer;
+        private InventoryMenuPanelHandler _inventory;
         private IMassageHandlerService _massageHandler;
+        private RequireMechanismsProvider _requireMechanismsProvider;
 
         private int _currentMinersCount = 0;
         private int _currentTransportersCount = 0;
 
         [Inject]
         private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory,
-            RobotMenuPanelHandler robotMenuPanelHandler, DetailsContainer detailsContainer
-            , DetailInventoryMenuPanelHandler detailInventory, IMassageHandlerService massage)
+            RobotMenuPanelHandler robotMenuPanelHandler, MechanismsContainer mechanismsContainer
+            , InventoryMenuPanelHandler detailInventory, IMassageHandlerService massage, RequireMechanismsProvider requireMechanismsProvider)
         {
             _robotMinerFactory = robotFactory;
             _robotTransporterFactory = robotTransporterFactory;
             _robotMenuPanelHandler = robotMenuPanelHandler;
-            _detailsContainer = detailsContainer;
-            _detailInventory = detailInventory;
+            _mechanismsContainer = mechanismsContainer;
+            _inventory = detailInventory;
             _massageHandler = massage;
+            _requireMechanismsProvider = requireMechanismsProvider;
         }
 
         public void CreateStartedRobotsAtTheBeginning()
@@ -57,10 +56,10 @@ namespace LastBreakthrought.Logic.RobotFactory
         {
             if (_currentMinersCount < MAX_MINERS_COUNT)
             {
-                if (_detailsContainer.IsSearchedDetailsAllFound(GetDetailsToCreateMiner()))
+                if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateMiner()))
                 {
-                    _detailsContainer.GiveDetails(GetDetailsToCreateMiner());
-                    _detailInventory.UpdateInventoryDetails(GetDetailsToCreateMiner());
+                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateMiner());
+                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateMiner());
                     CreateMiner();
                 }
                 else
@@ -74,10 +73,10 @@ namespace LastBreakthrought.Logic.RobotFactory
         {
             if (_currentTransportersCount < MAX_TRANSPORTERS_COUNT)
             {
-                if (_detailsContainer.IsSearchedDetailsAllFound(GetDetailsToCreateTransporter()))
+                if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateTransporter()))
                 {
-                    _detailsContainer.GiveDetails(GetDetailsToCreateTransporter());
-                    _detailInventory.UpdateInventoryDetails(GetDetailsToCreateTransporter());
+                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateTransporter());
+                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateTransporter());
                     CreateTransporter();
                 }
                 else
@@ -87,11 +86,11 @@ namespace LastBreakthrought.Logic.RobotFactory
                 _massageHandler.ShowMassage("You can only have three transporters");
         }
 
-        public List<ShipDetailEntity> GetDetailsToCreateMiner() =>
-            _neededDetailsToCreateMiner.GetRequiredShipDetails();
+        public List<MechanismEntity> GetMechanismsToCreateMiner() =>
+            _requireMechanismsProvider.Holder.CreateRobotMiner.GetRequiredShipDetails();
 
-        public List<ShipDetailEntity> GetDetailsToCreateTransporter() =>
-            _neededDetailsToCreateTransporter.GetRequiredShipDetails();
+        public List<MechanismEntity> GetMechanismsToCreateTransporter() =>
+            _requireMechanismsProvider.Holder.CreateRobotTransporter.GetRequiredShipDetails();
 
         private void CreateMiner()
         {

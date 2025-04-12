@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Logic.ShipDetail;
+﻿using LastBreakthrought.Logic.Mechanisms;
+using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,19 +10,19 @@ namespace LastBreakthrought.UI.RobotWindow
     public class RobotWindowView : WindowView<RobotWindowHandler>
     {
         [Header("UI")]
-        [SerializeField] private RectTransform _detailsContainerForRepair;
+        [SerializeField] private RectTransform _mechanismsContainerForRepair;
         [SerializeField] private Button _repairButton;
 
-        private ShipDetailsGeneratorUI _shipDetailsGeneratorUI;
+        private MechanismsGeneratorUI _mechanismsGeneratorUI;
 
         [Inject]
-        private void Construct(ShipDetailsGeneratorUI shipDetailsGeneratorUI) =>
-            _shipDetailsGeneratorUI = shipDetailsGeneratorUI;
+        private void Construct(MechanismsGeneratorUI mechanismsGeneratorUI) =>
+            _mechanismsGeneratorUI = mechanismsGeneratorUI;
 
         public override void Initialize()
         {
-            var detailsToRepairRobot = Handler.Robot.GetRequiredDetailsToRepair();
-            _shipDetailsGeneratorUI.GenerateRequireDetails(detailsToRepairRobot, _detailsContainerForRepair);
+            var mechanimesToRepairRobot = Handler.Robot.GetRequiredMechanismsToRepair();
+            _mechanismsGeneratorUI.GenerateRequireMechanisms(mechanimesToRepairRobot, _mechanismsContainerForRepair);
 
             _repairButton.onClick.AddListener(() => Handler.Robot.TryToRepair());
         }   

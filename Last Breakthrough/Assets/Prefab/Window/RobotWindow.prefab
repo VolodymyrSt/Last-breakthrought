@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2343384988423426402}
   - component: {fileID: 2415317710712713196}
   m_Layer: 5
-  m_Name: DetailsContainer
+  m_Name: MechanismsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Handler>k__BackingField: {fileID: 1269270148444369611}
-  _detailsContainerForRepair: {fileID: 2343384988423426402}
+  _mechanismsContainerForRepair: {fileID: 2343384988423426402}
   _repairButton: {fileID: 9029834472069642355}
 --- !u!224 &3600182893359057639 stripped
 RectTransform:

@@ -9,10 +9,10 @@ namespace LastBreakthrought.Logic.MaterialRecycler
     public class RecycleMachine : MonoBehaviour
     {
         private DetailsContainer _detailsContainer;
-        private DetailInventoryMenuPanelHandler _detailInventory;
+        private InventoryMenuPanelHandler _detailInventory;
 
         [Inject]
-        private void Construct(DetailsContainer shipDetailsContainer, DetailInventoryMenuPanelHandler detailInventoryMenuPanelHandler)
+        private void Construct(DetailsContainer shipDetailsContainer, InventoryMenuPanelHandler detailInventoryMenuPanelHandler)
         {
             _detailsContainer = shipDetailsContainer;
             _detailInventory = detailInventoryMenuPanelHandler;

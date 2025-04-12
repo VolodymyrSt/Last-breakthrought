@@ -20,6 +20,10 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
 
         public static string CrashedShipMarker = "CrashedShips/Marker/CrashedShipMarker";
 
+        public static string MechanismPath = "Mechanism/Mechanism";
+
+        public static string MechanismCraftPath = "CraftForCraftMachine/MechanismCraft";
+
         public static string GetRandomEnemyPath()
         {
             var randomPath = UnityEngine.Random.Range(1, 3);

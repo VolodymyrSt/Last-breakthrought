@@ -897,7 +897,6 @@ MonoBehaviour:
   Animator: {fileID: 8850560526485942968}
   _zoneHandler: {fileID: 6507227299919132916}
   _collider: {fileID: 83815495718937007}
-  _requireDetailsToRepair: {fileID: 11400000, guid: 608126c785a20c74ab64c832008305ce, type: 2}
 --- !u!1 &7348790355943264729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1342,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1456378716192124072}
     m_Modifications:
+    - target: {fileID: 204674110395990750, guid: 1de1daca5d7e36e499482c1cfc28cae4, type: 3}
+      propertyPath: _mechanismsContainerForRepair
+      value: 
+      objectReference: {fileID: 2075190991843376671}
     - target: {fileID: 1269270148444369611, guid: 1de1daca5d7e36e499482c1cfc28cae4, type: 3}
       propertyPath: <Robot>k__BackingField
       value: 
@@ -1436,6 +1439,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de1daca5d7e36e499482c1cfc28cae4, type: 3}
+--- !u!224 &2075190991843376671 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2343384988423426402, guid: 1de1daca5d7e36e499482c1cfc28cae4, type: 3}
+  m_PrefabInstance: {fileID: 4344266156754612093}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3302463940232256950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1269270148444369611, guid: 1de1daca5d7e36e499482c1cfc28cae4, type: 3}

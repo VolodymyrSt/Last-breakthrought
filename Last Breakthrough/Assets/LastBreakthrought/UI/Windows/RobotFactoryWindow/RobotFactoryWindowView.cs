@@ -1,4 +1,5 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
+using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,14 +14,14 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
         [SerializeField] private Button _createRobotTransporterButton;
 
         [Header("Containers")]
-        [SerializeField] private RectTransform _neededDetailsForMinerCreateContainer;
-        [SerializeField] private RectTransform _neededDetailsForTransporterCreateContainer;
+        [SerializeField] private RectTransform _neededMechanismsForMinerCreateContainer;
+        [SerializeField] private RectTransform _neededMechanismsForTransporterCreateContainer;
 
-        private ShipDetailsGeneratorUI _shipDetailsGeneratorUI;
+        private MechanismsGeneratorUI _mechanismsGeneratorUI;
 
         [Inject]
-        private void Construct(ShipDetailsGeneratorUI shipDetailsGeneratorUI) =>
-            _shipDetailsGeneratorUI = shipDetailsGeneratorUI;
+        private void Construct(MechanismsGeneratorUI mechanismsGeneratorUI) =>
+            _mechanismsGeneratorUI = mechanismsGeneratorUI;
 
         public override void Initialize()
         {
@@ -30,16 +31,16 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             _createRobotTransporterButton.onClick.AddListener(() =>
                 Handler.CreateTransporter());
 
-            GenerateRequiredDetailsForCreatingRobots();
+            GenerateRequiredMechanismsForCreatingRobots();
         }
 
-        private void GenerateRequiredDetailsForCreatingRobots()
+        private void GenerateRequiredMechanismsForCreatingRobots()
         {
-            var requiredDetailForMiner = Handler.RobotFactoryMachine.GetDetailsToCreateMiner();
-            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetailForMiner, _neededDetailsForMinerCreateContainer);
+            var requiredMechanismsForMiner = Handler.RobotFactoryMachine.GetMechanismsToCreateMiner();
+            _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanismsForMiner, _neededMechanismsForMinerCreateContainer);
 
-            var requiredDetailForTransporter = Handler.RobotFactoryMachine.GetDetailsToCreateTransporter();
-            _shipDetailsGeneratorUI.GenerateRequireDetails(requiredDetailForTransporter, _neededDetailsForTransporterCreateContainer);
+            var requiredMechanismsForTransporter = Handler.RobotFactoryMachine.GetMechanismsToCreateTransporter();
+            _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanismsForTransporter, _neededMechanismsForTransporterCreateContainer);
         }
 
         public override void Dispose()

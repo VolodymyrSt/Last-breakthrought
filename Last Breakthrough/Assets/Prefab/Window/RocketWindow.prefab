@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 1422213611198926408}
   - component: {fileID: 3932353116005344166}
   m_Layer: 5
-  m_Name: DetailContainerBacground
+  m_Name: MechanismsContainerBacground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Handler>k__BackingField: {fileID: 3468380275628976037}
   _repairButton: {fileID: 3187703211579637984}
-  _neededDetailsForRocketContainer: {fileID: 6230662669137611065}
+  _neededMechanismsForRocketContainer: {fileID: 6230662669137611065}
 --- !u!224 &6414168864389822236 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7039881795621900730, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}

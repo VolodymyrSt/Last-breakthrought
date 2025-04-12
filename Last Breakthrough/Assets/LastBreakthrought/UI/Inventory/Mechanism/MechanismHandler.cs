@@ -1,0 +1,42 @@
+using LastBreakthrought.Logic.Mechanisms;
+using UnityEngine;
+
+namespace LastBreakthrought.UI.Inventory.Mechanism
+{
+    public class MechanismHandler : MonoBehaviour
+    {
+        [SerializeField] private MechanismView _mechanismView;
+
+        private int _quantity;
+        public int Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                _mechanismView.SetQuantity(_quantity);
+            }
+        }
+
+        public MechanismEntity MechanismEntity { get; private set; }
+
+        public void Init(MechanismEntity mechanismEntity)
+        {
+            Quantity = mechanismEntity.Quantity;
+            MechanismEntity = mechanismEntity;
+
+            _mechanismView.SetQuantity(Quantity);
+            _mechanismView.SetImage(mechanismEntity.Data.Sprite);
+        }
+
+        public void UpdateView(MechanismEntity mechanismEntity)
+        {
+            MechanismEntity = mechanismEntity;
+
+            _mechanismView.SetImage(mechanismEntity.Data.Sprite);
+        }
+
+        public void SelfDesctroy() =>
+            Destroy(gameObject);
+    }
+}

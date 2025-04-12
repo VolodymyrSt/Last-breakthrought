@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using Zenject;
 
 namespace LastBreakthrought.Logic.ShipDetail
 {

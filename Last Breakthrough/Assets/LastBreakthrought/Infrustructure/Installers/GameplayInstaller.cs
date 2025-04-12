@@ -25,6 +25,9 @@ using LastBreakthrought.Logic.RobotFactory;
 using LastBreakthrought.UI.Map;
 using LastBreakthrought.UI.Other.Marker;
 using LastBreakthrought.Infrustructure.Services.Massage;
+using LastBreakthrought.UI.Inventory.Mechanism;
+using LastBreakthrought.Logic.Mechanisms;
+using LastBreakthrought.UI.CraftingMachine.Crafts;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -53,6 +56,10 @@ namespace LastBreakthrought.Infrustructure.Installers
         [Header("Materials")]
         [SerializeField] private ShipMaterialHolderSO _shipMaterialHolder;
 
+        [Header("Mechanism")]
+        [SerializeField] private MechanismHolderSO _mechanismHolderSO;
+        [SerializeField] private RequireMechanismHolderSO _requireMechanismHolderSO;
+
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
         [SerializeField] private Light _light;
@@ -80,17 +87,24 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindEnemyFactory();
             BindRobotsFactory();
             BindCrashedShipMarkerFactory();
+            BindMechanismCraftUIFactory();
+            BindMechanismUIFactory();
 
             BindPlayer();
             BindCamera();
 
             BindDetailsContainer();
+            BindMechanismsContainer();
             BindRecycleMachine();
 
             BindGamePlayHub();
             BindJoyStick();
 
             BindShipDetailsGeneratorUI();
+            BindRequireMechanismsProvider();
+
+            BindMechanismHolder();
+            BindMechanismsGeneratorUI();
 
             //UI
             BindHomePoint();
@@ -125,11 +139,23 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindRecycleMachine() => 
             Container.Bind<RecycleMachine>().FromInstance(_recycleMachine).AsSingle();
 
+        private void BindMechanismHolder() =>
+            Container.Bind<MechanismHolderSO>().FromInstance(_mechanismHolderSO).AsSingle();
+
         private void BindDetailsContainer() => 
             Container.Bind<DetailsContainer>().AsSingle();
 
+        private void BindMechanismsContainer() =>
+            Container.Bind<MechanismsContainer>().AsSingle();
+
+        private void BindRequireMechanismsProvider() =>
+            Container.Bind<RequireMechanismsProvider>().AsSingle().WithArguments(_requireMechanismHolderSO);
+
         private void BindShipDetailsGeneratorUI() =>
             Container.Bind<ShipDetailsGeneratorUI>().AsSingle();
+
+        private void BindMechanismsGeneratorUI() =>
+            Container.Bind<MechanismsGeneratorUI>().AsSingle();
 
         private void BindNavMeshSurface()
         {
@@ -139,6 +165,12 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
+
+        private void BindMechanismCraftUIFactory() =>
+            Container.Bind<MechanismCraftUIFactory>().AsSingle();
+
+        private void BindMechanismUIFactory() =>
+            Container.Bind<MechanismUIFactory>().AsSingle();
 
         private void BindCrashedShipMarkerFactory() =>
             Container.Bind<CrashedShipMarkerFactoryUI>().AsSingle();
@@ -233,10 +265,10 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindDetailInventoryMenuPanel()
         {
-            var view = _gameplayHub.GetComponentInChildren<DetailInventoryMenuPanelView>();
-            Container.Bind<DetailInventoryMenuPanelView>().FromInstance(view).AsSingle();
+            var view = _gameplayHub.GetComponentInChildren<InventoryMenuPanelView>();
+            Container.Bind<InventoryMenuPanelView>().FromInstance(view).AsSingle();
 
-            Container.BindInterfacesAndSelfTo<DetailInventoryMenuPanelHandler>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InventoryMenuPanelHandler>().AsSingle().NonLazy();
         }
 
         private void BindJoyStick()

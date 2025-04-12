@@ -2,6 +2,8 @@
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.InteractionZone;
+using LastBreakthrought.Logic.Mechanisms;
+using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.States;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,6 +61,9 @@ namespace LastBreakthrought.NPC.Robot
 
             StateMachine.EnterInState(_robotMiningState);
         }
+
+        public override List<MechanismEntity> GetRequiredMechanismsToRepair() =>
+            RequireMechanismsProvider.Holder.RepairRobotMiner.GetRequiredShipDetails();
 
         public void ClearCrashedShip() => 
             CrashedShip = null;

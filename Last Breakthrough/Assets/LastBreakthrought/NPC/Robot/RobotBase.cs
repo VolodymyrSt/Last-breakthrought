@@ -4,7 +4,7 @@ using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.InteractionZone;
-using LastBreakthrought.Logic.ShipDetail;
+using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.NPC.Robot.States;
 using LastBreakthrought.Player;
@@ -17,14 +17,13 @@ using Zenject;
 
 namespace LastBreakthrought.NPC.Robot
 {
-    public class RobotBase : MonoBehaviour, IRobot, IDamagable
+    public abstract class RobotBase : MonoBehaviour, IRobot, IDamagable
     {
         [Header("Base:")]
         [SerializeField] protected NavMeshAgent Agent;
         [SerializeField] protected Animator Animator;
         [SerializeField] private InteractionZoneHandler _zoneHandler;
         [SerializeField] private BoxCollider _collider;
-        [SerializeField] private RequireDetailsForCreating _requireDetailsToRepair;
 
         protected RobotBattary Battary;
         protected RobotHealth Health;
@@ -34,6 +33,7 @@ namespace LastBreakthrought.NPC.Robot
         protected RobotConfigSO RobotData;
         protected IEventBus EventBus;
         protected IMassageHandlerService MassageHandler;
+        protected RequireMechanismsProvider RequireMechanismsProvider;
 
         protected RobotWanderingState RobotWanderingState;
         protected RobotFollowingPlayerState RobotFollowingPlayerState;
@@ -41,8 +41,8 @@ namespace LastBreakthrought.NPC.Robot
         protected RobotDestroyedState RobotDestroyedState;
 
         private IConfigProviderService _configProvider;
-        private DetailsContainer _detailsContainer;
-        private DetailInventoryMenuPanelHandler _detailInventory;
+        private MechanismsContainer _mechanismsContainer;
+        private InventoryMenuPanelHandler _inventory;
         private List<RobotChargingPlace> _chargingPlaces;
 
         protected bool IsWanderingState { get; set; }
@@ -51,15 +51,17 @@ namespace LastBreakthrought.NPC.Robot
 
         [Inject]
         private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService,
-            IEventBus eventBus, IMassageHandlerService massageHandler, DetailsContainer detailsContainer, DetailInventoryMenuPanelHandler detailInventory)
+            IEventBus eventBus, IMassageHandlerService massageHandler, MechanismsContainer mechanismsContainer, InventoryMenuPanelHandler detailInventory,
+            RequireMechanismsProvider requireMechanismsProvider)
         {
             PlayerHandler = playerHandler;
             CoroutineRunner = coroutineRunner;
             EventBus = eventBus;
             _configProvider = configProviderService;
             MassageHandler = massageHandler;
-            _detailsContainer = detailsContainer;
-            _detailInventory = detailInventory;
+            _mechanismsContainer = mechanismsContainer;
+            _inventory = detailInventory;
+            RequireMechanismsProvider = requireMechanismsProvider;
         }
 
         public virtual void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
@@ -130,9 +132,6 @@ namespace LastBreakthrought.NPC.Robot
 
         public RobotHealth GetRobotHealth() => Health;
 
-        public List<ShipDetailEntity> GetRequiredDetailsToRepair() => 
-            _requireDetailsToRepair.GetRequiredShipDetails();
-
         public RobotChargingPlace FindAvelableCharingPlace()
         {
             foreach (var chargingPlace in _chargingPlaces)
@@ -142,14 +141,16 @@ namespace LastBreakthrought.NPC.Robot
             return null;
         }
 
+        public abstract List<MechanismEntity> GetRequiredMechanismsToRepair();
+
         public void TryToRepair()
         {
-            if (_detailsContainer.IsSearchedDetailsAllFound(GetRequiredDetailsToRepair()))
+            if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetRequiredMechanismsToRepair()))
             {
                 IsRobotDestroyed = false;
                 Health.FullRecover();
-                _detailsContainer.GiveDetails(GetRequiredDetailsToRepair());
-                _detailInventory.UpdateInventoryDetails(GetRequiredDetailsToRepair());
+                _mechanismsContainer.GiveMechanisms(GetRequiredMechanismsToRepair());
+                _inventory.UpdateInventoryMechanisms(GetRequiredMechanismsToRepair());
             }
             else
                 MassageHandler.ShowMassage("You don`t have the right details");
