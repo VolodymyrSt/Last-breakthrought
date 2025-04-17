@@ -153,7 +153,7 @@ namespace LastBreakthrought.NPC.Robot
                 _inventory.UpdateInventoryMechanisms(GetRequiredMechanismsToRepair());
             }
             else
-                MassageHandler.ShowMassage("You don`t have the right details");
+                MassageHandler.ShowMassage("You don`t have the right mechanisms");
         }
     }
 }

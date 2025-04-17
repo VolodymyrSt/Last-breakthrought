@@ -77,17 +77,23 @@ namespace LastBreakthrought.NPC.Enemy
             float elapsedTime = 0f;
             while (elapsedTime < MOVEMENT_TIME_OUT)
             {
-                if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+                if (_agent != null && _agent.isActiveAndEnabled && _agent.isOnNavMesh)
                 {
-                    if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
-                        yield break;
+                    if (!_agent.pathPending)
+                    {
+                        if (_agent.remainingDistance <= _agent.stoppingDistance)
+                        {
+                            if (!_agent.hasPath || Mathf.Approximately(_agent.velocity.sqrMagnitude, 0f))
+                                yield break;
+                        }
+                    }
                 }
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            _agent.ResetPath();
+            _agent?.ResetPath();
         }
 
         private Vector3 GetRandomPositionForNavMesh()

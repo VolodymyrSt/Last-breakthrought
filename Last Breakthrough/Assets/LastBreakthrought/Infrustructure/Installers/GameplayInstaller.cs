@@ -28,6 +28,9 @@ using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.UI.Inventory.Mechanism;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.UI.CraftingMachine.Crafts;
+using LastBreakthrought.UI.PausedMenu;
+using LastBreakthrought.UI.VictoryMenu;
+using LastBreakthrought.UI.LostMenu;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -69,6 +72,8 @@ namespace LastBreakthrought.Infrustructure.Installers
         public override void InstallBindings()
         {
             BindEventBus();
+            BindTimeHandler();
+
             BindConfigProviderService();
             BindAssetProvider();
 
@@ -113,6 +118,9 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindDetailInventoryMenuPanel();
             BindMassageHandler();
             BindMapMenuPanel();
+            BindPausedMenu();
+            BindVictoryMenu();
+            BindLostMenu();
 
             BindLight();
             BindTimer();
@@ -166,6 +174,9 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindEnemyFactory() => 
             Container.Bind<EnemyFactory>().AsSingle();
 
+        private void BindTimeHandler() => 
+            Container.Bind<TimeHandler>().AsSingle();
+
         private void BindMechanismCraftUIFactory() =>
             Container.Bind<MechanismCraftUIFactory>().AsSingle();
 
@@ -181,6 +192,30 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<MassageView>().FromInstance(massageView).AsSingle();
 
             Container.Bind<IMassageHandlerService>().To<MassageHandlerService>().AsSingle();
+        }
+
+        private void BindPausedMenu()
+        {
+            var pausedMenu = _gameplayHub.GetComponentInChildren<PausedMenuView>();
+            Container.Bind<PausedMenuView>().FromInstance(pausedMenu).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<PausedMenuHandler>().AsSingle().NonLazy();
+        }
+
+        private void BindVictoryMenu()
+        {
+            var victoryMenu = _gameplayHub.GetComponentInChildren<VictoryMenuView>();
+            Container.Bind<VictoryMenuView>().FromInstance(victoryMenu).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<VictoryMenuHandler>().AsSingle().NonLazy();
+        }
+
+        private void BindLostMenu()
+        {
+            var lostMenu = _gameplayHub.GetComponentInChildren<LostMenuView>();
+            Container.Bind<LostMenuView>().FromInstance(lostMenu).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<LostMenuHandler>().AsSingle().NonLazy();
         }
 
         private void BindRobotsFactory()

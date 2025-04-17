@@ -33,7 +33,7 @@ namespace LastBreakthrought.Logic.Rocket
             if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetDMechanismsToRepairRocket()))
                 Repair();
             else
-                _massageHandler.ShowMassage("You don`t have the right details");
+                _massageHandler.ShowMassage("You don`t have the right mechanisms");
         }
 
         public List<MechanismEntity> GetDMechanismsToRepairRocket() =>

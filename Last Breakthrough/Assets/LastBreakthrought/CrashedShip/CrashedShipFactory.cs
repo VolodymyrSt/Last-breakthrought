@@ -9,7 +9,7 @@ namespace LastBreakthrought.CrashedShip
         public CrashedShipFactory(IAssetProvider assetProvider) : base(assetProvider){}
 
         public override ICrashedShip Create(Vector3 at, Transform parent) => 
-            AssetProvider.Instantiate<CrashedShip>(AssetPath.CrashedShipPath, at, parent);
+            AssetProvider.Instantiate<CrashedShip>(AssetPath.GetRandomCrashedShipPath(), at, parent);
 
         public override ICrashedShip SpawnAt(Vector3 at, Transform parent)
         {

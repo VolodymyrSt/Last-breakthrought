@@ -113,7 +113,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 25, y: -25}
-  m_SizeDelta: {x: -50, y: -49.999985}
+  m_SizeDelta: {x: -50, y: -45}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7640207432323429974
 CanvasRenderer:
@@ -261,6 +261,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e639bbe95a59a2f4497ea9d9f0a90b06, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (7)
@@ -427,6 +431,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e236071ded515b141886fc3109344504, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (3)
@@ -593,6 +601,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: bbcc001bc1a18d049b7409f855eb9814, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (5)
@@ -755,6 +767,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 28d4ae22f97eb01479baff7ff5ec411d, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft
@@ -917,6 +933,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 7aca93e8b3127884290f30d6d7d7fca1, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (4)
@@ -1086,7 +1106,11 @@ PrefabInstance:
     - target: {fileID: 3075805175702664684, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: dcdc43f7a0ad67b4ab3e3db38233dfae, type: 3}
+      objectReference: {fileID: 7482667652216324306, guid: 79ad9b14f663d3447b1209d8700de611, type: 3}
+    - target: {fileID: 3075805175702664684, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5152153983172325510, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1196,6 +1220,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 18eba70ef7f08e346918e8a0fcb62d5d, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (6)
@@ -1354,6 +1382,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2087623730413181244}
     m_Modifications:
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (2)
@@ -1520,6 +1552,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 44a0fec2296388d4d93bba89791663af, type: 3}
+    - target: {fileID: 1991515797234144288, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Name
       value: Craft (1)

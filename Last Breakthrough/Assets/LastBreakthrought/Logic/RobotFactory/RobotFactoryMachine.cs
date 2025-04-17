@@ -63,7 +63,7 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateMiner();
                 }
                 else
-                    _massageHandler.ShowMassage("You cann`t create because you don`t have right details");
+                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
             }
             else
                 _massageHandler.ShowMassage("You can only have three miners");
@@ -80,7 +80,7 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateTransporter();
                 }
                 else
-                    _massageHandler.ShowMassage("You cann`t create because you don`t have right details");
+                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
             }
             else
                 _massageHandler.ShowMassage("You can only have three transporters");

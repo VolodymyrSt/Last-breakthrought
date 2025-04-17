@@ -74,9 +74,8 @@ namespace LastBreakthrought.NPC.Robot
             {
                 if (IsRobotDestroyed)
                     MassageHandler.ShowMassage("Robot is destroyed");
-                else
-                    MassageHandler.ShowMassage("Robot is already transporting");
-                return;
+                else if (CrashedShip.MinedMaterials.Count > 0)
+                    MassageHandler.ShowMassage("Robot is already doing its duty");
             }
 
             CrashedShip = PlayerHandler.GetSeekedCrashedShip();
@@ -93,6 +92,12 @@ namespace LastBreakthrought.NPC.Robot
 
         private bool IsRobotReady()
         {
+            if (CrashedShip != null && CrashedShip.MinedMaterials.Count <= 0)
+            {
+                MassageHandler.ShowMassage("Crashed ship doesn`t have mined materials");
+                CrashedShip = null;
+                return false;
+            }
             if (Battary.NeedToBeRecharged)
             {
                 MassageHandler.ShowMassage("Robot battary is too low");
@@ -101,11 +106,6 @@ namespace LastBreakthrought.NPC.Robot
             if (CrashedShip == null)
             {
                 MassageHandler.ShowMassage("Robot don`t have a target crashed ship");
-                return false;
-            }
-            if (CrashedShip.MinedMaterials.Count <= 0)
-            {
-                MassageHandler.ShowMassage("Crashed ship doesn`t have mined materials");
                 return false;
             }
             if (HasLoadedMaterials)

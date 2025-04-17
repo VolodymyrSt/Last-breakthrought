@@ -60,7 +60,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.SetDestination(_recycleMachine.GetMachinePosition());
 
-            var isArrived = Vector3.Distance(_agent.transform.position, _recycleMachine.GetMachinePosition()) <= 0.1f + STOP_DISTANCE;
+            var isArrived = Vector3.Distance(_agent.transform.position, _recycleMachine.GetMachinePosition()) <= STOP_DISTANCE + 1f;
 
             if (isArrived && !_isCarring)
             {

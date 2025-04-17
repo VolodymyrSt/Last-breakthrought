@@ -1,6 +1,4 @@
 ﻿using LastBreakthrought.Logic;
-using System;
-using UnityEngine;
 
 namespace LastBreakthrought.Infrustructure.State
 {

@@ -1,53 +1,50 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 
 namespace LastBreakthrought.Logic.InteractionZone
 {
-    [RequireComponent(typeof(SphereCollider))]
     public class InterationZoneView : MonoBehaviour
     {
-        public event Action OnPlayerEnter;
-        public event Action OnPlayerExit;
-
         [SerializeField] private Vector3 _currentScale;
+        private bool _isHidden;
+        private bool _isOpened;
 
         private void OnValidate() => 
            _currentScale = transform.localScale;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-                OnPlayerEnter?.Invoke();
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Player"))
-                OnPlayerExit?.Invoke();
-        }
-
         public void Show()
         {
-            var duration = 10f;
+            if (_isOpened) return;
+
+            var duration = 20f;
             gameObject.SetActive(true);
             transform.DOScale(_currentScale, duration * Time.deltaTime)
                 .SetEase(Ease.Linear)
-                .Play();
+                .Play()
+                .OnComplete(() => { 
+                    _isOpened = true;
+                    _isHidden = false;
+                });
         }
         
         public void Hide()
         {
-            var duration = 10f;
+            if (_isHidden) return;
+
+            var duration = 20f;
             transform.DOScale(0, duration * Time.deltaTime)
                 .SetEase(Ease.Linear)
                 .Play()
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() => { 
+                    gameObject.SetActive(false);
+                    _isHidden = true;
+                    _isOpened = false;
+                });
         }
 
         public void HideOnInit()
         {
-            transform.localScale = Vector3.zero;
+            Hide();
             gameObject.SetActive(false);
         }
     }

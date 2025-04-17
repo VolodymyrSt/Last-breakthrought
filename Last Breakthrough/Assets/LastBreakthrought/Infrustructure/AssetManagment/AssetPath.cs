@@ -1,10 +1,14 @@
+using NUnit.Framework;
 using System;
 
 namespace LastBreakthrought.Infrustructure.AssetManagment
 {
     public static class AssetPath
     {
-        public static string CrashedShipPath = "CrashedShips/CrashedShip_Big";
+        public static string CrashedShipBigPath = "CrashedShips/CrashedShip_Big";
+        public static string CrashedShipSmallPath = "CrashedShips/CrashedShip_Small";
+        public static string CrashedShipMediumPath = "CrashedShips/CrashedShip_Medium";
+        public static string CrashedShipLargePath = "CrashedShips/CrashedShip_Large";
 
         public static string ShipMaterialViewPath = "ShipMaterial/ShipMaterial";
         public static string ShipDetailViewPath = "ShipDetail/ShipDetail";
@@ -34,6 +38,20 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
                 return BatPath;
 
             throw new Exception("The enemyPath doesnt exist");
+        }
+
+        public static string GetRandomCrashedShipPath()
+        {
+            var randomPath = UnityEngine.Random.Range(1, 5);
+
+            return randomPath switch
+            {
+                1 => CrashedShipBigPath,
+                2 => CrashedShipLargePath,
+                3 => CrashedShipSmallPath,
+                4 => CrashedShipMediumPath,
+                _ => throw new Exception("The enemyPath doesnt exist"),
+            };
         }
     }
 }

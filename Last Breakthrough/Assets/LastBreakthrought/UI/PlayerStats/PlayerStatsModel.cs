@@ -1,5 +1,7 @@
 using LastBreakthrought.Configs.Player;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.PlayerStats
@@ -8,6 +10,7 @@ namespace LastBreakthrought.UI.PlayerStats
     {
         private readonly PlayerConfigSO _playerConfig;
         private readonly PlayerStatsView _playerStatsView;
+        private readonly IEventBus _eventBus;
 
         public float CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
         public float CurrentOxygen { get { return _currentOxygen; } set { _currentOxygen = value; } }
@@ -15,12 +18,14 @@ namespace LastBreakthrought.UI.PlayerStats
         private float _currentHealth;
         private float _currentOxygen;
 
-        public PlayerStatsModel(PlayerConfigSO playerConfig, PlayerStatsView playerStatsView) 
+        public PlayerStatsModel(PlayerConfigSO playerConfig, PlayerStatsView playerStatsView, IEventBus eventBus) 
         {
             _currentHealth = playerConfig.StartedHealth;
             _currentOxygen = playerConfig.StartedOxygen;
             _playerConfig = playerConfig;
             _playerStatsView = playerStatsView;
+
+            _eventBus = eventBus;
 
             playerStatsView.SetHealthSliderMaxValueAndStartedValue(playerConfig.MaxHealth, playerConfig.StartedHealth);
             playerStatsView.SetOxygeSliderMaxValueAndStartedValue(playerConfig.MaxOxygen, playerConfig.StartedOxygen);
@@ -38,7 +43,14 @@ namespace LastBreakthrought.UI.PlayerStats
         public bool IsRunOutOfHealth() => CurrentHealth < 0;
         public bool CanRegenerate() => CurrentHealth >= _playerConfig.MaxHealth;
 
-        public void UpdateHealth() => _playerStatsView.SetHealthSliderValue(CurrentHealth);
+        public void UpdateHealth()
+        {
+            _playerStatsView.SetHealthSliderValue(CurrentHealth);
+
+            if (CurrentHealth <= 0)
+                _eventBus.Invoke(new OnGameEndedSignal());
+        }
+
         public void UpdateOxygen() => _playerStatsView.SetOxygeSliderValue(CurrentOxygen);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LastBreakthrought.Infrustructure.Services.Massage;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Map;
@@ -53,6 +54,7 @@ namespace LastBreakthrought.CrashedShip
         {
             _shipsContainer.CrashedShips.Add(this);
             Materials = _shipMaterialGenerator.GenerateShipMaterials(_rarity, _maxNumberOfMaterialDiversity);
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
             _materials = new List<ShipMaterialEntity>(Materials);
         }

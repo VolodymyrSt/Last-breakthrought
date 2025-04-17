@@ -36,7 +36,7 @@ namespace LastBreakthrought.Infrustructure.Services.EventBus
             if (!_signals.ContainsKey(key))
                 throw new Exception($"You are trying to unregister not existed event {key}");
 
-            _signals[key].Remove(callback);
+            _signals[key]?.Remove(callback);
         }
         
         public void UnSubscribeEvent<T>(Action callback)
@@ -46,7 +46,7 @@ namespace LastBreakthrought.Infrustructure.Services.EventBus
             if (!_signals.ContainsKey(key))
                 throw new Exception($"You are trying to unregister not existed event {key}");
 
-            _signals[key].Remove(callback);
+            _signals[key]?.Remove(callback);
         }
 
         public void Invoke<T>(T signal)

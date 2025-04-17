@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7502079322896169036}
   - component: {fileID: 1394301664531411325}
   - component: {fileID: 6105546570227250400}
+  - component: {fileID: 1597666064543230288}
   m_Layer: 8
   m_Name: CrashedShip_Big
   m_TagString: Untagged
@@ -71,8 +72,24 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.1, y: 1, z: 4.06}
-  m_Center: {x: 0, y: 0, z: 0.79}
+  m_Size: {x: 4.1, y: 1.49, z: 4.06}
+  m_Center: {x: 0, y: 0.75, z: 0.79}
+--- !u!208 &1597666064543230288
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34116782492270044}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.75, y: 0.745, z: 1.75}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.75, z: 0.79}
+  m_TimeToStationary: 0.5
 --- !u!1 &5063459403249587759
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3945113842652492081, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4133014787994856441, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -440,6 +461,10 @@ PrefabInstance:
     - target: {fileID: 6690383646984991052, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883874463259988581, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6993759201187268572, guid: c7ce84c4e9401384cb474b906aeb426c, type: 3}
       propertyPath: m_Layer
