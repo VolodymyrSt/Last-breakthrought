@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Tire
   <Name>k__BackingField: Tire
+  <Description>k__BackingField: A durable rubber wheel. Crucial for building mobile
+    units, vehicles, or transport systems.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 18e4678a5c483a948ae1e8fefc182b7d, type: 3}
   <RequireDetails>k__BackingField: {fileID: 11400000, guid: 05b5a245c7f6ea449af724e1968125bf, type: 2}

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Pipe
   <Name>k__BackingField: Pipe
+  <Description>k__BackingField: A sturdy aluminium pipe. Useful for construction,
+    ventilation, or fluid transport.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 27501797eab29c14cbae1422251a6fac, type: 3}

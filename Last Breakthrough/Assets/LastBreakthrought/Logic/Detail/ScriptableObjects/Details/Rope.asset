@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Rope
   <Name>k__BackingField: Rope
+  <Description>k__BackingField: Strong and flexible rope made from leather. Great
+    for tying, climbing, or crafting gear.
   <Sprite>k__BackingField: {fileID: 21300000, guid: f77b0e4867c3c3540b28bc4845f0c1d0, type: 3}

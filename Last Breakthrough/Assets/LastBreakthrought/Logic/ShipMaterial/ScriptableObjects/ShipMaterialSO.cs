@@ -9,6 +9,7 @@ namespace LastBreakthrought.Logic.ShipMaterial.ScriptableObjects
     {
         [field: SerializeField] public string Id { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public string Description { get; private set; }
         [field: SerializeField] public Sprite Sprite { get; private set; }
         [field: SerializeField] public ShipDetailSO CraftDetail { get; private set; }
         [field: SerializeField, Range(2, 10)] public int MaxQuantity { get; private set; }

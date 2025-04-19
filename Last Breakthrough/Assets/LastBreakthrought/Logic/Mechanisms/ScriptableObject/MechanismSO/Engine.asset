@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Engine
   <Name>k__BackingField: Engine
+  <Description>k__BackingField: A complex machine that generates power from fuel
+    or electricity. Powers vehicles and heavy equipment.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 90218ee26ec707a4e8a11ed9bb9158cf, type: 3}
   <RequireDetails>k__BackingField: {fileID: 11400000, guid: 1823c24ec0a6a2d498e584f57b186cfa, type: 2}

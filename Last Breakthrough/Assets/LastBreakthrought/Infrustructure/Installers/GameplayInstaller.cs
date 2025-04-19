@@ -31,6 +31,7 @@ using LastBreakthrought.UI.CraftingMachine.Crafts;
 using LastBreakthrought.UI.PausedMenu;
 using LastBreakthrought.UI.VictoryMenu;
 using LastBreakthrought.UI.LostMenu;
+using LastBreakthrought.UI.ToolTip;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -81,9 +82,36 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindNavMeshSurface();
 
             BindShipMaterialGenerator();
-
             BindCrashedShipsContainer();
 
+            BindFactories();
+
+            BindPlayer();
+            BindCamera();
+
+            BindRecycleMachine();
+
+            BindUI();
+            BindInventory();
+
+            BindLight();
+            BindTimer();
+        }
+
+        private void BindInventory()
+        {
+            BindDetailsContainer();
+            BindMechanismsContainer();
+
+            BindShipDetailsGeneratorUI();
+            BindRequireMechanismsProvider();
+
+            BindMechanismHolder();
+            BindMechanismsGeneratorUI();
+        }
+
+        private void BindFactories()
+        {
             BindRobotFactoryMachine();
             BindCrashedShipFactory();
             BindShipMaterialViewFactory();
@@ -94,24 +122,12 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindCrashedShipMarkerFactory();
             BindMechanismCraftUIFactory();
             BindMechanismUIFactory();
+        }
 
-            BindPlayer();
-            BindCamera();
-
-            BindDetailsContainer();
-            BindMechanismsContainer();
-            BindRecycleMachine();
-
+        private void BindUI()
+        {
             BindGamePlayHub();
             BindJoyStick();
-
-            BindShipDetailsGeneratorUI();
-            BindRequireMechanismsProvider();
-
-            BindMechanismHolder();
-            BindMechanismsGeneratorUI();
-
-            //UI
             BindHomePoint();
             BindHomeDistanceInformer();
             BindRobotMenuPanel();
@@ -121,11 +137,8 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindPausedMenu();
             BindVictoryMenu();
             BindLostMenu();
-
-            BindLight();
-            BindTimer();
-
             BindPlayerStats();
+            BindToolTip();
         }
 
         private void BindLight() => 
@@ -202,6 +215,15 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.BindInterfacesAndSelfTo<PausedMenuHandler>().AsSingle().NonLazy();
         }
 
+        private void BindToolTip()
+        {
+            var toolTip = _gameplayHub.GetComponentInChildren<ToolTipView>();
+            var canva = _gameplayHub.GetComponent<Canvas>();
+            Container.Bind<ToolTipView>().FromInstance(toolTip).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ToolTipHandler>().AsSingle().WithArguments(toolTip, canva).NonLazy();
+        }
+
         private void BindVictoryMenu()
         {
             var victoryMenu = _gameplayHub.GetComponentInChildren<VictoryMenuView>();
@@ -222,6 +244,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         {
             Container.Bind<RobotMinerFactory>().AsSingle();
             Container.Bind<RobotTransporterFactory>().AsSingle();
+            Container.Bind<RobotDefenderFactory>().AsSingle();
         }
 
         private void BindShipMaterialViewFactory() => 
@@ -234,6 +257,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         {
             Container.Bind<RobotMinerControlUIFactory>().AsSingle();
             Container.Bind<RobotTransporterControlUIFactory>().AsSingle();
+            Container.Bind<RobotDefenderControlUIFactory>().AsSingle();
         }
 
         private void BindShipMaterialGenerator()

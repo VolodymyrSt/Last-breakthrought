@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: CopperCoil
   m_EditorClassIdentifier: 
   <Id>k__BackingField: CopperCoil
-  <Name>k__BackingField: CopperCoil
+  <Name>k__BackingField: Copper coil
+  <Description>k__BackingField: "Tightly wound copper wire. Generates or transfers
+    electromagnetic energy \u2014 essential for motors and generators."
   <Sprite>k__BackingField: {fileID: 21300000, guid: 38c651e00c361514ab9f99353d4979ab, type: 3}
   <RequireDetails>k__BackingField: {fileID: 11400000, guid: b6c2e0d2ff7a3564fb392db901fc0d9c, type: 2}

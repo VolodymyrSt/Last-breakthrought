@@ -91,6 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipMaterialImage: {fileID: 1320136395095089640}
   _quantityText: {fileID: 1308060824100917133}
+  _infoRoot: {fileID: 0}
+  _informationText: {fileID: 0}
 --- !u!1 &5328794603517797560
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Screw
   <Name>k__BackingField: Screw
+  <Description>k__BackingField: A steel fastener. Essential for assembling mechanical
+    parts and devices.
   <Sprite>k__BackingField: {fileID: 21300000, guid: fd653c54804a0934693b68b26d2b8ff9, type: 3}

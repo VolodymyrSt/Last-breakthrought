@@ -1,9 +1,10 @@
 using LastBreakthrought.Logic.Mechanisms;
+using LastBreakthrought.UI.ToolTip;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.Inventory.Mechanism
 {
-    public class MechanismHandler : MonoBehaviour
+    public class MechanismHandler : ToolTipTrigger
     {
         [SerializeField] private MechanismView _mechanismView;
 
@@ -27,6 +28,8 @@ namespace LastBreakthrought.UI.Inventory.Mechanism
 
             _mechanismView.SetQuantity(Quantity);
             _mechanismView.SetImage(mechanismEntity.Data.Sprite);
+
+            ConfigureToolTip(MechanismEntity.Data.Name, MechanismEntity.Data.Description, ToolTipPosition.BottomRight);
         }
 
         public void UpdateView(MechanismEntity mechanismEntity)
@@ -34,6 +37,8 @@ namespace LastBreakthrought.UI.Inventory.Mechanism
             MechanismEntity = mechanismEntity;
 
             _mechanismView.SetImage(mechanismEntity.Data.Sprite);
+
+            ConfigureToolTip(MechanismEntity.Data.Name, MechanismEntity.Data.Description, ToolTipPosition.BottomRight);
         }
 
         public void SelfDesctroy() =>

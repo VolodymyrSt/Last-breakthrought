@@ -18,9 +18,11 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
 
         public static string RobotMinerPath = "NPC/Robots/RobotMiner";
         public static string RobotTransporterPath = "NPC/Robots/RobotTransporter";
+        public static string RobotDefenderPath = "NPC/Robots/RobotDefender";
 
         public static string RobotMinerControlPath = "RobotControl/RobotMinerControl";
         public static string RobotTransporterControlPath = "RobotControl/RobotTransporterControl";
+        public static string RobotDefenderControlPath = "RobotControl/RobotDefenderControl";
 
         public static string CrashedShipMarker = "CrashedShips/Marker/CrashedShipMarker";
 

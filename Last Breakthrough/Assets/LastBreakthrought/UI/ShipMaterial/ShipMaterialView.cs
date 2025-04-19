@@ -1,11 +1,16 @@
+using DG.Tweening;
+using LastBreakthrought.UI.ToolTip;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace LastBreakthrought.UI.ShipMaterial
 {
     public class ShipMaterialView : MonoBehaviour
     {
+        [Header("Base")]
         [SerializeField] private Image _shipMaterialImage;
         [SerializeField] private TextMeshProUGUI _quantityText;
 

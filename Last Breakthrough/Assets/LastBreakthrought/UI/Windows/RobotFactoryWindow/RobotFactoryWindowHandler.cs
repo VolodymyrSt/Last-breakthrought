@@ -14,6 +14,8 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             RobotFactoryMachine.CreateRobotMiner();
         public void CreateTransporter() =>
             RobotFactoryMachine.CreateRobotTransporter();
+        public void CreateDefender() =>
+            RobotFactoryMachine.CreateRobotDefender();
     }
 }
 

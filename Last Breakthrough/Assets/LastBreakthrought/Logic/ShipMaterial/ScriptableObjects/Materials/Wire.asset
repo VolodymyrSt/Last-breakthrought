@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Wire
   <Name>k__BackingField: Wire
+  <Description>k__BackingField: Thin strands of metal. Can be refined into copper
+    wire for electrical crafting.
   <Sprite>k__BackingField: {fileID: 21300000, guid: e639bbe95a59a2f4497ea9d9f0a90b06, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: 5c8beeda17805a54ebcd99bdad413365, type: 2}
   <MaxQuantity>k__BackingField: 3

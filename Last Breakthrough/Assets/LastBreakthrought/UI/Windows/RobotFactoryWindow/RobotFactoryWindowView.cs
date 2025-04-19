@@ -12,10 +12,12 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
         [Header("UI")]
         [SerializeField] private Button _createRobotMinerButton;
         [SerializeField] private Button _createRobotTransporterButton;
+        [SerializeField] private Button _createRobotDefenderButton;
 
         [Header("Containers")]
         [SerializeField] private RectTransform _neededMechanismsForMinerCreateContainer;
         [SerializeField] private RectTransform _neededMechanismsForTransporterCreateContainer;
+        [SerializeField] private RectTransform _neededMechanismsForDefenderCreateContainer;
 
         private MechanismsGeneratorUI _mechanismsGeneratorUI;
 
@@ -31,6 +33,9 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             _createRobotTransporterButton.onClick.AddListener(() =>
                 Handler.CreateTransporter());
 
+            _createRobotDefenderButton.onClick.AddListener(() =>
+                Handler.CreateDefender());
+
             GenerateRequiredMechanismsForCreatingRobots();
         }
 
@@ -41,12 +46,16 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
 
             var requiredMechanismsForTransporter = Handler.RobotFactoryMachine.GetMechanismsToCreateTransporter();
             _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanismsForTransporter, _neededMechanismsForTransporterCreateContainer);
+
+            var requiredMechanismsForDefender = Handler.RobotFactoryMachine.GetMechanismsToCreateDefender();
+            _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanismsForDefender, _neededMechanismsForDefenderCreateContainer);
         }
 
         public override void Dispose()
         {
             _createRobotMinerButton.onClick.RemoveListener(() => Handler.CreateMiner());
             _createRobotTransporterButton.onClick.RemoveListener(() => Handler.CreateTransporter());
+            _createRobotTransporterButton.onClick.RemoveListener(() => Handler.CreateDefender());
         }
     }
 }

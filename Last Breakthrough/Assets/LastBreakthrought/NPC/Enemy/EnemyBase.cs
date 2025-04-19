@@ -67,6 +67,9 @@ namespace LastBreakthrought.NPC.Enemy
             AddStates();
         }
 
+        public Vector3 GetPosition() =>
+            transform.position;
+
         public void ApplyDamage(float damage) => 
             _healthHandler.Health -= damage;
 
@@ -115,6 +118,8 @@ namespace LastBreakthrought.NPC.Enemy
 
             return _isTargetInAttakingRange;
         }
+
+        public bool IsDied() => _isDied;
 
         private void AddStates()
         {

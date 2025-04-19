@@ -1,9 +1,10 @@
 ﻿using LastBreakthrought.Logic.ShipDetail;
+using LastBreakthrought.UI.ToolTip;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.Inventory.ShipDetail
 {
-    public class ShipDetailHandler : MonoBehaviour
+    public class ShipDetailHandler : ToolTipTrigger
     {
         [SerializeField] private ShipDetailView _shipDetailView;
 
@@ -27,13 +28,16 @@ namespace LastBreakthrought.UI.Inventory.ShipDetail
 
             _shipDetailView.SetQuantity(Quantity);
             _shipDetailView.SetImage(shipDetailEntity.Data.Sprite);
+
+            ConfigureToolTip(DetailEntity.Data.Name, DetailEntity.Data.Description, ToolTipPosition.BottomRight);
         }
 
         public void UpdateView(ShipDetailEntity shipDetail)
         {
             DetailEntity = shipDetail;
-
             _shipDetailView.SetImage(shipDetail.Data.Sprite);
+
+            ConfigureToolTip(DetailEntity.Data.Name, DetailEntity.Data.Description, ToolTipPosition.BottomRight);
         }
 
         public void SelfDesctroy() =>

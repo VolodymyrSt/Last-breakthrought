@@ -15,6 +15,7 @@ namespace LastBreakthrought.Logic.RobotFactory
     {
         private const int MAX_MINERS_COUNT = 3;
         private const int MAX_TRANSPORTERS_COUNT = 3;
+        private const int MAX_DEFENDERS_COUNT = 3;
 
         [Header("Base:")]
         [SerializeField] private Transform _robotSpawnPoint;
@@ -23,6 +24,8 @@ namespace LastBreakthrought.Logic.RobotFactory
 
         private RobotMinerFactory _robotMinerFactory;
         private RobotTransporterFactory _robotTransporterFactory;
+        private RobotDefenderFactory _robotDefenderFactory;
+
         private RobotMenuPanelHandler _robotMenuPanelHandler;
         private MechanismsContainer _mechanismsContainer;
         private InventoryMenuPanelHandler _inventory;
@@ -31,14 +34,17 @@ namespace LastBreakthrought.Logic.RobotFactory
 
         private int _currentMinersCount = 0;
         private int _currentTransportersCount = 0;
+        private int _currentDefendersCount = 0;
 
         [Inject]
-        private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory,
-            RobotMenuPanelHandler robotMenuPanelHandler, MechanismsContainer mechanismsContainer
+        private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory
+            , RobotDefenderFactory robotDefenderFactory, RobotMenuPanelHandler robotMenuPanelHandler, MechanismsContainer mechanismsContainer
             , InventoryMenuPanelHandler detailInventory, IMassageHandlerService massage, RequireMechanismsProvider requireMechanismsProvider)
         {
             _robotMinerFactory = robotFactory;
             _robotTransporterFactory = robotTransporterFactory;
+            _robotDefenderFactory = robotDefenderFactory;
+
             _robotMenuPanelHandler = robotMenuPanelHandler;
             _mechanismsContainer = mechanismsContainer;
             _inventory = detailInventory;
@@ -50,6 +56,7 @@ namespace LastBreakthrought.Logic.RobotFactory
         {
             CreateMiner();
             CreateTransporter();
+            CreateDefender();
         }
 
         public void CreateRobotMiner()
@@ -86,11 +93,31 @@ namespace LastBreakthrought.Logic.RobotFactory
                 _massageHandler.ShowMassage("You can only have three transporters");
         }
 
+        public void CreateRobotDefender()
+        {
+            if (_currentDefendersCount < MAX_DEFENDERS_COUNT)
+            {
+                if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateDefender()))
+                {
+                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateDefender());
+                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateDefender());
+                    CreateDefender();
+                }
+                else
+                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
+            }
+            else
+                _massageHandler.ShowMassage("You can only have three transporters");
+        }
+
         public List<MechanismEntity> GetMechanismsToCreateMiner() =>
             _requireMechanismsProvider.Holder.CreateRobotMiner.GetRequiredShipDetails();
 
         public List<MechanismEntity> GetMechanismsToCreateTransporter() =>
             _requireMechanismsProvider.Holder.CreateRobotTransporter.GetRequiredShipDetails();
+
+        public List<MechanismEntity> GetMechanismsToCreateDefender() =>
+            _requireMechanismsProvider.Holder.CreateRobotDefender.GetRequiredShipDetails();
 
         private void CreateMiner()
         {
@@ -114,6 +141,18 @@ namespace LastBreakthrought.Logic.RobotFactory
                 robotTransporter.SetWanderingState, transportAction: robotTransporter.DoWork);
 
             _currentTransportersCount++;
+        }
+
+        private void CreateDefender()
+        {
+            var robotDefender = _robotDefenderFactory.CreateRobot(_robotSpawnPoint.position,
+                                    _robotSpawnPoint, _robotWanderingZone, _chargingPlaces);
+
+            _robotMenuPanelHandler.AddRobotDefenderControlUI(robotDefender.GetRobotData(),
+                robotDefender.GetRobotBattary(), robotDefender.GetRobotHealth(), robotDefender.SetFollowingPlayerState,
+                robotDefender.SetWanderingState, defend: robotDefender.DoWork);
+
+            _currentDefendersCount++;
         }
     }
 }

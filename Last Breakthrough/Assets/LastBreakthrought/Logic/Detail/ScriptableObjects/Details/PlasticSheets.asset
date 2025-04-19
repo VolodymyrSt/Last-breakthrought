@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966460f12d980dc428fd167799944846, type: 3}
   m_Name: PlasticSheets
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: PlasticSheets
-  <Name>k__BackingField: PlasticSheets
+  <Id>k__BackingField: Plastic sheets
+  <Name>k__BackingField: Plastic sheets
+  <Description>k__BackingField: A flat sheet of plastic. Waterproof and multipurpose
+    for crafting structures or containers.
   <Sprite>k__BackingField: {fileID: 21300000, guid: d539510cc8cb29e48b1bed1fbe84ad5a, type: 3}

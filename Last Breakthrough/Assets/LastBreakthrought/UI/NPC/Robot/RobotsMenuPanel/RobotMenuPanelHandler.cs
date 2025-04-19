@@ -17,16 +17,19 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 
         private readonly RobotMinerControlUIFactory _robotMinerControlUIFactory;
         private readonly RobotTransporterControlUIFactory _robotTransporterControlUIFactory;
+        private readonly RobotDefenderControlUIFactory _robotDefenderControlUIFactory;
         public readonly IEventBus _eventBus;
 
         private readonly List<RobotControlHandlerUI> _robotControls = new ();
 
-        public RobotMenuPanelHandler(RobotMenuPanelView view, IEventBus eventBus, RobotMinerControlUIFactory robotControlUIFactory, RobotTransporterControlUIFactory robotTransporterControlUIFactory)
+        public RobotMenuPanelHandler(RobotMenuPanelView view, IEventBus eventBus, RobotMinerControlUIFactory robotControlUIFactory
+            , RobotTransporterControlUIFactory robotTransporterControlUIFactory, RobotDefenderControlUIFactory robotDefenderControlUIFactory)
         {
             View = view;
             _robotMinerControlUIFactory = robotControlUIFactory;
             _robotTransporterControlUIFactory = robotTransporterControlUIFactory;
             _eventBus = eventBus;
+            _robotDefenderControlUIFactory = robotDefenderControlUIFactory;
         }
 
         public void Initialize() => View.Init();
@@ -53,6 +56,15 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 
             View.OnNewItemAdded(robotTransporterControl.transform);
             _robotControls.Add(robotTransporterControl);
+        }
+
+        public void AddRobotDefenderControlUI(RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action defend)
+        {
+            var robotDefenderControl = _robotDefenderControlUIFactory.Create(View.GetContainer(),
+                robotData, battary, robotHealth, followAction, goHomeAction, defend);
+
+            View.OnNewItemAdded(robotDefenderControl.transform);
+            _robotControls.Add(robotDefenderControl);
         }
     }
 }

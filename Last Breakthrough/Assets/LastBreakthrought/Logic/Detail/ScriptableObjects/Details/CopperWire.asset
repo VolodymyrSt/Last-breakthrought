@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966460f12d980dc428fd167799944846, type: 3}
   m_Name: CopperWire
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: CopperCoil
-  <Name>k__BackingField: CopperCoil
+  <Id>k__BackingField: Copper coil
+  <Name>k__BackingField: Copper coil
+  <Description>k__BackingField: Conductive copper wire. Used for connecting electrical
+    components and circuits.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 6095de97c7894034788f6bbe7145c64d, type: 3}

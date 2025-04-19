@@ -26,13 +26,12 @@ namespace LastBreakthrought.NPC.Robot
             StateMachine.AddTransition(_robotMiningState, RobotFollowingPlayerState, () => CrashedShip == null && IsFollowingState);
             StateMachine.AddTransition(_robotMiningState, RobotWanderingState, () => CrashedShip == null && !IsFollowingState && !IsWanderingState);
 
-            StateMachine.AddTransition(_robotMiningState, RobotRechargingState, () => Battary.NeedToBeRecharged);
-
             StateMachine.AddTransition(RobotRechargingState, _robotMiningState, () => !Battary.NeedToBeRecharged && CrashedShip != null);
             StateMachine.AddTransition(RobotRechargingState, RobotWanderingState, () => !Battary.NeedToBeRecharged && CrashedShip == null && IsWanderingState);
             StateMachine.AddTransition(RobotRechargingState, RobotFollowingPlayerState, () => !Battary.NeedToBeRecharged && CrashedShip == null && IsFollowingState);
             StateMachine.AddTransition(RobotRechargingState, RobotWanderingState, () => !Battary.NeedToBeRecharged && CrashedShip == null && !IsFollowingState && !IsWanderingState);
 
+            StateMachine.AddTransition(_robotMiningState, RobotRechargingState, () => Battary.NeedToBeRecharged);
             StateMachine.AddTransition(RobotFollowingPlayerState, RobotRechargingState, () => Battary.NeedToBeRecharged);
             StateMachine.AddTransition(RobotWanderingState, RobotRechargingState, () => Battary.NeedToBeRecharged);
 

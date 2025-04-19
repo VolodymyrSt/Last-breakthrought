@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: CarbonDust
   m_EditorClassIdentifier: 
   <Id>k__BackingField: carbonDust
-  <Name>k__BackingField: Dust Carbon
+  <Name>k__BackingField: Dust of carbon
+  <Description>k__BackingField: Refined carbon material. Can be processed into pure
+    carbon for technical or energy uses.
   <Sprite>k__BackingField: {fileID: 21300000, guid: e236071ded515b141886fc3109344504, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: cf95bdaa2c79ee646bee6be6f4bfc1b5, type: 2}
   <MaxQuantity>k__BackingField: 7

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Glass
   <Name>k__BackingField: Glass
+  <Description>k__BackingField: Clean glass shards salvaged from bulbs. Can be used
+    in lenses, screens, or construction.
   <Sprite>k__BackingField: {fileID: 21300000, guid: f9332996284309b4f976879341760029, type: 3}

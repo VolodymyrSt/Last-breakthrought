@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Electronics
   <Name>k__BackingField: Electronics
+  <Description>k__BackingField: A set of functional circuits and chips. Core ingredient
+    for any tech-related crafting.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 24334b283cb1bf24eb8b94bc61c9253a, type: 3}
