@@ -19,5 +19,11 @@ namespace LastBreakthrought.Logic.Mechanisms
                 neededMechanismView.Init(requiredMechanism);
             }
         }
+
+        public void GenerateMechanism(MechanismEntity requiredMechanism, RectTransform parent)
+        {
+            var neededMechanismView = _mechanismUIFactory.SpawnAt(parent);
+            neededMechanismView.Init(requiredMechanism);
+        }
     }
 }

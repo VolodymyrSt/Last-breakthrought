@@ -18,4 +18,4 @@ MonoBehaviour:
     Can be crafted into durable pipes.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 44a0fec2296388d4d93bba89791663af, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: a03e299d50d426b44a0ebc54edb11ec9, type: 2}
-  <MaxQuantity>k__BackingField: 2
+  <MaxQuantity>k__BackingField: 10

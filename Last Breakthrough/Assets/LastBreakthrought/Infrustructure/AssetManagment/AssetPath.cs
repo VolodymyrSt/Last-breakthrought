@@ -30,6 +30,10 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
 
         public static string MechanismCraftPath = "CraftForCraftMachine/MechanismCraft";
 
+        public static string LightningEffectPath = "Effects/Lightning Hit Blue";
+
+
+
         public static string GetRandomEnemyPath()
         {
             var randomPath = UnityEngine.Random.Range(1, 3);

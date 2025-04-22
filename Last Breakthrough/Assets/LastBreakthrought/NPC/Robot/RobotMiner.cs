@@ -20,7 +20,7 @@ namespace LastBreakthrought.NPC.Robot
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
 
-            _robotMiningState = new RobotMiningState(this, CoroutineRunner, Agent, Animator, Battary, RobotData.GeneralSpeed);
+            _robotMiningState = new RobotMiningState(this, CoroutineRunner, Agent, Animator, Battary, EventBus, RobotData.GeneralSpeed);
 
             StateMachine.AddTransition(_robotMiningState, RobotWanderingState, () => CrashedShip == null && IsWanderingState);
             StateMachine.AddTransition(_robotMiningState, RobotFollowingPlayerState, () => CrashedShip == null && IsFollowingState);
@@ -45,11 +45,14 @@ namespace LastBreakthrought.NPC.Robot
         }
         public override void DoWork()
         {
+            if (IsRobotDestroyed)
+            {
+                MassageHandler.ShowMassage("Robot is destroyed");
+                return;
+            }
             if (CrashedShip != null)
             {
-                if (IsRobotDestroyed)
-                    MassageHandler.ShowMassage("Robot is destroyed");
-                else if (CrashedShip.Materials.Count > 0)
+                if (CrashedShip.Materials.Count > 0)
                     MassageHandler.ShowMassage("Robot is already doing its duty");
                 return;
             }   

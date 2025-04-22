@@ -1,8 +1,10 @@
 using LastBreakthrought.Configs.Robot;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
+using LastBreakthrought.Logic.FSX;
 using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.NPC.Base;
@@ -34,6 +36,7 @@ namespace LastBreakthrought.NPC.Robot
         protected IEventBus EventBus;
         protected IMassageHandlerService MassageHandler;
         protected RequireMechanismsProvider RequireMechanismsProvider;
+        protected EffectCreator EffectCreator;
 
         protected RobotWanderingState RobotWanderingState;
         protected RobotFollowingPlayerState RobotFollowingPlayerState;
@@ -52,7 +55,7 @@ namespace LastBreakthrought.NPC.Robot
         [Inject]
         private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService,
             IEventBus eventBus, IMassageHandlerService massageHandler, MechanismsContainer mechanismsContainer, InventoryMenuPanelHandler detailInventory,
-            RequireMechanismsProvider requireMechanismsProvider)
+            RequireMechanismsProvider requireMechanismsProvider, EffectCreator effectCreator)
         {
             PlayerHandler = playerHandler;
             CoroutineRunner = coroutineRunner;
@@ -62,6 +65,7 @@ namespace LastBreakthrought.NPC.Robot
             _mechanismsContainer = mechanismsContainer;
             _inventory = detailInventory;
             RequireMechanismsProvider = requireMechanismsProvider;
+            EffectCreator = effectCreator;
         }
 
         public virtual void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
@@ -87,6 +91,7 @@ namespace LastBreakthrought.NPC.Robot
             StateMachine.AddTransition(RobotDestroyedState, RobotRechargingState, () => !IsRobotDestroyed && Battary.NeedToBeRecharged);
             StateMachine.AddTransition(RobotDestroyedState, RobotWanderingState, () => !IsRobotDestroyed && !IsWanderingState && !IsFollowingState);
 
+            _zoneHandler.Init();
             _zoneHandler.Disactivate();
         }
 
@@ -102,11 +107,7 @@ namespace LastBreakthrought.NPC.Robot
 
         public void SetFollowingPlayerState()
         {
-            if (Battary.NeedToBeRecharged)
-            {
-                MassageHandler.ShowMassage("Robot battary is too low");
-                return;
-            }
+            if (!CanFunction()) return;
 
             IsFollowingState = true;
             IsWanderingState = false;
@@ -114,11 +115,7 @@ namespace LastBreakthrought.NPC.Robot
 
         public void SetWanderingState()
         {
-            if (Battary.NeedToBeRecharged)
-            {
-                MassageHandler.ShowMassage("Robot battary is too low");
-                return;
-            }
+            if (!CanFunction()) return;
 
             IsWanderingState = true;
             IsFollowingState = false;
@@ -154,6 +151,21 @@ namespace LastBreakthrought.NPC.Robot
             }
             else
                 MassageHandler.ShowMassage("You don`t have the right mechanisms");
+        }
+
+        private bool CanFunction()
+        {
+            if (IsRobotDestroyed)
+            {
+                MassageHandler.ShowMassage("Robot is destroyed");
+                return false;
+            }
+            if (Battary.NeedToBeRecharged)
+            {
+                MassageHandler.ShowMassage("Robot battary is too low");
+                return false;
+            }
+            return true;
         }
     }
 }

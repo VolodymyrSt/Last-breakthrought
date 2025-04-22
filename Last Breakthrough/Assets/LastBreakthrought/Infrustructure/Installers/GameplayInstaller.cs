@@ -32,6 +32,7 @@ using LastBreakthrought.UI.PausedMenu;
 using LastBreakthrought.UI.VictoryMenu;
 using LastBreakthrought.UI.LostMenu;
 using LastBreakthrought.UI.ToolTip;
+using LastBreakthrought.Logic.FSX;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -83,6 +84,8 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindShipMaterialGenerator();
             BindCrashedShipsContainer();
+
+            BindEffectCreator();
 
             BindFactories();
 
@@ -159,6 +162,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindRecycleMachine() => 
             Container.Bind<RecycleMachine>().FromInstance(_recycleMachine).AsSingle();
+        
+        private void BindEffectCreator() => 
+            Container.Bind<EffectCreator>().AsSingle();
 
         private void BindMechanismHolder() =>
             Container.Bind<MechanismHolderSO>().FromInstance(_mechanismHolderSO).AsSingle();

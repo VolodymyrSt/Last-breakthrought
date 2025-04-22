@@ -11,22 +11,23 @@ namespace LastBreakthrought.UI.Inventory
 {
     public class InventoryMenuPanelHandler : IInitializable
     {
-        private readonly InventoryMenuPanelView _view;
+        public InventoryMenuPanelView View { get; }
+
         private readonly ShipDetailUIFactory _shipDetailUIFactory;
         private readonly MechanismUIFactory _mechanismUIFactory;
 
         public InventoryMenuPanelHandler(InventoryMenuPanelView view, ShipDetailUIFactory shipDetailUIFactory, MechanismUIFactory mechanismUIFactory)
         {
-            _view = view;
+            View = view;
             _shipDetailUIFactory = shipDetailUIFactory;
             _mechanismUIFactory = mechanismUIFactory;
         }
 
-        public void Initialize() => _view.Init();
+        public void Initialize() => View.Init();
 
         public void UpdateInventoryDetails(ShipMaterialEntity shipMaterial)
         {
-            foreach (var shipDetail in _view.DetailsContainerUI.Details)
+            foreach (var shipDetail in View.DetailsContainerUI.Details)
             {
                 if (shipMaterial.Data.CraftDetail.Id == shipDetail.DetailEntity.Data.Id)
                 {
@@ -39,7 +40,7 @@ namespace LastBreakthrought.UI.Inventory
 
         public void UpdateInventoryMechanism(MechanismEntity mechanism)
         {
-            foreach (var existedMechanism in _view.MechanismsContainer.Mechanisms)
+            foreach (var existedMechanism in View.MechanismsContainer.Mechanisms)
             {
                 if (mechanism.Data.Id == existedMechanism.MechanismEntity.Data.Id)
                 {
@@ -52,17 +53,17 @@ namespace LastBreakthrought.UI.Inventory
 
         public MechanismHandler CreateNewMechanismAndInit(MechanismEntity mechanism)
         {
-            var newMechanismUI = _mechanismUIFactory.SpawnAt(_view.GetMechanismContainer());
-            _view.MechanismsContainer.Mechanisms.Add(newMechanismUI);
+            var newMechanismUI = _mechanismUIFactory.SpawnAt(View.GetMechanismContainer());
+            View.MechanismsContainer.Mechanisms.Add(newMechanismUI);
             newMechanismUI.Init(mechanism);
             return newMechanismUI;
         }
 
         public ShipDetailHandler CreateNewShipDetailAndInit(ShipMaterialEntity shipMaterial)
         {
-            var shipDetailUI = _shipDetailUIFactory.SpawnAt(_view.GetDetailContainer());
+            var shipDetailUI = _shipDetailUIFactory.SpawnAt(View.GetDetailContainer());
             var shipDetailEntity = new ShipDetailEntity(shipMaterial.Data.CraftDetail, shipMaterial.Quantity);
-            _view.DetailsContainerUI.Details.Add(shipDetailUI);
+            View.DetailsContainerUI.Details.Add(shipDetailUI);
             shipDetailUI.Init(shipDetailEntity);
             return shipDetailUI;
         }
@@ -71,9 +72,9 @@ namespace LastBreakthrought.UI.Inventory
         {
             foreach (var requireDetail in requiredDetails)
             {
-                for (var i = 0; i < _view.DetailsContainerUI.Details.Count; i++)
+                for (var i = 0; i < View.DetailsContainerUI.Details.Count; i++)
                 {
-                    var existedDetailView = _view.DetailsContainerUI.Details[i];
+                    var existedDetailView = View.DetailsContainerUI.Details[i];
 
                     if (existedDetailView != null)
                     {
@@ -84,7 +85,7 @@ namespace LastBreakthrought.UI.Inventory
                             if (existedDetailView.Quantity <= 0)
                             {
                                 existedDetailView.SelfDesctroy();
-                                _view.DetailsContainerUI.Details.Remove(existedDetailView);
+                                View.DetailsContainerUI.Details.Remove(existedDetailView);
                             }
                         }
                     }
@@ -96,9 +97,9 @@ namespace LastBreakthrought.UI.Inventory
         {
             foreach (var requireMechanism in requiredMechanisms)
             {
-                for (var i = 0; i < _view.MechanismsContainer.Mechanisms.Count; i++)
+                for (var i = 0; i < View.MechanismsContainer.Mechanisms.Count; i++)
                 {
-                    var existedMechanismView = _view.MechanismsContainer.Mechanisms[i];
+                    var existedMechanismView = View.MechanismsContainer.Mechanisms[i];
 
                     if (existedMechanismView != null)
                     {
@@ -109,7 +110,7 @@ namespace LastBreakthrought.UI.Inventory
                             if (existedMechanismView.Quantity <= 0)
                             {
                                 existedMechanismView.SelfDesctroy();
-                                _view.MechanismsContainer.Mechanisms.Remove(existedMechanismView);
+                                View.MechanismsContainer.Mechanisms.Remove(existedMechanismView);
                             }
                         }
                     }

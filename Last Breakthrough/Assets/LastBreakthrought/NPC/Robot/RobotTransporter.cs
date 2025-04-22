@@ -30,8 +30,8 @@ namespace LastBreakthrought.NPC.Robot
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
 
-            _robotLoadingUpMaterialsState = new RobotLoadingUpMaterialsState(this, CoroutineRunner, Agent, Animator, Battary, RobotData.GeneralSpeed);
-            _robotTransportingMaterialsState = new RobotTransportingMaterialsState(this, CoroutineRunner, Agent, Animator, Battary, _recycleMachine, RobotData.GeneralSpeed);
+            _robotLoadingUpMaterialsState = new RobotLoadingUpMaterialsState(this, CoroutineRunner, Agent, Animator, Battary, EventBus, RobotData.GeneralSpeed);
+            _robotTransportingMaterialsState = new RobotTransportingMaterialsState(this, CoroutineRunner, Agent, Animator, Battary, _recycleMachine, EventBus, RobotData.GeneralSpeed);
 
             StateMachine.AddTransition(_robotLoadingUpMaterialsState, RobotWanderingState, () => CrashedShip == null && IsWanderingState && !HasLoadedMaterials);
             StateMachine.AddTransition(_robotLoadingUpMaterialsState, RobotFollowingPlayerState, () => CrashedShip == null && IsFollowingState && !HasLoadedMaterials);

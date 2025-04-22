@@ -1,4 +1,6 @@
-﻿using LastBreakthrought.Logic.MaterialRecycler;
+﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.MaterialRecycler;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Util;
 using System.Collections;
@@ -20,13 +22,14 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
         private readonly RecycleMachine _recycleMachine;
+        private readonly IEventBus _eventBus;
         private readonly float _movingSpeed;
 
         private Coroutine _transportingCoroutine;
         private bool _isCarring = false;
 
         public RobotTransportingMaterialsState(RobotTransporter robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, RobotBattary robotBattary, RecycleMachine recycleMachine, float followingSpeed)
+            Animator animator, RobotBattary robotBattary, RecycleMachine recycleMachine, IEventBus eventBus, float followingSpeed)
         {
             _robot = robot;
             _coroutineRunner = coroutineRunner;
@@ -34,6 +37,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _animator = animator;
             _robotBattary = robotBattary;
             _recycleMachine = recycleMachine;
+            _eventBus = eventBus;
             _movingSpeed = followingSpeed;
         }
 
@@ -43,6 +47,9 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.speed = _movingSpeed;
             _agent.stoppingDistance = STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
+
+            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopTransporting);
+            _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueTransporting);
         }
 
         public void Exit()
@@ -54,6 +61,9 @@ namespace LastBreakthrought.NPC.Robot.States
 
             if (_transportingCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_transportingCoroutine);
+
+            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopTransporting);
+            _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueTransporting);
         }
 
         public void Update()
@@ -95,5 +105,11 @@ namespace LastBreakthrought.NPC.Robot.States
             _robot.ClearCrashedShip();
             _robot.HasLoadedMaterials = false;
         }
+
+        private void StopTransporting(OnGamePausedSignal signal) =>
+            _coroutineRunner.HandleStopCoroutine(_transportingCoroutine);
+
+        private void ContinueTransporting(OnGameResumedSignal signal) =>
+            _transportingCoroutine = _coroutineRunner.PerformCoroutine(StartTransporting());
     }
 }

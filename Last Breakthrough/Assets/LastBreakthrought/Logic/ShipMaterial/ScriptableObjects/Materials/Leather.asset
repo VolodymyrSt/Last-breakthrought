@@ -18,4 +18,4 @@ MonoBehaviour:
     other binding materials.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 4a3a0940c1cb73f4eb445dda098919ad, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: 43f5f06c65ada264693ff24db72897c4, type: 2}
-  <MaxQuantity>k__BackingField: 5
+  <MaxQuantity>k__BackingField: 10

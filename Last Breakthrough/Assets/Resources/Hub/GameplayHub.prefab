@@ -5716,7 +5716,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Refined carbon material. Can be processed into pure carbon for technical
+    or energy uses.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06397dfbf1b847243988e589db45f18e, type: 2}
   m_sharedMaterial: {fileID: 1567567975272199129, guid: 06397dfbf1b847243988e589db45f18e, type: 2}
@@ -5750,7 +5751,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

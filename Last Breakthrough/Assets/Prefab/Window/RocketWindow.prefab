@@ -261,7 +261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Require details to repair the rocket:'
+  m_text: 'Require mechanisms to repair the rocket:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06397dfbf1b847243988e589db45f18e, type: 2}
   m_sharedMaterial: {fileID: 1567567975272199129, guid: 06397dfbf1b847243988e589db45f18e, type: 2}
@@ -587,6 +587,14 @@ PrefabInstance:
     - target: {fileID: 375873956899989657, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
       propertyPath: m_text
       value: Rocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 375873956899989657, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
+      propertyPath: m_fontSize
+      value: 40.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 375873956899989657, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40.1
       objectReference: {fileID: 0}
     - target: {fileID: 3075805175702664684, guid: e50e323ebf5b56247a1dd199d4d868c2, type: 3}
       propertyPath: m_Sprite

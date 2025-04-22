@@ -1,4 +1,5 @@
 ﻿using LastBreakthrought.Logic.ChargingPlace;
+using LastBreakthrought.Logic.FSX;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.NPC.Enemy;
 using LastBreakthrought.NPC.Robot.States;
@@ -9,8 +10,12 @@ namespace LastBreakthrought.NPC.Robot
 {
     public class RobotDefender : RobotBase 
     {
+        [Header("Base:")]
         [SerializeField] private LayerMask _targetLayerMask;
         [SerializeField] private float _detectionRadious;
+
+        [Header("Effect:")]
+        [SerializeField] private Transform _effectContainer;
 
         public IEnemy Target { get; private set; } = null;
 
@@ -22,7 +27,7 @@ namespace LastBreakthrought.NPC.Robot
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
 
-            _robotDefendingPlayerState = new RobotDefendingPlayerState(this, CoroutineRunner, Agent, Animator, Battary, RobotData.GeneralSpeed);
+            _robotDefendingPlayerState = new RobotDefendingPlayerState(this, CoroutineRunner, Agent, Animator, Battary, EffectCreator, EventBus, RobotData.GeneralSpeed);
 
             StateMachine.AddTransition(_robotDefendingPlayerState, RobotWanderingState, () => Target == null && IsWanderingState);
             StateMachine.AddTransition(_robotDefendingPlayerState, RobotFollowingPlayerState, () => Target == null && IsFollowingState);
@@ -61,6 +66,9 @@ namespace LastBreakthrought.NPC.Robot
 
         public void ClearTarget() => 
             Target = null;
+
+        public Transform GetRootForEffect() =>
+            _effectContainer;
 
         public override List<MechanismEntity> GetRequiredMechanismsToRepair() =>
             RequireMechanismsProvider.Holder.RepairRobotDefender.GetRequiredShipDetails();

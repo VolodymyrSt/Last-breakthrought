@@ -18,4 +18,4 @@ MonoBehaviour:
     carbon for technical or energy uses.
   <Sprite>k__BackingField: {fileID: 21300000, guid: e236071ded515b141886fc3109344504, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: cf95bdaa2c79ee646bee6be6f4bfc1b5, type: 2}
-  <MaxQuantity>k__BackingField: 7
+  <MaxQuantity>k__BackingField: 10

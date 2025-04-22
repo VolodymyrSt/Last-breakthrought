@@ -1,4 +1,7 @@
-﻿using LastBreakthrought.NPC.Base;
+﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.FSX;
+using LastBreakthrought.NPC.Base;
 using LastBreakthrought.NPC.Enemy;
 using LastBreakthrought.Player;
 using LastBreakthrought.Util;
@@ -21,18 +24,22 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
+        private readonly EffectCreator _effectCreator;
+        private readonly IEventBus _eventBus;
         private readonly float _followingSpeed;
 
         private Coroutine _defendingCoroutine;
 
         public RobotDefendingPlayerState(RobotDefender robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,  Animator animator,
-            RobotBattary robotBattary, float followingSpeed)
+            RobotBattary robotBattary, EffectCreator effectCreator, IEventBus eventBus, float followingSpeed)
         {
             _agent = agent;
             _robot = robot;
             _coroutineRunner = coroutineRunner;
             _animator = animator;
             _robotBattary = robotBattary;
+            _effectCreator = effectCreator;
+            _eventBus = eventBus;
             _followingSpeed = followingSpeed;
         }
 
@@ -43,12 +50,19 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.stoppingDistance = STOP_DISTANCE;
             _animator.SetBool(IS_MOVING, true);
             _defendingCoroutine = _coroutineRunner.PerformCoroutine(PerformDefending());
+
+            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopDefending);
+            _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueDefending);
         }
 
         public void Exit()
         {
             _animator.SetBool(IS_MOVING, false);
+            _animator.SetBool(IS_Defending, false);
             _coroutineRunner.HandleStopCoroutine(_defendingCoroutine);
+
+            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopDefending);
+            _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueDefending);
         }
 
         public void Update()
@@ -95,6 +109,8 @@ namespace LastBreakthrought.NPC.Robot.States
             var enemy = _robot.Target as EnemyBase;
             enemy?.ApplyDamage(35f);
 
+            _effectCreator.CreateLightningEffect(_robot.GetRootForEffect());
+
             _animator.SetBool(IS_Defending, true);
             _animator.SetBool(IS_MOVING, false);
         }
@@ -103,5 +119,11 @@ namespace LastBreakthrought.NPC.Robot.States
             _animator.SetBool(IS_MOVING, true);
             _animator.SetBool(IS_Defending, false);
         }
+
+        private void StopDefending(OnGamePausedSignal signal) =>
+            _coroutineRunner.HandleStopCoroutine(_defendingCoroutine);
+
+        private void ContinueDefending(OnGameResumedSignal signal) =>
+            _defendingCoroutine = _coroutineRunner.PerformCoroutine(PerformDefending());
     }
 }

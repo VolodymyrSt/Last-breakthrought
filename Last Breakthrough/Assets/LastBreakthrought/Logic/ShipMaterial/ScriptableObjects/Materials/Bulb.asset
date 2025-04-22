@@ -18,4 +18,4 @@ MonoBehaviour:
     in crafting.
   <Sprite>k__BackingField: {fileID: 21300000, guid: 7aca93e8b3127884290f30d6d7d7fca1, type: 3}
   <CraftDetail>k__BackingField: {fileID: 11400000, guid: 8c987c80acb41114380a72e8f5faedbe, type: 2}
-  <MaxQuantity>k__BackingField: 5
+  <MaxQuantity>k__BackingField: 10

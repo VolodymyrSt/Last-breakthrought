@@ -16,7 +16,7 @@ namespace LastBreakthrought.Logic.InteractionZone
         {
             if (_isOpened) return;
 
-            var duration = 20f;
+            var duration = 50f;
             gameObject.SetActive(true);
             transform.DOScale(_currentScale, duration * Time.deltaTime)
                 .SetEase(Ease.Linear)
@@ -31,7 +31,7 @@ namespace LastBreakthrought.Logic.InteractionZone
         {
             if (_isHidden) return;
 
-            var duration = 20f;
+            var duration = 50f;
             transform.DOScale(0, duration * Time.deltaTime)
                 .SetEase(Ease.Linear)
                 .Play()

@@ -5,6 +5,7 @@ using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
 using LastBreakthrought.UI.Inventory;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -16,6 +17,10 @@ namespace LastBreakthrought.Logic.RobotFactory
         private const int MAX_MINERS_COUNT = 3;
         private const int MAX_TRANSPORTERS_COUNT = 3;
         private const int MAX_DEFENDERS_COUNT = 3;
+
+        public event Action<int> OnMinersCountChanged;
+        public event Action<int> OnTransportersCountChanged;
+        public event Action<int> OnDefendersCountChanged;
 
         [Header("Base:")]
         [SerializeField] private Transform _robotSpawnPoint;
@@ -70,7 +75,7 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateMiner();
                 }
                 else
-                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
+                    _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
             }
             else
                 _massageHandler.ShowMassage("You can only have three miners");
@@ -87,7 +92,7 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateTransporter();
                 }
                 else
-                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
+                    _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
             }
             else
                 _massageHandler.ShowMassage("You can only have three transporters");
@@ -104,10 +109,10 @@ namespace LastBreakthrought.Logic.RobotFactory
                     CreateDefender();
                 }
                 else
-                    _massageHandler.ShowMassage("You cann`t create because you don`t have right mechanisms");
+                    _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
             }
             else
-                _massageHandler.ShowMassage("You can only have three transporters");
+                _massageHandler.ShowMassage("You can only have three defenders");
         }
 
         public List<MechanismEntity> GetMechanismsToCreateMiner() =>
@@ -129,6 +134,8 @@ namespace LastBreakthrought.Logic.RobotFactory
                 , robotMiner.SetWanderingState, mineAction: robotMiner.DoWork);
 
             _currentMinersCount++;
+
+            OnMinersCountChanged?.Invoke(_currentMinersCount);
         }
 
         private void CreateTransporter()
@@ -141,6 +148,8 @@ namespace LastBreakthrought.Logic.RobotFactory
                 robotTransporter.SetWanderingState, transportAction: robotTransporter.DoWork);
 
             _currentTransportersCount++;
+
+            OnTransportersCountChanged?.Invoke(_currentTransportersCount);
         }
 
         private void CreateDefender()
@@ -153,6 +162,8 @@ namespace LastBreakthrought.Logic.RobotFactory
                 robotDefender.SetWanderingState, defend: robotDefender.DoWork);
 
             _currentDefendersCount++;
+
+            OnDefendersCountChanged?.Invoke(_currentDefendersCount);
         }
     }
 }

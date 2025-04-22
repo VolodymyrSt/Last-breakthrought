@@ -1,5 +1,7 @@
 ﻿using LastBreakthrought.Logic.CraftingMachine;
+using LastBreakthrought.UI.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace LastBreakthrought.UI.Windows.CraftMachineWindow
 {
@@ -7,7 +9,17 @@ namespace LastBreakthrought.UI.Windows.CraftMachineWindow
     {
         [field:SerializeField] public CraftMachine CraftMachine {  get; private set; }
 
-        public override void ActivateWindow() => View.ShowView();
+        private InventoryMenuPanelHandler _inventoryMenuPanel;
+
+        [Inject]
+        private void Construct(InventoryMenuPanelHandler inventoryMenuPanel) =>
+            _inventoryMenuPanel = inventoryMenuPanel;
+
+        public override void ActivateWindow()
+        {
+            View.ShowView();
+            _inventoryMenuPanel.View.Open();
+        }
 
         public override void DeactivateWindow() => View.HideView();
     }

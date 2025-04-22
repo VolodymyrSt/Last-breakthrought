@@ -1,6 +1,5 @@
-﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
-using LastBreakthrought.Logic.Mechanisms;
-using LastBreakthrought.Logic.ShipDetail;
+﻿using LastBreakthrought.Logic.Mechanisms;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -13,6 +12,11 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
         [SerializeField] private Button _createRobotMinerButton;
         [SerializeField] private Button _createRobotTransporterButton;
         [SerializeField] private Button _createRobotDefenderButton;
+
+        [Space(20f)]
+        [SerializeField] private TextMeshProUGUI _minersCountText;
+        [SerializeField] private TextMeshProUGUI _transportersCountText;
+        [SerializeField] private TextMeshProUGUI _defendersCountText;
 
         [Header("Containers")]
         [SerializeField] private RectTransform _neededMechanismsForMinerCreateContainer;
@@ -36,8 +40,13 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             _createRobotDefenderButton.onClick.AddListener(() =>
                 Handler.CreateDefender());
 
+            Handler.RobotFactoryMachine.OnMinersCountChanged += ChangedMinersCount;
+            Handler.RobotFactoryMachine.OnTransportersCountChanged += ChangedTransportersCount;
+            Handler.RobotFactoryMachine.OnDefendersCountChanged += ChangedDefendersCount;
+
             GenerateRequiredMechanismsForCreatingRobots();
         }
+
 
         private void GenerateRequiredMechanismsForCreatingRobots()
         {
@@ -50,6 +59,10 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             var requiredMechanismsForDefender = Handler.RobotFactoryMachine.GetMechanismsToCreateDefender();
             _mechanismsGeneratorUI.GenerateRequireMechanisms(requiredMechanismsForDefender, _neededMechanismsForDefenderCreateContainer);
         }
+
+        private void ChangedMinersCount(int obj) => _minersCountText.text = $"{obj}/3";
+        private void ChangedDefendersCount(int obj) => _defendersCountText.text = $"{obj}/3";
+        private void ChangedTransportersCount(int obj) => _transportersCountText.text = $"{obj}/3";
 
         public override void Dispose()
         {

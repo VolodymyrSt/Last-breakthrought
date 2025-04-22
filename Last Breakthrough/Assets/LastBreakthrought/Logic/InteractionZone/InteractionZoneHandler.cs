@@ -27,8 +27,6 @@ namespace LastBreakthrought.Logic.InteractionZone
             _activationRadious = 1.25f * _interationZoneView.transform.localScale.x;
         }
 
-        private void OnEnable() => _interationZoneView.HideOnInit();
-
         public void Init()
         {
             _interactionRadious = _interationZoneView.transform.localScale.x / 2;

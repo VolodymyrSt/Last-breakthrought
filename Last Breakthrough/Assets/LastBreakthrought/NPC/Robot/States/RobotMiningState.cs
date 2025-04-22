@@ -1,4 +1,6 @@
-﻿using LastBreakthrought.NPC.Base;
+﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Util;
 using System.Collections;
 using UnityEngine;
@@ -18,19 +20,21 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
+        private readonly IEventBus _eventBus;
         private readonly float _movingSpeed;
 
         private Coroutine _miningCoroutine;
         private bool _isMining = false;
 
         public RobotMiningState(RobotMiner robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, RobotBattary robotBattary, float followingSpeed)
+            Animator animator, RobotBattary robotBattary, IEventBus eventBus, float followingSpeed)
         {
             _robot = robot;
             _coroutineRunner = coroutineRunner;
             _agent = agent;
             _animator = animator;
             _robotBattary = robotBattary;
+            _eventBus = eventBus;
             _movingSpeed = followingSpeed;
         }
 
@@ -40,6 +44,9 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.speed = _movingSpeed;
             _agent.stoppingDistance = STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
+
+            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopMining);
+            _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueMining);
         }
 
         public void Exit()
@@ -51,6 +58,9 @@ namespace LastBreakthrought.NPC.Robot.States
 
             if (_miningCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_miningCoroutine);
+
+            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopMining);
+            _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueMining);
         }
 
         public void Update()
@@ -85,5 +95,11 @@ namespace LastBreakthrought.NPC.Robot.States
             }
             _robot.ClearCrashedShip();
         }
+
+        private void StopMining(OnGamePausedSignal signal) =>
+            _coroutineRunner.HandleStopCoroutine(_miningCoroutine);
+
+        private void ContinueMining(OnGameResumedSignal signal) =>
+            _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
     }
 }
