@@ -3,6 +3,7 @@ using DG.Tweening;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.UI.Inventory.Mechanism;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -22,8 +23,10 @@ namespace LastBreakthrought.UI.Inventory
         [field: SerializeField] public DetailContainerUI DetailsContainerUI { get; private set; }
         [field: SerializeField] public MechanismsContainerUI MechanismsContainer { get; private set; }
 
-        private bool _isMenuOpen = false;
         private IEventBus _eventBus;
+
+        private bool _isMenuOpen = false;
+        private bool _isTutorialEnded = false;
 
         [Inject]
         private void Construct(IEventBus eventBus) =>
@@ -34,6 +37,8 @@ namespace LastBreakthrought.UI.Inventory
             _openClosedInventoryMenuButton.onClick.AddListener(() => PerformOpenAndClose());
             _eventBus.SubscribeEvent<OnRobotMenuOpenedSignal>(CheckIfNeedToBeClose);
             _eventBus.SubscribeEvent<OnMapMenuOpenedSignal>(CheckIfNeedToBeClose);
+
+            _eventBus.SubscribeEvent((OnTutorialEndedSignal signal) => _isTutorialEnded = true);
 
             _root.localScale = Vector3.zero;
             _root.gameObject.SetActive(false);
@@ -67,10 +72,15 @@ namespace LastBreakthrought.UI.Inventory
 
         private void PerformOpenAndClose()
         {
-            if (_isMenuOpen)
-                Close();
+            if (!_isTutorialEnded)
+                return;
             else
-                Open();
+            {
+                if (_isMenuOpen)
+                    Close();
+                else
+                    Open();
+            }
         }
 
         private void Close()

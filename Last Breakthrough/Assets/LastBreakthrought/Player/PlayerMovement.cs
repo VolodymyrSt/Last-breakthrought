@@ -1,5 +1,8 @@
 ﻿using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.Input;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +19,7 @@ namespace LastBreakthrought.Player
         private float _deceleration;
 
         private IInputService _inputService;
+        private IEventBus _eventBus;
         private Camera _camera;
 
         private Vector3 _currentHorizontalVelocity;
@@ -23,15 +27,21 @@ namespace LastBreakthrought.Player
         private float _verticalVelocity;
 
         [Inject]
-        private void Construct(IInputService inputService, IConfigProviderService configProvider)
+        private void Construct(IInputService inputService, IConfigProviderService configProvider, IEventBus eventBus)
         {
+            //turn off because we want out player to move when the game started (when the turorial is ended)
+            enabled = false;
+
             _inputService = inputService;
+            _eventBus = eventBus;
 
             _moveSpeed = configProvider.PlayerConfigSO.MoveSpeed;
             _rotationSpeed = configProvider.PlayerConfigSO.RotationSpeed;
             _gravityMultiplier = configProvider.PlayerConfigSO.GravityMultiplier;
             _acceleration = configProvider.PlayerConfigSO.Acceleration;
             _deceleration = configProvider.PlayerConfigSO.Deceleration;
+
+            _eventBus.SubscribeEvent((OnTutorialEndedSignal signal) => enabled = true);
         }
 
         private void Start() => _camera = Camera.main;
@@ -90,5 +100,8 @@ namespace LastBreakthrought.Player
             Vector3 movement = _currentHorizontalVelocity + Vector3.up * _verticalVelocity;
             _characterController.Move(movement * Time.deltaTime);
         }
+
+        private void OnDestroy() => 
+            _eventBus.UnSubscribeEvent((OnTutorialEndedSignal signal) => enabled = true);
     }
 }

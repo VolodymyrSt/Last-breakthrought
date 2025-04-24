@@ -37,30 +37,33 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         public void Tick()
         {
             foreach (var robotControl in _robotControls)
+            {
                 robotControl.UpdateSlider();
+                robotControl.UpdateDistanceToPlayer();
+            }
         }
 
-        public void AddRobotMinerControlUI(RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action mineAction)
+        public void AddRobotMinerControlUI(IRobot robot, RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action mineAction)
         {
-            var robotMinerControl = _robotMinerControlUIFactory.Create(View.GetContainer(),
+            var robotMinerControl = _robotMinerControlUIFactory.Create(View.GetContainer(), robot,
                 robotData, battary, robotHealth, followAction, goHomeAction, mineAction);
 
             View.OnNewItemAdded(robotMinerControl.transform);
             _robotControls.Add(robotMinerControl);
         }
         
-        public void AddRobotTransporterControlUI(RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action transportAction)
+        public void AddRobotTransporterControlUI(IRobot robot,RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action transportAction)
         {
-            var robotTransporterControl = _robotTransporterControlUIFactory.Create(View.GetContainer(),
+            var robotTransporterControl = _robotTransporterControlUIFactory.Create(View.GetContainer(), robot,
                 robotData, battary, robotHealth, followAction, goHomeAction, transportAction);
 
             View.OnNewItemAdded(robotTransporterControl.transform);
             _robotControls.Add(robotTransporterControl);
         }
 
-        public void AddRobotDefenderControlUI(RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action defend)
+        public void AddRobotDefenderControlUI(IRobot robot, RobotConfigSO robotData, RobotBattary battary, RobotHealth robotHealth, Action followAction, Action goHomeAction, Action defend)
         {
-            var robotDefenderControl = _robotDefenderControlUIFactory.Create(View.GetContainer(),
+            var robotDefenderControl = _robotDefenderControlUIFactory.Create(View.GetContainer(), robot,
                 robotData, battary, robotHealth, followAction, goHomeAction, defend);
 
             View.OnNewItemAdded(robotDefenderControl.transform);

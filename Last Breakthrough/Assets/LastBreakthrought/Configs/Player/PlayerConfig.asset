@@ -17,8 +17,8 @@ MonoBehaviour:
   <GravityMultiplier>k__BackingField: 2
   <Acceleration>k__BackingField: 10
   <Deceleration>k__BackingField: 15
-  <StartedHealth>k__BackingField: 73.5
-  <StartedOxygen>k__BackingField: 81.2
+  <StartedHealth>k__BackingField: 72.8
+  <StartedOxygen>k__BackingField: 19
   <MaxHealth>k__BackingField: 100
   <MaxOxygen>k__BackingField: 100
   <HealthRegeneration>k__BackingField: 0.3

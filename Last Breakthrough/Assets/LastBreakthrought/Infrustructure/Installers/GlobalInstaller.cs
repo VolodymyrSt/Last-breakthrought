@@ -1,3 +1,4 @@
+using LastBreakthrought.Configs.Dialogue;
 using LastBreakthrought.Configs.Enemy;
 using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Configs.Player;
@@ -23,6 +24,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         [SerializeField] private GameConfigSO _gameConfigSO;
         [SerializeField] private EnemyConfigHolderSO _enemyConfigHolderSO;
         [SerializeField] private RobotConfigHolderSO _robotConfigHolderSO;
+        [SerializeField] private DialogueConfigSO _dialogueConfigSO;
 
         public override void InstallBindings()
         {
@@ -46,6 +48,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<PlayerConfigSO>().FromInstance(_playerConfigSO).AsSingle();
             Container.Bind<EnemyConfigHolderSO>().FromInstance(_enemyConfigHolderSO).AsSingle();
             Container.Bind<RobotConfigHolderSO>().FromInstance(_robotConfigHolderSO).AsSingle();
+            Container.Bind<DialogueConfigSO>().FromInstance(_dialogueConfigSO).AsSingle();
         }
 
         private void BindSceneLoader() => 

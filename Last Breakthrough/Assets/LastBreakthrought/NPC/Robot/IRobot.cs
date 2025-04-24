@@ -14,5 +14,6 @@ namespace LastBreakthrought.NPC.Robot
         RobotBattary GetRobotBattary();
         void DoWork();
         RobotHealth GetRobotHealth();
+        int GetRobotDistanceToPlayer();
     }
 }

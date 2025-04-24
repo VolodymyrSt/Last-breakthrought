@@ -1,7 +1,6 @@
 using LastBreakthrought.Configs.Player;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.PlayerStats
@@ -33,15 +32,15 @@ namespace LastBreakthrought.UI.PlayerStats
 
         public void IncreaseOxygen(float value) =>
             CurrentOxygen = Mathf.Min(CurrentOxygen + value * Time.deltaTime, _playerConfig.MaxOxygen);
+        public void IncreaseHealth() =>
+            CurrentHealth = Mathf.Min(CurrentHealth + _playerConfig.HealthRegeneration * Time.deltaTime, _playerConfig.MaxHealth);
         public void DecreaseHealth() =>
             CurrentHealth = Mathf.Min(CurrentHealth - _playerConfig.HealthReductionIndex * Time.deltaTime, _playerConfig.MaxHealth);
         public void DecreaseOxygen() =>
             CurrentOxygen = Mathf.Min(CurrentOxygen - _playerConfig.OxygenSuppletion * Time.deltaTime, _playerConfig.MaxOxygen);
-        public void IncreaseHealth() =>
-            CurrentHealth = Mathf.Min(CurrentHealth + _playerConfig.HealthRegeneration * Time.deltaTime, _playerConfig.MaxHealth);
 
         public bool IsRunOutOfHealth() => CurrentHealth < 0;
-        public bool CanRegenerate() => CurrentHealth >= _playerConfig.MaxHealth;
+        public bool CanRegenerate() => CurrentHealth < _playerConfig.MaxHealth;
 
         public void UpdateHealth()
         {
@@ -51,6 +50,14 @@ namespace LastBreakthrought.UI.PlayerStats
                 _eventBus.Invoke(new OnGameEndedSignal());
         }
 
-        public void UpdateOxygen() => _playerStatsView.SetOxygeSliderValue(CurrentOxygen);
+        public void UpdateOxygen()
+        {
+            _playerStatsView.SetOxygeSliderValue(CurrentOxygen);
+
+            if (CurrentOxygen <= 0)
+                _playerStatsView.ShowWarningSigh();
+            else
+                _playerStatsView.HideWarningSigh();
+        }
     }
 }

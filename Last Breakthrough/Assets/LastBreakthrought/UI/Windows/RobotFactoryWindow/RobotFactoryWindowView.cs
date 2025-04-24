@@ -69,6 +69,10 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
             _createRobotMinerButton.onClick.RemoveListener(() => Handler.CreateMiner());
             _createRobotTransporterButton.onClick.RemoveListener(() => Handler.CreateTransporter());
             _createRobotTransporterButton.onClick.RemoveListener(() => Handler.CreateDefender());
+
+            Handler.RobotFactoryMachine.OnMinersCountChanged -= ChangedMinersCount;
+            Handler.RobotFactoryMachine.OnTransportersCountChanged -= ChangedTransportersCount;
+            Handler.RobotFactoryMachine.OnDefendersCountChanged -= ChangedDefendersCount;
         }
     }
 }

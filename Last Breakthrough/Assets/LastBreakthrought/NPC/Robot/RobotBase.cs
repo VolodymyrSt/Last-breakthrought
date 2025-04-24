@@ -129,6 +129,9 @@ namespace LastBreakthrought.NPC.Robot
 
         public RobotHealth GetRobotHealth() => Health;
 
+        public int GetRobotDistanceToPlayer() =>
+            (int)(transform.position - PlayerHandler.GetPosition()).magnitude;
+
         public RobotChargingPlace FindAvelableCharingPlace()
         {
             foreach (var chargingPlace in _chargingPlaces)

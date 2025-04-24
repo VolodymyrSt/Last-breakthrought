@@ -16,8 +16,10 @@ namespace LastBreakthrought.UI.Map
         [SerializeField] private RectTransform _root;
         [SerializeField] private Button _openClosedMapMenuButton;
 
-        private bool _isMenuOpen = false;
         private IEventBus _eventBus;
+
+        private bool _isMenuOpen = false;
+        private bool _isTutorialEnded = false;
 
         [Inject]
         private void Construct(IEventBus eventBus) =>
@@ -28,6 +30,8 @@ namespace LastBreakthrought.UI.Map
             _openClosedMapMenuButton.onClick.AddListener(() => PerformOpenAndClose());
             _eventBus.SubscribeEvent<OnInventoryMenuOpenedSignal>(CheckIfNeedToBeClose);
             _eventBus.SubscribeEvent<OnRobotMenuOpenedSignal>(CheckIfNeedToBeClose);
+
+            _eventBus.SubscribeEvent((OnTutorialEndedSignal signal) => _isTutorialEnded = true);
 
             _root.localScale = Vector3.zero;
             _root.gameObject.SetActive(false);
@@ -60,10 +64,15 @@ namespace LastBreakthrought.UI.Map
 
         private void PerformOpenAndClose()
         {
-            if (_isMenuOpen)
-                Close();
+            if (!_isTutorialEnded)
+                return;
             else
-                Open();
+            {
+                if (_isMenuOpen)
+                    Close();
+                else
+                    Open();
+            }
         }
 
         private void Close()

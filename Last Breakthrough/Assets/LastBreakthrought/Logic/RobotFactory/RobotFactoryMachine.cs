@@ -129,7 +129,7 @@ namespace LastBreakthrought.Logic.RobotFactory
             var robotMiner = _robotMinerFactory.CreateRobot(_robotSpawnPoint.position, _robotSpawnPoint,
                                     _robotWanderingZone, _chargingPlaces);
 
-            _robotMenuPanelHandler.AddRobotMinerControlUI(robotMiner.GetRobotData(), 
+            _robotMenuPanelHandler.AddRobotMinerControlUI(robotMiner, robotMiner.GetRobotData(), 
                 robotMiner.GetRobotBattary(), robotMiner.GetRobotHealth(), robotMiner.SetFollowingPlayerState
                 , robotMiner.SetWanderingState, mineAction: robotMiner.DoWork);
 
@@ -143,7 +143,7 @@ namespace LastBreakthrought.Logic.RobotFactory
             var robotTransporter = _robotTransporterFactory.CreateRobot(_robotSpawnPoint.position,
                                     _robotSpawnPoint, _robotWanderingZone, _chargingPlaces);
 
-            _robotMenuPanelHandler.AddRobotTransporterControlUI(robotTransporter.GetRobotData(),
+            _robotMenuPanelHandler.AddRobotTransporterControlUI(robotTransporter, robotTransporter.GetRobotData(),
                 robotTransporter.GetRobotBattary(), robotTransporter.GetRobotHealth(), robotTransporter.SetFollowingPlayerState,
                 robotTransporter.SetWanderingState, transportAction: robotTransporter.DoWork);
 
@@ -157,7 +157,7 @@ namespace LastBreakthrought.Logic.RobotFactory
             var robotDefender = _robotDefenderFactory.CreateRobot(_robotSpawnPoint.position,
                                     _robotSpawnPoint, _robotWanderingZone, _chargingPlaces);
 
-            _robotMenuPanelHandler.AddRobotDefenderControlUI(robotDefender.GetRobotData(),
+            _robotMenuPanelHandler.AddRobotDefenderControlUI(robotDefender, robotDefender.GetRobotData(),
                 robotDefender.GetRobotBattary(), robotDefender.GetRobotHealth(), robotDefender.SetFollowingPlayerState,
                 robotDefender.SetWanderingState, defend: robotDefender.DoWork);
 

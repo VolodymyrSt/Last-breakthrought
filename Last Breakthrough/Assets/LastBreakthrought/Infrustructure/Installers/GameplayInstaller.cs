@@ -33,6 +33,7 @@ using LastBreakthrought.UI.VictoryMenu;
 using LastBreakthrought.UI.LostMenu;
 using LastBreakthrought.UI.ToolTip;
 using LastBreakthrought.Logic.FSX;
+using LastBreakthrought.UI.Tutorial;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -142,6 +143,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindLostMenu();
             BindPlayerStats();
             BindToolTip();
+            BindTutorial();
         }
 
         private void BindLight() => 
@@ -236,6 +238,14 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<VictoryMenuView>().FromInstance(victoryMenu).AsSingle();
 
             Container.BindInterfacesAndSelfTo<VictoryMenuHandler>().AsSingle().NonLazy();
+        }
+
+        private void BindTutorial()
+        {
+            var tutorialView = _gameplayHub.GetComponentInChildren<TutorialView>();
+            Container.Bind<TutorialView>().FromInstance(tutorialView).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<TutorialHandler>().AsSingle().NonLazy();
         }
 
         private void BindLostMenu()
