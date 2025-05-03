@@ -4,6 +4,9 @@ using LastBreakthrought.Infrustructure.Services.EventBus;
 using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Player;
+using LastBreakthrought.Logic.Camera;
 
 namespace LastBreakthrought.UI.Map
 {
@@ -17,13 +20,19 @@ namespace LastBreakthrought.UI.Map
         [SerializeField] private Button _openClosedMapMenuButton;
 
         private IEventBus _eventBus;
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
 
         private bool _isMenuOpen = false;
         private bool _isTutorialEnded = false;
 
         [Inject]
-        private void Construct(IEventBus eventBus) =>
+        private void Construct(IEventBus eventBus, IAudioService audioService, FollowCamera followCamera)
+        {
             _eventBus = eventBus;
+            _audioService = audioService;
+            _followCamera = followCamera;
+        }
 
         public void Init()
         {
@@ -42,9 +51,17 @@ namespace LastBreakthrought.UI.Map
 
         public RectTransform GetMarkerContainer() => _markersContent;
 
-        public void Open()
+
+        public void UpdateChildrenScale()
+        {
+            foreach (Transform item in _markersContent)
+                item.localScale = _isMenuOpen ? Vector3.one : Vector3.zero;
+        }
+
+        private void Open()
         {
             _eventBus.Invoke(new OnMapMenuOpenedSignal());
+            _audioService.PlayOnObject(Configs.Sound.SoundType.PanelOpen, _followCamera);
 
             _root.gameObject.SetActive(true);
             _root.DOScale(1f, ANIMATION_DURATION)
@@ -54,12 +71,6 @@ namespace LastBreakthrought.UI.Map
                     _isMenuOpen = true;
                     UpdateChildrenScale();
                 });
-        }
-
-        public void UpdateChildrenScale()
-        {
-            foreach (Transform item in _markersContent)
-                item.localScale = _isMenuOpen ? Vector3.one : Vector3.zero;
         }
 
         private void PerformOpenAndClose()

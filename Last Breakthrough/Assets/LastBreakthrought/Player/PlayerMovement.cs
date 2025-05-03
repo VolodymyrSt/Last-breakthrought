@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.Input;
@@ -20,6 +21,7 @@ namespace LastBreakthrought.Player
 
         private IInputService _inputService;
         private IEventBus _eventBus;
+        private IAudioService _audioService;
         private Camera _camera;
 
         private Vector3 _currentHorizontalVelocity;
@@ -27,13 +29,14 @@ namespace LastBreakthrought.Player
         private float _verticalVelocity;
 
         [Inject]
-        private void Construct(IInputService inputService, IConfigProviderService configProvider, IEventBus eventBus)
+        private void Construct(IInputService inputService, IConfigProviderService configProvider, IEventBus eventBus, IAudioService audioService)
         {
             //turn off because we want out player to move when the game started (when the turorial is ended)
             enabled = false;
 
             _inputService = inputService;
             _eventBus = eventBus;
+            _audioService = audioService;
 
             _moveSpeed = configProvider.PlayerConfigSO.MoveSpeed;
             _rotationSpeed = configProvider.PlayerConfigSO.RotationSpeed;
@@ -42,6 +45,12 @@ namespace LastBreakthrought.Player
             _deceleration = configProvider.PlayerConfigSO.Deceleration;
 
             _eventBus.SubscribeEvent((OnTutorialEndedSignal signal) => enabled = true);
+            _eventBus.SubscribeEvent((OnGameEndedSignal signal) => enabled = false);
+            _eventBus.SubscribeEvent((OnGameWonSignal signal) => enabled = false);
+            _eventBus.SubscribeEvent((OnPlayerDiedSignal signal) => { 
+                enabled = false;
+                _characterController.enabled = false;
+            });
         }
 
         private void Start() => _camera = Camera.main;
@@ -54,6 +63,7 @@ namespace LastBreakthrought.Player
             UpdateHorizontalMovement(inputDirection);
             RotateTowardsMovement(inputDirection);
             MoveCharacter();
+            PlayWalkingSound(inputDirection);
         }
 
         private Vector3 GetNormalizedMovementVector()
@@ -101,7 +111,29 @@ namespace LastBreakthrought.Player
             _characterController.Move(movement * Time.deltaTime);
         }
 
-        private void OnDestroy() => 
-            _eventBus.UnSubscribeEvent((OnTutorialEndedSignal signal) => enabled = true);
+        private void PlayWalkingSound(Vector3 inputDirection)
+        {
+            bool isMoving = inputDirection.magnitude > 0.1f;
+            bool isSoundPlaying = _audioService.IsSoundPlaying(this, Configs.Sound.SoundType.PlayerMoving);
+
+            if (isMoving)
+            {
+                if (!isSoundPlaying)
+                    _audioService.PlayOnObject(Configs.Sound.SoundType.PlayerMoving, this, true, 0.5f);
+            }
+            else if (isSoundPlaying)
+                _audioService.StopOnObject(this, Configs.Sound.SoundType.PlayerMoving);
+        }
+
+        private void OnDestroy()
+        {
+            _eventBus?.UnSubscribeEvent((OnTutorialEndedSignal signal) => enabled = true);
+            _eventBus?.UnSubscribeEvent((OnGameEndedSignal signal) => enabled = false);
+            _eventBus?.UnSubscribeEvent((OnGameWonSignal signal) => enabled = false);
+            _eventBus?.UnSubscribeEvent((OnPlayerDiedSignal signal) => {
+                enabled = false;
+                _characterController.enabled = false;
+            });
+        }
     }
 }

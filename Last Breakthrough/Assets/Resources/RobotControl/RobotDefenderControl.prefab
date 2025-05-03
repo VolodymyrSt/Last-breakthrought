@@ -1791,6 +1791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ease: 10
+  _scaleValue: 1.1
 --- !u!1 &6011002319829761264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,6 +1979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ease: 10
+  _scaleValue: 1.1
 --- !u!1 &6250357649719753249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,6 +2090,9 @@ MonoBehaviour:
   _followButton: {fileID: 8402029551275268578}
   _homeButton: {fileID: 4702109706447925542}
   _doWorkButton: {fileID: 437556169084274719}
+  _normalColor: {r: 1, g: 0.93333334, b: 0.7882353, a: 1}
+  _pressedColor: {r: 0.74562216, g: 1, b: 0.48584908, a: 1}
+  _selectedColor: {r: 1, g: 0.7309886, b: 0.5882353, a: 1}
 --- !u!1 &6538081802880638995
 GameObject:
   m_ObjectHideFlags: 0
@@ -3035,6 +3040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ease: 10
+  _scaleValue: 1.1
 --- !u!1 &9106523138695936373
 GameObject:
   m_ObjectHideFlags: 0

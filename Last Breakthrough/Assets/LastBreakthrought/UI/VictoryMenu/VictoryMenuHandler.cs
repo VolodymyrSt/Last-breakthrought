@@ -27,13 +27,13 @@ namespace LastBreakthrought.UI.VictoryMenu
         {
             _view.Init();
 
-            _eventBus.SubscribeEvent<OnGameWonSignal>(ShowPopup);
+            _eventBus.SubscribeEvent<OnVictoryVideoEndedSignal>(ShowPopup);
             _eventBus.SubscribeEvent<OnGamePausedSignal>(Pause);
             _view.OnGoneToMenu += GoToMenu;
 
         }
 
-        private void ShowPopup(OnGameWonSignal signal)
+        private void ShowPopup(OnVictoryVideoEndedSignal signal)
         {
             _view.Show();
             _view.SetVictoryTimer(_timer.GetDay(), _timer.GetMinutes(), _timer.GetSeconds());
@@ -47,7 +47,7 @@ namespace LastBreakthrought.UI.VictoryMenu
         public void Dispose()
         {
             _eventBus.UnSubscribeEvent<OnGamePausedSignal>(Pause);
-            _eventBus.UnSubscribeEvent<OnGameWonSignal>(ShowPopup);
+            _eventBus.UnSubscribeEvent<OnVictoryVideoEndedSignal>(ShowPopup);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Logic.FSX;
 using LastBreakthrought.NPC.Base;
@@ -26,12 +27,13 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly RobotBattary _robotBattary;
         private readonly EffectCreator _effectCreator;
         private readonly IEventBus _eventBus;
+        private readonly IAudioService _audioService;
         private readonly float _followingSpeed;
 
         private Coroutine _defendingCoroutine;
 
         public RobotDefendingPlayerState(RobotDefender robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,  Animator animator,
-            RobotBattary robotBattary, EffectCreator effectCreator, IEventBus eventBus, float followingSpeed)
+            RobotBattary robotBattary, EffectCreator effectCreator, IEventBus eventBus, IAudioService audioService, float followingSpeed)
         {
             _agent = agent;
             _robot = robot;
@@ -40,6 +42,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _robotBattary = robotBattary;
             _effectCreator = effectCreator;
             _eventBus = eventBus;
+            _audioService = audioService;
             _followingSpeed = followingSpeed;
         }
 
@@ -110,6 +113,7 @@ namespace LastBreakthrought.NPC.Robot.States
             enemy?.ApplyDamage(35f);
 
             _effectCreator.CreateLightningEffect(_robot.GetRootForEffect());
+            _audioService.PlayOnObject(Configs.Sound.SoundType.DefenderAttack, _robot);
 
             _animator.SetBool(IS_Defending, true);
             _animator.SetBool(IS_MOVING, false);

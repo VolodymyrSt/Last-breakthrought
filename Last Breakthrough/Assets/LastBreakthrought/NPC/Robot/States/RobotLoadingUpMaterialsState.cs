@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Util;
@@ -21,13 +22,15 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
         private readonly IEventBus _eventBus;
+        private readonly IAudioService _audioService;
         private readonly float _movingSpeed;
 
         private Coroutine _loadingUpCoroutine;
+        private Coroutine _loadingUpAudioCoroutine;
         private bool _isTransporting = false;
 
         public RobotLoadingUpMaterialsState(RobotTransporter robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, RobotBattary robotBattary, IEventBus eventBus, float followingSpeed)
+            Animator animator, RobotBattary robotBattary, IEventBus eventBus, IAudioService audioService, float followingSpeed)
         {
             _robot = robot;
             _coroutineRunner = coroutineRunner;
@@ -36,6 +39,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _robotBattary = robotBattary;
             _eventBus = eventBus;
             _movingSpeed = followingSpeed;
+            _audioService = audioService;
         }
 
         public void Enter()
@@ -58,6 +62,8 @@ namespace LastBreakthrought.NPC.Robot.States
 
             if (_loadingUpCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_loadingUpCoroutine);
+
+            ClearLoadingSound();
 
             _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopLoading);
             _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueLoading);
@@ -95,13 +101,15 @@ namespace LastBreakthrought.NPC.Robot.States
 
             _animator.SetBool(IS_TRANSPORTING, true);
 
+            PlayLoadingSound();
+
             while (_robot.CrashedShip.MinedMaterials.Count > 0)
             {
                 yield return new WaitForSecondsRealtime(LOADING_ONE_METERIAL_TIME);
 
                 HandleLoading();
             }
-        }
+        }     
 
         private void HandleLoading()
         {
@@ -127,10 +135,26 @@ namespace LastBreakthrought.NPC.Robot.States
             }
         }
 
-        private void StopLoading(OnGamePausedSignal signal) =>
-            _coroutineRunner.HandleStopCoroutine(_loadingUpCoroutine);
+        private void StopLoading(OnGamePausedSignal signal)
+        {
+            if (_loadingUpCoroutine != null)
+                _coroutineRunner.HandleStopCoroutine(_loadingUpCoroutine);
 
-        private void ContinueLoading(OnGameResumedSignal signal) =>
+            ClearLoadingSound();
+        }
+
+        private void ContinueLoading(OnGameResumedSignal signal)
+        {
             _loadingUpCoroutine = _coroutineRunner.PerformCoroutine(StartLoadingUp());
+            PlayLoadingSound();
+        }
+
+        private void PlayLoadingSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.TransporterTransporting, _robot, true);
+
+        private void ClearLoadingSound()
+        {
+            _audioService.StopOnObject(_robot, Configs.Sound.SoundType.TransporterTransporting);
+        }
     }
 }

@@ -42,13 +42,8 @@ namespace LastBreakthrought.UI.PlayerStats
         public bool IsRunOutOfHealth() => CurrentHealth < 0;
         public bool CanRegenerate() => CurrentHealth < _playerConfig.MaxHealth;
 
-        public void UpdateHealth()
-        {
+        public void UpdateHealth() => 
             _playerStatsView.SetHealthSliderValue(CurrentHealth);
-
-            if (CurrentHealth <= 0)
-                _eventBus.Invoke(new OnGameEndedSignal());
-        }
 
         public void UpdateOxygen()
         {

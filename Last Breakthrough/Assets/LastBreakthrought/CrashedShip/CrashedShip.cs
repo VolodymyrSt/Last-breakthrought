@@ -1,4 +1,6 @@
-﻿using LastBreakthrought.Infrustructure.Services.Massage;
+﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
@@ -42,7 +44,8 @@ namespace LastBreakthrought.CrashedShip
         }
 
         [Inject]
-        private void Construct(CrashedShipsContainer shipsContainer, ShipMaterialGenerator materialGenerator, MapMenuPanelHandler mapMenuPanel, IMassageHandlerService massageHandler)
+        private void Construct(CrashedShipsContainer shipsContainer, ShipMaterialGenerator materialGenerator
+            , MapMenuPanelHandler mapMenuPanel, IMassageHandlerService massageHandler)
         {
             _shipsContainer = shipsContainer;
             _shipMaterialGenerator = materialGenerator;

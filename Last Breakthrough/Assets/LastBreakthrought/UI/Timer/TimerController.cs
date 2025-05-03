@@ -134,8 +134,8 @@ namespace LastBreakthrought.UI.Timer
 
         public void Dispose()
         {
-            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopTimer);
-            _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ResumeTimer);
+            _eventBus?.UnSubscribeEvent<OnGamePausedSignal>(StopTimer);
+            _eventBus?.UnSubscribeEvent<OnGameResumedSignal>(ResumeTimer);
         }
     }
 }

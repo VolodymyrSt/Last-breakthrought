@@ -31,6 +31,8 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
         public static string MechanismCraftPath = "CraftForCraftMachine/MechanismCraft";
 
         public static string LightningEffectPath = "Effects/Lightning Hit Blue";
+        public static string FireEffectPath = "Effects/Fire Hit";
+        public static string FireExplosionPath = "Effects/Explosion";
 
 
 

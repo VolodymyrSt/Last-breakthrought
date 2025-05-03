@@ -1,10 +1,8 @@
 ﻿using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Other;
-using LastBreakthrought.UI.VictoryMenu;
 using Zenject;
 using System;
-using TMPro;
 
 namespace LastBreakthrought.UI.LostMenu
 {
@@ -25,13 +23,14 @@ namespace LastBreakthrought.UI.LostMenu
         {
             _view.Init();
 
-            _eventBus.SubscribeEvent<OnGameEndedSignal>(ShowPopup);
             _eventBus.SubscribeEvent<OnGamePausedSignal>(Pause);
+            _eventBus.SubscribeEvent<OnExploededStarVideoEndedSignal>(ShowPopup);
+            _eventBus.SubscribeEvent<OnPlayerDiedSignal>(ShowPopup);
             _view.OnGoneToMenu += GoToMenu;
 
         }
 
-        private void ShowPopup(OnGameEndedSignal signal) => _view.Show();
+        private void ShowPopup() => _view.Show();
 
         private void Pause(OnGamePausedSignal signal) =>
             _timeHandler.StopTime();
@@ -40,8 +39,9 @@ namespace LastBreakthrought.UI.LostMenu
 
         public void Dispose()
         {
-            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(Pause);
-            _eventBus.UnSubscribeEvent<OnGameEndedSignal>(ShowPopup);
+            _eventBus?.UnSubscribeEvent<OnGamePausedSignal>(Pause);
+            _eventBus?.UnSubscribeEvent<OnExploededStarVideoEndedSignal>(ShowPopup);
+            _eventBus?.UnSubscribeEvent<OnPlayerDiedSignal>(ShowPopup);
         }
     }
 }

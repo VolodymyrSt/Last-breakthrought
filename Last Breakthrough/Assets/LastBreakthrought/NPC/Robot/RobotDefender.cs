@@ -27,7 +27,7 @@ namespace LastBreakthrought.NPC.Robot
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
 
-            _robotDefendingPlayerState = new RobotDefendingPlayerState(this, CoroutineRunner, Agent, Animator, Battary, EffectCreator, EventBus, RobotData.GeneralSpeed);
+            _robotDefendingPlayerState = new RobotDefendingPlayerState(this, CoroutineRunner, Agent, Animator, Battary, EffectCreator, EventBus, AudioService, RobotData.GeneralSpeed);
 
             StateMachine.AddTransition(_robotDefendingPlayerState, RobotWanderingState, () => Target == null && IsWanderingState);
             StateMachine.AddTransition(_robotDefendingPlayerState, RobotFollowingPlayerState, () => Target == null && IsFollowingState);

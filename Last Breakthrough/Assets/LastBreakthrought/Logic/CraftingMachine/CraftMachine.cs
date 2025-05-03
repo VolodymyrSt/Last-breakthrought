@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.Massage;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
@@ -15,15 +16,17 @@ namespace LastBreakthrought.Logic.CraftingMachine
         private InventoryMenuPanelHandler _detailInventory;
         private IMassageHandlerService _massageHandler;
         private MechanismsContainer _mechanismsContainer;
+        private IAudioService _audioService;
 
         [Inject]
         private void Construct(DetailsContainer detailsContainer , InventoryMenuPanelHandler detailInventory
-            , IMassageHandlerService massage, MechanismsContainer mechanismsContainer)
+            , IMassageHandlerService massage, MechanismsContainer mechanismsContainer, IAudioService audioService)
         {
             _detailsContainer = detailsContainer;
             _detailInventory = detailInventory;
             _massageHandler = massage;
             _mechanismsContainer = mechanismsContainer;
+            _audioService = audioService;
         }
 
         public void TryToCraft(List<ShipDetailEntity> requiredDetails, MechanismSO mechanism)
@@ -42,6 +45,8 @@ namespace LastBreakthrought.Logic.CraftingMachine
 
         private void CreateOrAddMechanism(MechanismEntity mechanismEntity)
         {
+            _audioService.PlayOnObject(Configs.Sound.SoundType.CraftSound, this);
+
             bool isNewMechansim = true;
 
             foreach (var existedMechanism in _mechanismsContainer.Mechanisms)

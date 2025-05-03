@@ -1,3 +1,4 @@
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Inventory;
@@ -10,17 +11,21 @@ namespace LastBreakthrought.Logic.MaterialRecycler
     {
         private DetailsContainer _detailsContainer;
         private InventoryMenuPanelHandler _detailInventory;
+        private IAudioService _audioService;
 
         [Inject]
-        private void Construct(DetailsContainer shipDetailsContainer, InventoryMenuPanelHandler detailInventoryMenuPanelHandler)
+        private void Construct(DetailsContainer shipDetailsContainer
+            , InventoryMenuPanelHandler detailInventoryMenuPanelHandler, IAudioService audioService)
         {
             _detailsContainer = shipDetailsContainer;
             _detailInventory = detailInventoryMenuPanelHandler;
+            _audioService = audioService;
         }
 
         public void RecycleEntireMaterial(ShipMaterialEntity shipMaterialEntity)
         {
             bool isNewDetail = true;
+            PlayRecycleSound();
 
             foreach (var detail in _detailsContainer.Details)
             {
@@ -42,5 +47,8 @@ namespace LastBreakthrought.Logic.MaterialRecycler
 
         public Vector3 GetMachinePosition() =>
             transform.position;
+
+        public void PlayRecycleSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.RecyclerSound, this, false, 0.2f, 2f);
     }
 }

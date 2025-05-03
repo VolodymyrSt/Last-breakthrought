@@ -1,6 +1,11 @@
 using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.Camera;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
+using Zenject;
 
 namespace LastBreakthrought.Other
 {
@@ -13,12 +18,24 @@ namespace LastBreakthrought.Other
         [SerializeField] private RectTransform _selectedArrowRoot;
         public Ease Ease;
 
+        private IAudioService _audioService;
+        private SoundHolder _soundHolder;
+
+        private bool _isSoundRestored = true;
+
+        [Inject]
+        private void Construct(IAudioService audioService, SoundHolder soundHolder)
+        {
+            _audioService = audioService;
+            _soundHolder = soundHolder;
+        }
+
         private void OnEnable() => 
             _selectedArrowRoot.gameObject.SetActive(false);
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _selectedArrowRoot.gameObject.SetActive(true);
+            PlaySelectedSound();
 
             transform.DOScale(SCALED_VALUE, DURATIOIN)
                 .SetEase(Ease)
@@ -32,6 +49,22 @@ namespace LastBreakthrought.Other
             transform.DOScale(UNSCALED_VALUE, DURATIOIN)
                 .SetEase(Ease)
                 .Play();
+        }
+
+        private void PlaySelectedSound()
+        {
+            if (_isSoundRestored)
+            {
+                _isSoundRestored = false;
+                _audioService.PlayOnObject(Configs.Sound.SoundType.Selected, _soundHolder, false, 0.2f);
+                StartCoroutine(RestorSound());
+            }
+        }
+
+        private IEnumerator RestorSound()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isSoundRestored = true;
         }
     }
 }

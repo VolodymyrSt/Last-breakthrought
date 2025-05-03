@@ -1,4 +1,5 @@
 using LastBreakthrought.Configs.Robot;
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
@@ -42,6 +43,7 @@ namespace LastBreakthrought.NPC.Robot
         protected RobotFollowingPlayerState RobotFollowingPlayerState;
         protected RobotRechargingState RobotRechargingState;
         protected RobotDestroyedState RobotDestroyedState;
+        protected IAudioService AudioService;
 
         private IConfigProviderService _configProvider;
         private MechanismsContainer _mechanismsContainer;
@@ -55,7 +57,7 @@ namespace LastBreakthrought.NPC.Robot
         [Inject]
         private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService,
             IEventBus eventBus, IMassageHandlerService massageHandler, MechanismsContainer mechanismsContainer, InventoryMenuPanelHandler detailInventory,
-            RequireMechanismsProvider requireMechanismsProvider, EffectCreator effectCreator)
+            RequireMechanismsProvider requireMechanismsProvider, EffectCreator effectCreator, IAudioService audioService)
         {
             PlayerHandler = playerHandler;
             CoroutineRunner = coroutineRunner;
@@ -66,6 +68,7 @@ namespace LastBreakthrought.NPC.Robot
             _inventory = detailInventory;
             RequireMechanismsProvider = requireMechanismsProvider;
             EffectCreator = effectCreator;
+            AudioService = audioService;
         }
 
         public virtual void OnCreated(BoxCollider wanderingZone, List<RobotChargingPlace> chargingPlaces, string id)
@@ -77,10 +80,10 @@ namespace LastBreakthrought.NPC.Robot
             Health = new RobotHealth(RobotData.MaxHealth);
             StateMachine = new NPCStateMachine();
 
-            RobotWanderingState = new RobotWanderingState(CoroutineRunner, Agent, Animator, wanderingZone, Battary, RobotData.WandaringSpeed);
-            RobotFollowingPlayerState = new RobotFollowingPlayerState(Agent, PlayerHandler, Animator, Battary, RobotData.GeneralSpeed);
+            RobotWanderingState = new RobotWanderingState(this, CoroutineRunner, Agent, Animator, wanderingZone, Battary, AudioService, EventBus, RobotData.WandaringSpeed);
+            RobotFollowingPlayerState = new RobotFollowingPlayerState(this, Agent, PlayerHandler, Animator, Battary, CoroutineRunner, AudioService, EventBus, RobotData.GeneralSpeed);
             RobotRechargingState = new RobotRechargingState(this, Agent, Animator, Battary, RobotData.GeneralSpeed);
-            RobotDestroyedState = new RobotDestroyedState(Agent, Animator, _collider, _zoneHandler);
+            RobotDestroyedState = new RobotDestroyedState(this, Agent, Animator, _collider, _zoneHandler, EffectCreator, AudioService);
 
             StateMachine.AddTransition(RobotWanderingState, RobotDestroyedState, () => IsRobotDestroyed);
             StateMachine.AddTransition(RobotFollowingPlayerState, RobotDestroyedState, () => IsRobotDestroyed);

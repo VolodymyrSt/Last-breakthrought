@@ -1,7 +1,11 @@
 using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.Camera;
 using LastBreakthrought.UI.SlotItem;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace LastBreakthrought.UI.Slot
 {
@@ -10,7 +14,18 @@ namespace LastBreakthrought.UI.Slot
         [SerializeField] private Item _item;
         [SerializeField] private RectTransform _selectedFrame;
 
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
+
         private bool _isSelected = false;
+        private bool _isSoundRestored = true;
+
+        [Inject]
+        private void Construct(IAudioService audioService, FollowCamera followCamera)
+        {
+            _audioService = audioService;
+            _followCamera = followCamera;
+        }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -32,6 +47,7 @@ namespace LastBreakthrought.UI.Slot
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_isSelected) return;
+            PlaySelectedSound();
 
             var scaledSize = 1.1f;
             transform.DOScale(scaledSize, 0.2f)
@@ -48,6 +64,22 @@ namespace LastBreakthrought.UI.Slot
             transform.DOScale(normalSize, 0.2f)
             .SetEase(Ease.InOutCubic)
             .Play();
+        }
+
+        private void PlaySelectedSound()
+        {
+            if (_isSoundRestored)
+            {
+                _isSoundRestored = false;
+                _audioService.PlayOnObject(Configs.Sound.SoundType.Selected, _followCamera, false, 0.2f);
+                StartCoroutine(RestorSound());
+            }
+        }
+
+        private IEnumerator RestorSound()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isSoundRestored = true;
         }
     }
 }

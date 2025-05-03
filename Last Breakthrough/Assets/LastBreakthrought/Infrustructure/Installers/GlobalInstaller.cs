@@ -3,10 +3,12 @@ using LastBreakthrought.Configs.Enemy;
 using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Configs.Player;
 using LastBreakthrought.Configs.Robot;
+using LastBreakthrought.Configs.Sound;
 using LastBreakthrought.Infrustructure.AssetManagment;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.Input;
 using LastBreakthrought.Logic;
-using LastBreakthrought.Other;
 using LastBreakthrought.Util;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -25,6 +27,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         [SerializeField] private EnemyConfigHolderSO _enemyConfigHolderSO;
         [SerializeField] private RobotConfigHolderSO _robotConfigHolderSO;
         [SerializeField] private DialogueConfigSO _dialogueConfigSO;
+        [SerializeField] private SoundConfigSO _soundConfigSO;
 
         public override void InstallBindings()
         {
@@ -35,6 +38,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindConfigs();
 
             BindSceneLoader();
+            BindAudioService();
 
             BindGame();
         }
@@ -49,6 +53,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             Container.Bind<EnemyConfigHolderSO>().FromInstance(_enemyConfigHolderSO).AsSingle();
             Container.Bind<RobotConfigHolderSO>().FromInstance(_robotConfigHolderSO).AsSingle();
             Container.Bind<DialogueConfigSO>().FromInstance(_dialogueConfigSO).AsSingle();
+            Container.Bind<SoundConfigSO>().FromInstance(_soundConfigSO).AsSingle();
         }
 
         private void BindSceneLoader() => 
@@ -73,6 +78,9 @@ namespace LastBreakthrought.Infrustructure.Installers
             else
                 Container.Bind<IInputService>().To<StandeloneInput>().AsSingle();
         }
+
+        private void BindAudioService() =>
+            Container.Bind<IAudioService>().To<AudioService>().AsSingle();
     }
 }
 

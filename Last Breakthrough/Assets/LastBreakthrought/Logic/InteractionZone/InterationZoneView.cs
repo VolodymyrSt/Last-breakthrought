@@ -1,5 +1,8 @@
 ﻿using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.Camera;
 using UnityEngine;
+using Zenject;
 
 namespace LastBreakthrought.Logic.InteractionZone
 {

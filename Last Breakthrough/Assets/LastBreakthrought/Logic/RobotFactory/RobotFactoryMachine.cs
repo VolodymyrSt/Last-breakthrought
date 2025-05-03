@@ -1,11 +1,14 @@
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
+using LastBreakthrought.Logic.FSX;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
 using LastBreakthrought.UI.Inventory;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -26,6 +29,7 @@ namespace LastBreakthrought.Logic.RobotFactory
         [SerializeField] private Transform _robotSpawnPoint;
         [SerializeField] private BoxCollider _robotWanderingZone;
         [SerializeField] private List<RobotChargingPlace> _chargingPlaces;
+        [SerializeField] private Transform _effectRoot;
 
         private RobotMinerFactory _robotMinerFactory;
         private RobotTransporterFactory _robotTransporterFactory;
@@ -36,15 +40,20 @@ namespace LastBreakthrought.Logic.RobotFactory
         private InventoryMenuPanelHandler _inventory;
         private IMassageHandlerService _massageHandler;
         private RequireMechanismsProvider _requireMechanismsProvider;
+        private IAudioService _audioService;
+        private EffectCreator _effectCreator;
 
         private int _currentMinersCount = 0;
         private int _currentTransportersCount = 0;
         private int _currentDefendersCount = 0;
 
+        private bool _isRobotCreating = false;
+
         [Inject]
         private void Construct(RobotMinerFactory robotFactory, RobotTransporterFactory robotTransporterFactory
             , RobotDefenderFactory robotDefenderFactory, RobotMenuPanelHandler robotMenuPanelHandler, MechanismsContainer mechanismsContainer
-            , InventoryMenuPanelHandler detailInventory, IMassageHandlerService massage, RequireMechanismsProvider requireMechanismsProvider)
+            , InventoryMenuPanelHandler detailInventory, IMassageHandlerService massage, RequireMechanismsProvider requireMechanismsProvider,
+            IAudioService audioService, EffectCreator effectCreator)
         {
             _robotMinerFactory = robotFactory;
             _robotTransporterFactory = robotTransporterFactory;
@@ -55,6 +64,8 @@ namespace LastBreakthrought.Logic.RobotFactory
             _inventory = detailInventory;
             _massageHandler = massage;
             _requireMechanismsProvider = requireMechanismsProvider;
+            _audioService = audioService;
+            _effectCreator = effectCreator;
         }
 
         public void CreateStartedRobotsAtTheBeginning()
@@ -70,9 +81,17 @@ namespace LastBreakthrought.Logic.RobotFactory
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateMiner()))
                 {
-                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateMiner());
-                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateMiner());
-                    CreateMiner();
+                    if (_isRobotCreating)
+                        _massageHandler.ShowMassage("Wait a bit, machine can`t create robots soo fast");
+                    else
+                    {
+                        _isRobotCreating = true;
+                        PlaySoundAndEffect();
+                        _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateMiner());
+                        _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateMiner());
+                        CreateMiner();
+                        StartCoroutine(CheckIfRobotIsCreated());
+                    }
                 }
                 else
                     _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
@@ -87,9 +106,17 @@ namespace LastBreakthrought.Logic.RobotFactory
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateTransporter()))
                 {
-                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateTransporter());
-                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateTransporter());
-                    CreateTransporter();
+                    if (_isRobotCreating)
+                        _massageHandler.ShowMassage("Wait a bit, machine can`t create robots soo fast");
+                    else
+                    {
+                        _isRobotCreating = true;
+                        PlaySoundAndEffect();
+                        _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateTransporter());
+                        _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateTransporter());
+                        CreateTransporter();
+                        StartCoroutine(CheckIfRobotIsCreated());
+                    }
                 }
                 else
                     _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
@@ -104,9 +131,17 @@ namespace LastBreakthrought.Logic.RobotFactory
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateDefender()))
                 {
-                    _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateDefender());
-                    _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateDefender());
-                    CreateDefender();
+                    if (_isRobotCreating)
+                        _massageHandler.ShowMassage("Wait a bit, machine can`t create robots soo fast");
+                    else
+                    {
+                        _isRobotCreating = true;
+                        PlaySoundAndEffect();
+                        _mechanismsContainer.GiveMechanisms(GetMechanismsToCreateDefender());
+                        _inventory.UpdateInventoryMechanisms(GetMechanismsToCreateDefender());
+                        CreateDefender();
+                        StartCoroutine(CheckIfRobotIsCreated());
+                    }
                 }
                 else
                     _massageHandler.ShowMassage("You can`t create because you don`t have right mechanisms");
@@ -164,6 +199,19 @@ namespace LastBreakthrought.Logic.RobotFactory
             _currentDefendersCount++;
 
             OnDefendersCountChanged?.Invoke(_currentDefendersCount);
+        }
+
+        private void PlaySoundAndEffect()
+        {
+            _audioService.PlayOnObject(Configs.Sound.SoundType.RobotFactoryCreating, this);
+            _effectCreator.CreateExplosionEffect(_effectRoot);
+        }
+
+        private IEnumerator CheckIfRobotIsCreated()
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            _isRobotCreating = false;
         }
     }
 }

@@ -1,5 +1,10 @@
-﻿using LastBreakthrought.NPC.Base;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Player;
+using LastBreakthrought.Util;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,19 +15,29 @@ namespace LastBreakthrought.NPC.Robot.States
         private const string IS_MOVING = "isMoving";
         private const float STOP_DISTANCE = 2.5f;
 
+        private readonly RobotBase _robotBase;
         private readonly NavMeshAgent _agent;
         private readonly PlayerHandler _playerHandler;
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IAudioService _audioService;
+        private readonly IEventBus _eventBus;
         private readonly float _followingSpeed;
 
-        public RobotFollowingPlayerState(NavMeshAgent agent, PlayerHandler playerHandler, Animator animator,
-            RobotBattary robotBattary, float followingSpeed)
+        private Coroutine _follovingSoundCoroutine;
+
+        public RobotFollowingPlayerState(RobotBase robotBase, NavMeshAgent agent, PlayerHandler playerHandler, Animator animator, RobotBattary robotBattary
+            , ICoroutineRunner coroutineRunner, IAudioService audioService, IEventBus eventBus, float followingSpeed)
         {
+            _robotBase = robotBase;
             _agent = agent;
             _playerHandler = playerHandler;
             _animator = animator;
             _robotBattary = robotBattary;
+            _coroutineRunner = coroutineRunner;
+            _audioService = audioService;
+            _eventBus = eventBus;
             _followingSpeed = followingSpeed;
         }
 
@@ -32,22 +47,46 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.speed = _followingSpeed;
             _agent.stoppingDistance = STOP_DISTANCE;
             _animator.SetBool(IS_MOVING, true);
+
+            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopFollowing);
+            _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueFollowing);
         }
 
-        public void Exit() => 
-            _animator.SetBool(IS_MOVING, false);
+        public void Exit()
+        {
+            SetFollowingAnimation(false);
+            ClearFollowingSound();
+        }
 
         public void Update()
         {
             _agent.SetDestination(_playerHandler.GetPosition());
 
             if (_agent.remainingDistance < STOP_DISTANCE + 0.01f)
-                _animator.SetBool(IS_MOVING, false);
+            {
+                SetFollowingAnimation(false);
+                ClearFollowingSound();
+            }
             else
-                _animator.SetBool(IS_MOVING, true);
+            {
+                SetFollowingAnimation(true);
+                PlayFollowingSound();
+            }
 
             _robotBattary.DecreaseCapacity();
             _robotBattary.CheckIfCapacityIsRechedLimit();
         }
+
+        private void StopFollowing(OnGamePausedSignal signal) => ClearFollowingSound();
+        private void ContinueFollowing(OnGameResumedSignal signal) => PlayFollowingSound();
+
+        private void SetFollowingAnimation(bool isMoving) =>
+            _animator.SetBool(IS_MOVING, isMoving);
+
+        private void PlayFollowingSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.RobotFollowing, _robotBase, true);
+
+        private void ClearFollowingSound() =>
+            _audioService.StopOnObject(_robotBase, Configs.Sound.SoundType.RobotFollowing);
     }
 }

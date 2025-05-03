@@ -1,3 +1,6 @@
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.NPC.Enemy;
 using LastBreakthrought.Util;
@@ -15,24 +18,31 @@ namespace LastBreakthrought.NPC.Robot.States
         private const float MAX_WAIT_TIME = 3f;
         private const float MOVEMENT_TIME_OUT = 5f;
 
+        private readonly RobotBase _robotBase;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly NavMeshAgent _agent;
         private readonly BoxCollider _wanderingZone;
         private readonly RobotBattary _robotBattary;
         private readonly Animator _animator;
+        private readonly IAudioService _audioService;
+        private readonly IEventBus _eventBus;
         private readonly float _wanderingSpeed;
 
         private Coroutine _wanderingCoroutine;
 
-        public RobotWanderingState(ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, BoxCollider wanderingZone, RobotBattary robotBattary, float wanderingSpeed)
+        public RobotWanderingState(RobotBase robotBase, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
+            Animator animator, BoxCollider wanderingZone, RobotBattary robotBattary, IAudioService audioService
+            ,IEventBus eventBus, float wanderingSpeed)
         {
+            _robotBase = robotBase;
             _coroutineRunner = coroutineRunner;
             _agent = agent;
             _animator = animator;
             _wanderingZone = wanderingZone;
             _robotBattary = robotBattary;
             _wanderingSpeed = wanderingSpeed;
+            _audioService = audioService;
+            _eventBus = eventBus;
         }
 
         public void Enter()
@@ -40,6 +50,9 @@ namespace LastBreakthrought.NPC.Robot.States
             _agent.isStopped = false;
             _agent.speed = _wanderingSpeed;
             _wanderingCoroutine = _coroutineRunner.PerformCoroutine(StartWandering());
+
+            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopMoving);
+            _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueMoving);
         }
 
         public void Update() 
@@ -53,7 +66,11 @@ namespace LastBreakthrought.NPC.Robot.States
             if (_wanderingCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_wanderingCoroutine);
 
-            SetRidingAnimation(false);
+            SetMovingAnimation(false);
+            ClearMovingSound();
+
+            _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopMoving);
+            _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueMoving);
         }
 
         private IEnumerator StartWandering()
@@ -64,10 +81,12 @@ namespace LastBreakthrought.NPC.Robot.States
                 if (destination != Vector3.negativeInfinity)
                 {
                     _agent.SetDestination(destination);
-                    SetRidingAnimation(true);
+                    SetMovingAnimation(true);
+                    PlayMovingSound();
 
                     yield return WaitForDestinationReached();
-                    SetRidingAnimation(false);
+                    SetMovingAnimation(false);
+                    ClearMovingSound();
                 }
 
                 yield return WaitBeforeNext();
@@ -123,7 +142,16 @@ namespace LastBreakthrought.NPC.Robot.States
             yield return new WaitForSeconds(waitTime);
         }
 
-        private void SetRidingAnimation(bool isMoving) =>
+        private void StopMoving(OnGamePausedSignal signal) => ClearMovingSound();
+        private void ContinueMoving(OnGameResumedSignal signal) => PlayMovingSound();
+
+        private void SetMovingAnimation(bool isMoving) =>
             _animator.SetBool(IS_MOVING, isMoving);
+
+        private void PlayMovingSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.RobotMoving, _robotBase, true);
+
+        private void ClearMovingSound() => 
+            _audioService.StopOnObject(_robotBase, Configs.Sound.SoundType.RobotMoving);
     }
 }

@@ -20,7 +20,7 @@ namespace LastBreakthrought.NPC.Robot
         {
             base.OnCreated(wanderingZone, chargingPlaces, id);
 
-            _robotMiningState = new RobotMiningState(this, CoroutineRunner, Agent, Animator, Battary, EventBus, RobotData.GeneralSpeed);
+            _robotMiningState = new RobotMiningState(this, CoroutineRunner, Agent, Animator, Battary, EventBus, AudioService, RobotData.GeneralSpeed);
 
             StateMachine.AddTransition(_robotMiningState, RobotWanderingState, () => CrashedShip == null && IsWanderingState);
             StateMachine.AddTransition(_robotMiningState, RobotFollowingPlayerState, () => CrashedShip == null && IsFollowingState);

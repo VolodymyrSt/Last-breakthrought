@@ -16,6 +16,11 @@ namespace LastBreakthrought.Logic.FSX
         public void CreateLightningEffect(Transform at) => 
             CreateEffectAt(AssetPath.LightningEffectPath, at);
 
+        public void CreateFireEffect(Transform at) => 
+            CreateEffectAt(AssetPath.FireEffectPath, at);
+        public void CreateExplosionEffect(Transform at) => 
+            CreateEffectAt(AssetPath.FireExplosionPath, at);
+
         public void CreateEffectAt(string effectPath, Transform at)
         {
             var effectPrefab = CreateEffect(effectPath, at);

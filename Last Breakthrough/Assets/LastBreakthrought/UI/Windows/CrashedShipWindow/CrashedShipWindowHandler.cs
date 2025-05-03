@@ -36,7 +36,7 @@ namespace LastBreakthrought.UI.Windows.CrashedShipWindow
         public override void ActivateWindow()
         {
             View.ShowView();
-            _robotMenuPanelHandler.View.Open();
+            _robotMenuPanelHandler.View.OpenPanel();
         }
 
         public override void DeactivateWindow() => View.HideView();

@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using LastBreakthrought.Infrustructure;
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.State;
@@ -26,14 +27,16 @@ namespace LastBreakthrought.UI.PausedMenu
 
         private IEventBus _eventBus;
         private Game _game;
+        private IAudioService _audioService;
 
         public bool IsClicked { get; set; } = false;
 
         [Inject]
-        private void Construct(IEventBus eventBus, Game game)
+        private void Construct(IEventBus eventBus, Game game, IAudioService audioService)
         {
             _eventBus = eventBus;
             _game = game;
+            _audioService = audioService;
         }
 
         public void Init()
@@ -77,6 +80,14 @@ namespace LastBreakthrought.UI.PausedMenu
                     _menuRoot.gameObject.SetActive(false);
                     _openButton.gameObject.SetActive(true);
                 });
+        }
+
+        public void ToggleSound()
+        {
+            if (_audioService.IsVolumeMax())
+                _audioService.SetZeroVolume();
+            else
+                _audioService.SetMaxVolume();
         }
 
         private void HideAtStart()

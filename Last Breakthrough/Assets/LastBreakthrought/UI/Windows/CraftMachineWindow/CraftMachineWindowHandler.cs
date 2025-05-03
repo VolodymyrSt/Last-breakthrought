@@ -18,7 +18,7 @@ namespace LastBreakthrought.UI.Windows.CraftMachineWindow
         public override void ActivateWindow()
         {
             View.ShowView();
-            _inventoryMenuPanel.View.Open();
+            _inventoryMenuPanel.View.OpenInventory();
         }
 
         public override void DeactivateWindow() => View.HideView();

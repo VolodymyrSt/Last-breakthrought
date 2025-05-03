@@ -1,6 +1,10 @@
 using LastBreakthrought.CrashedShip;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace LastBreakthrought.Player
 {
@@ -12,6 +16,17 @@ namespace LastBreakthrought.Player
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CrashedShipSeeker _crashedShipSeeker;
 
+        private IAudioService _audioService;
+        private IEventBus _eventBus;
+        private Coroutine _audioCoroutine;
+
+        [Inject]
+        private void Construct(IAudioService audioService, IEventBus eventBus)
+        {
+            _audioService = audioService;
+            _eventBus = eventBus;
+        }
+
         private void OnEnable() => HideDetectorItem();
 
         public Vector3 GetPosition() => transform.position;
@@ -22,11 +37,19 @@ namespace LastBreakthrought.Player
         public void SetMovingAnimation(bool withItem) =>
             _playerAnimator.SetMoving(withItem);
 
-        public void ShowDetectorItem() =>
-            _wreckageDetectorItemPrefab.SetActive(true);
+        public void ShowDetectorItem()
+        {
+            _audioService.PlayOnObject(Configs.Sound.SoundType.PlayerUseDetector, this, true);
 
-        public void HideDetectorItem() =>
+            _wreckageDetectorItemPrefab.SetActive(true);
+        }
+
+        public void HideDetectorItem()
+        {
+            _audioService.StopOnObject(this, Configs.Sound.SoundType.PlayerUseDetector);
+
             _wreckageDetectorItemPrefab.SetActive(false);
+        }
 
         public ICrashedShip GetSeekedCrashedShip() =>
             _crashedShipSeeker.FoundCrashedShip;

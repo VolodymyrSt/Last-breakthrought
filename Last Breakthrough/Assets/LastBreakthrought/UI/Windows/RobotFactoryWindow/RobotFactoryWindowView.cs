@@ -29,6 +29,14 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
         private void Construct(MechanismsGeneratorUI mechanismsGeneratorUI) =>
             _mechanismsGeneratorUI = mechanismsGeneratorUI;
 
+        //I use OnEnable because Initialize is called on start which means i OnMinersCountChanged is called +- on awake and it will be late
+        private void OnEnable()
+        {
+            Handler.RobotFactoryMachine.OnMinersCountChanged += ChangedMinersCount;
+            Handler.RobotFactoryMachine.OnTransportersCountChanged += ChangedTransportersCount;
+            Handler.RobotFactoryMachine.OnDefendersCountChanged += ChangedDefendersCount;
+        }
+
         public override void Initialize()
         {
             _createRobotMinerButton.onClick.AddListener(() =>
@@ -39,10 +47,6 @@ namespace LastBreakthrought.UI.Windows.RobotFactoryWindow
 
             _createRobotDefenderButton.onClick.AddListener(() =>
                 Handler.CreateDefender());
-
-            Handler.RobotFactoryMachine.OnMinersCountChanged += ChangedMinersCount;
-            Handler.RobotFactoryMachine.OnTransportersCountChanged += ChangedTransportersCount;
-            Handler.RobotFactoryMachine.OnDefendersCountChanged += ChangedDefendersCount;
 
             GenerateRequiredMechanismsForCreatingRobots();
         }

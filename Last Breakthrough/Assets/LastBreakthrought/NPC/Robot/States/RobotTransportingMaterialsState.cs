@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Logic.MaterialRecycler;
 using LastBreakthrought.NPC.Base;
@@ -23,13 +24,16 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly RobotBattary _robotBattary;
         private readonly RecycleMachine _recycleMachine;
         private readonly IEventBus _eventBus;
+        private readonly IAudioService _audioService;
         private readonly float _movingSpeed;
 
+        private Coroutine _transportingAudioCoroutine;
         private Coroutine _transportingCoroutine;
         private bool _isCarring = false;
 
-        public RobotTransportingMaterialsState(RobotTransporter robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, RobotBattary robotBattary, RecycleMachine recycleMachine, IEventBus eventBus, float followingSpeed)
+        public RobotTransportingMaterialsState(RobotTransporter robot, ICoroutineRunner coroutineRunner
+            , NavMeshAgent agent, Animator animator, RobotBattary robotBattary, RecycleMachine recycleMachine
+            , IEventBus eventBus, IAudioService audioService, float followingSpeed)
         {
             _robot = robot;
             _coroutineRunner = coroutineRunner;
@@ -38,6 +42,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _robotBattary = robotBattary;
             _recycleMachine = recycleMachine;
             _eventBus = eventBus;
+            _audioService = audioService;
             _movingSpeed = followingSpeed;
         }
 
@@ -62,6 +67,8 @@ namespace LastBreakthrought.NPC.Robot.States
             if (_transportingCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_transportingCoroutine);
 
+            ClearTransportingSound();
+
             _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopTransporting);
             _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueTransporting);
         }
@@ -85,10 +92,11 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private IEnumerator StartTransporting()
         {
+            _animator.SetBool(IS_TRANSPORTING, true);
+            PlayTransportingSound();
+
             while (_robot.TransportedMaterials.Count > 0)
             {
-                _animator.SetBool(IS_TRANSPORTING, true);
-
                 for (int i = 0; i < _robot.TransportedMaterials.Count; i++)
                 {
                     var transportedMaterial = _robot.TransportedMaterials[i];
@@ -106,10 +114,24 @@ namespace LastBreakthrought.NPC.Robot.States
             _robot.HasLoadedMaterials = false;
         }
 
-        private void StopTransporting(OnGamePausedSignal signal) =>
+        private void StopTransporting(OnGamePausedSignal signal)
+        {
             _coroutineRunner.HandleStopCoroutine(_transportingCoroutine);
+            ClearTransportingSound();
+        }
 
-        private void ContinueTransporting(OnGameResumedSignal signal) =>
+        private void ContinueTransporting(OnGameResumedSignal signal)
+        {
             _transportingCoroutine = _coroutineRunner.PerformCoroutine(StartTransporting());
+            PlayTransportingSound();
+        }
+
+        private void PlayTransportingSound() =>
+             _audioService.PlayOnObject(Configs.Sound.SoundType.TransporterTransporting, _robot, true);
+
+        private void ClearTransportingSound()
+        {
+            _audioService.StopOnObject(_robot, Configs.Sound.SoundType.TransporterTransporting);
+        }
     }
 }

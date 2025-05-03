@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 8945025160020658315}
   - component: {fileID: 2648064786826377893}
   - component: {fileID: 8328006196575705021}
+  - component: {fileID: 4741773653643178734}
   m_Layer: 0
   m_Name: CraftButton
   m_TagString: Untagged
@@ -458,6 +459,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: -2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &4741773653643178734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276452412916993254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb64a35dc955d14a84670d4b6d348f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ease: 10
+  _scaleValue: 1.025
 --- !u!1 &4873797902425277785
 GameObject:
   m_ObjectHideFlags: 0

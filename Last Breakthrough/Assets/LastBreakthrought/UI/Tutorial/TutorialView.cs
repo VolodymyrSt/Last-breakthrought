@@ -1,12 +1,15 @@
 ﻿using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.Camera;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace LastBreakthrought.UI.Tutorial
 {
@@ -21,19 +24,26 @@ namespace LastBreakthrought.UI.Tutorial
         [SerializeField] private TextMeshProUGUI _dialogueContent;
 
         private IEventBus _eventBus;
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
 
         private Coroutine _currentDialogueCoroutine;
         private List<string> _dialogueLines;
         private float _waitTime;
         private int _currentLine;
 
-        public void Init(List<string> dialogueLines, float waitTime, IEventBus eventBus)
+        [Inject]
+        private void Construct(FollowCamera followCamera) =>
+            _followCamera = followCamera;
+
+        public void Init(List<string> dialogueLines, float waitTime, IEventBus eventBus, IAudioService audioService)
         {
             _currentLine = 0;
             _dialogueContent.text = string.Empty;
             _dialogueLines = new List<string>(dialogueLines);
             _waitTime = waitTime;
             _eventBus = eventBus;
+            _audioService = audioService;
 
             _eventBus.SubscribeEvent<OnGamePausedSignal>(StopDialogue);
             _eventBus.SubscribeEvent<OnGameResumedSignal>(ContinueDialogue);
@@ -50,25 +60,26 @@ namespace LastBreakthrought.UI.Tutorial
                 CompleteCurrentLine();
         }
 
-        public void RunCurrentDialogueLine() =>
+        public void RunCurrentDialogueLine()
+        {
             _currentDialogueCoroutine = StartCoroutine(RunDialogueLine());
+            PlayAnimation();
+        }
 
         private IEnumerator RunDialogueLine()
         {
-            PlayAnimation();
-
             foreach (var character in _dialogueLines[_currentLine].ToCharArray())
             {
                 _dialogueContent.text += character;
                 yield return new WaitForSecondsRealtime(_waitTime);
             }
-
             ResetAnimation();
         }
 
 
         private void CompleteCurrentLine()
         {
+            ResetAnimation();
             if (_currentDialogueCoroutine != null)
             {
                 StopCoroutine(_currentDialogueCoroutine);
@@ -87,8 +98,8 @@ namespace LastBreakthrought.UI.Tutorial
             }
             else
             {
-                gameObject.SetActive(false);
                 OnDialogueEnded.Invoke();
+                Destroy(gameObject);
             }
         }
 
@@ -101,6 +112,22 @@ namespace LastBreakthrought.UI.Tutorial
             RunCurrentDialogueLine();
         }
 
+        private void ResetAnimation()
+        {
+            _audioService.StopOnObject(_followCamera, Configs.Sound.SoundType.RobotTalking);
+            _robotSpeaker.DOKill();
+            _robotSpeaker.DOScale(1f, ANIMATION_DURATION).SetEase(Ease.Linear).Play();
+        }
+
+        private void PlayAnimation()
+        {
+            _audioService.PlayOnObject(Configs.Sound.SoundType.RobotTalking, _followCamera, false, 1);
+            _robotSpeaker.DOScale(1.05f, ANIMATION_DURATION)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Yoyo)
+            .Play();
+        }
+
         private void OnDestroy()
         {
             if (_currentDialogueCoroutine != null)
@@ -108,20 +135,6 @@ namespace LastBreakthrought.UI.Tutorial
 
             _eventBus?.UnSubscribeEvent<OnGamePausedSignal>(StopDialogue);
             _eventBus?.UnSubscribeEvent<OnGameResumedSignal>(ContinueDialogue);
-        }
-
-        private void ResetAnimation()
-        {
-            _robotSpeaker.DOKill();
-            _robotSpeaker.DOScale(1f, ANIMATION_DURATION).SetEase(Ease.Linear).Play();
-        }
-
-        private void PlayAnimation()
-        {
-            _robotSpeaker.DOScale(1.05f, ANIMATION_DURATION)
-            .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Yoyo)
-            .Play();
         }
     }
 }

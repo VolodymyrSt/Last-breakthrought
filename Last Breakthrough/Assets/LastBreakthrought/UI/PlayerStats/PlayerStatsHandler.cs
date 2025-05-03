@@ -67,7 +67,7 @@ namespace LastBreakthrought.UI.PlayerStats
             if (_playerStatsModel.IsRunOutOfHealth())
             {
                 _isGameOver = true;
-                _eventBus.Invoke(new OnGameEndedSignal());
+                _eventBus.Invoke(new OnPlayerDiedSignal());
             }
         }
 

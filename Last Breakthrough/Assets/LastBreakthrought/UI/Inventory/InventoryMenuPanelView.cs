@@ -1,7 +1,10 @@
 ﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
 using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.Camera;
+using LastBreakthrought.Player;
 using LastBreakthrought.UI.Inventory.Mechanism;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,13 +27,19 @@ namespace LastBreakthrought.UI.Inventory
         [field: SerializeField] public MechanismsContainerUI MechanismsContainer { get; private set; }
 
         private IEventBus _eventBus;
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
 
         private bool _isMenuOpen = false;
         private bool _isTutorialEnded = false;
 
         [Inject]
-        private void Construct(IEventBus eventBus) =>
+        private void Construct(IEventBus eventBus, IAudioService audioService, FollowCamera followCamera)
+        {
             _eventBus = eventBus;
+            _audioService = audioService;
+            _followCamera = followCamera;
+        }
 
         public void Init()
         {
@@ -47,7 +56,7 @@ namespace LastBreakthrought.UI.Inventory
         public RectTransform GetDetailContainer() => _detailContainer;
         public RectTransform GetMechanismContainer() => _mechanismContainer;
 
-        public void Open()
+        public void OpenInventory()
         {
             _eventBus.Invoke(new OnInventoryMenuOpenedSignal());
 
@@ -69,6 +78,22 @@ namespace LastBreakthrought.UI.Inventory
             foreach (Transform item in _mechanismContainer)
                 item.localScale = _isMenuOpen ? Vector3.one : Vector3.zero;
         }
+
+        private void Open()
+        {
+            _eventBus.Invoke(new OnInventoryMenuOpenedSignal());
+            _audioService.PlayOnObject(Configs.Sound.SoundType.PanelOpen, _followCamera);
+
+            _root.gameObject.SetActive(true);
+            _root.DOScale(1f, ANIMATION_DURATION)
+                .SetEase(Ease.Linear)
+                .Play().OnComplete(() =>
+                {
+                    _isMenuOpen = true;
+                    UpdateChildrenScale();
+                });
+        }
+
 
         private void PerformOpenAndClose()
         {

@@ -34,6 +34,9 @@ using LastBreakthrought.UI.LostMenu;
 using LastBreakthrought.UI.ToolTip;
 using LastBreakthrought.Logic.FSX;
 using LastBreakthrought.UI.Tutorial;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.Video;
+using LastBreakthrought.UI;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -47,7 +50,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         [SerializeField] private FollowCamera _cameraPrefab;
 
         [Header("UI")]
-        [SerializeField] private GameObject _gameplayHubPrefab;
+        [SerializeField] private GameplayHub _gameplayHubPrefab;
         [SerializeField] private GameObject _joyStickPrefab;
 
         [Header("HomePoint")]
@@ -66,16 +69,20 @@ namespace LastBreakthrought.Infrustructure.Installers
         [SerializeField] private MechanismHolderSO _mechanismHolderSO;
         [SerializeField] private RequireMechanismHolderSO _requireMechanismHolderSO;
 
+        [Header("Videos")]
+        [SerializeField] private VideoPlayerHandler _videoPlayerHandler;
+
         [Header("Other")]
         [SerializeField] private NavMeshSurface _navMeshSurface;
         [SerializeField] private Light _light;
 
-        private GameObject _gameplayHub;
+        private GameplayHub _gameplayHub;
 
         public override void InstallBindings()
         {
             BindEventBus();
             BindTimeHandler();
+            BindAudioService();
 
             BindConfigProviderService();
             BindAssetProvider();
@@ -92,6 +99,8 @@ namespace LastBreakthrought.Infrustructure.Installers
 
             BindPlayer();
             BindCamera();
+
+            BindVideoPlayerHandler();
 
             BindRecycleMachine();
 
@@ -148,6 +157,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindLight() => 
             Container.Bind<Light>().FromInstance(_light).AsSingle();
+        
+        private void BindVideoPlayerHandler() => 
+            Container.Bind<VideoPlayerHandler>().FromInstance(_videoPlayerHandler).AsSingle().NonLazy();
 
         private void BindSpawnersContainer()
         {
@@ -306,6 +318,12 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindEventBus() => 
             Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
+        private void BindAudioService()
+        {
+            var eventBus = Container.TryResolve<IEventBus>();
+            Container.TryResolve<IAudioService>().Initialize(eventBus);
+        }
+
         private void BindTimer()
         {
             var timerView = _gameplayHub.GetComponentInChildren<TimerView>();
@@ -352,13 +370,18 @@ namespace LastBreakthrought.Infrustructure.Installers
                 Container.InstantiatePrefab(_joyStickPrefab, _gameplayHub.transform);
         }
 
-        private void BindGamePlayHub() => 
-            _gameplayHub = Container.InstantiatePrefab(_gameplayHubPrefab);
+        private void BindGamePlayHub()
+        {
+            var hub = Container.InstantiatePrefab(_gameplayHubPrefab);
+            _gameplayHub = hub.GetComponent<GameplayHub>();
+            _gameplayHub.Init();
+        }
 
         private void BindCamera()
         {
             var camera = Container.InstantiatePrefabForComponent<FollowCamera>(_cameraPrefab);
             Container.Bind<FollowCamera>().FromInstance(camera).AsSingle();
+            Container.Bind<Camera>().FromInstance(camera.GetComponentInChildren<Camera>()).AsSingle();
         }
         private void BindHomePoint() => 
             Container.Bind<HomePoint>().FromInstance(_homePointPrefab).AsSingle();

@@ -1,5 +1,10 @@
-﻿using LastBreakthrought.UI.Windows;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
+using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.Camera;
+using LastBreakthrought.UI.Windows;
 using UnityEngine;
+using Zenject;
 
 namespace LastBreakthrought.Logic.InteractionZone
 {
@@ -12,14 +17,26 @@ namespace LastBreakthrought.Logic.InteractionZone
         [Header("Setting")]
         [SerializeField] private LayerMask _playerLayerMask;
 
-        private  Collider[] _playerActivation = new Collider[1];
-        private  Collider[] _playerInteraction = new Collider[1];
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
+        private IEventBus _eventBus;
+
+        private Collider[] _playerActivation = new Collider[1];
+        private Collider[] _playerInteraction = new Collider[1];
 
         private float _interactionRadious;
         private float _activationRadious;
 
         private bool _isPlayerInteracting = false;
         private bool _isInteractingZoneHidden = false;
+
+        [Inject]
+        private void Construct(IAudioService audioService, FollowCamera followCamera, IEventBus eventBus)
+        {
+            _audioService = audioService;
+            _followCamera = followCamera;
+            _eventBus = eventBus;
+        }
 
         private void OnValidate()
         {
@@ -32,6 +49,13 @@ namespace LastBreakthrought.Logic.InteractionZone
             _interactionRadious = _interationZoneView.transform.localScale.x / 2;
             _activationRadious = 1.25f * _interationZoneView.transform.localScale.x;
             _interationZoneView.HideOnInit();
+        }
+
+        private void Start()
+        {
+            _eventBus.SubscribeEvent((OnGameEndedSignal signal) => Disactivate());
+            _eventBus.SubscribeEvent((OnGameWonSignal signal) => Disactivate());
+            _eventBus.SubscribeEvent((OnPlayerDiedSignal signal) => Disactivate());
         }
 
         private void Update()
@@ -94,8 +118,11 @@ namespace LastBreakthrought.Logic.InteractionZone
         public void Activate() => gameObject.SetActive(true);
 
         private void HidePopup() => _windowHandler.DeactivateWindow();
-        private void ShowPopup() => _windowHandler.ActivateWindow();
-
+        private void ShowPopup()
+        {
+            _windowHandler.ActivateWindow();
+            _audioService.PlayOnObject(Configs.Sound.SoundType.WindowOpen, _followCamera);
+        }
 
         private void OnDrawGizmosSelected()
         {
@@ -104,6 +131,13 @@ namespace LastBreakthrought.Logic.InteractionZone
 
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(transform.position, _interactionRadious);
+        }
+
+        private void OnDestroy()
+        {
+            _eventBus?.UnSubscribeEvent((OnGameEndedSignal signal) => Disactivate());
+            _eventBus?.UnSubscribeEvent((OnGameWonSignal signal) => Disactivate());
+            _eventBus?.UnSubscribeEvent((OnPlayerDiedSignal signal) => Disactivate());
         }
     }
 }

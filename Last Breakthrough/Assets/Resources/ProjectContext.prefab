@@ -81,3 +81,4 @@ MonoBehaviour:
   _enemyConfigHolderSO: {fileID: 11400000, guid: 6449f2adb0d4d1d428dcd7990ca03c3c, type: 2}
   _robotConfigHolderSO: {fileID: 11400000, guid: 730a3d641b8deed438d2c8c8fccf8596, type: 2}
   _dialogueConfigSO: {fileID: 11400000, guid: f81e8129c63736346abd6bb237ff4796, type: 2}
+  _soundConfigSO: {fileID: 11400000, guid: d9c8c06fcd81d374ebacc5168d5aaa2b, type: 2}

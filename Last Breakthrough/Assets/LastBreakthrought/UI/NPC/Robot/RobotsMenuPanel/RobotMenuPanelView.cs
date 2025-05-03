@@ -1,6 +1,9 @@
 ﻿using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
+using LastBreakthrought.Logic.Camera;
+using LastBreakthrought.Player;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -17,13 +20,19 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         [SerializeField] private Button _openClosedRobotsMenuButton;
 
         private IEventBus _eventBus;
+        private IAudioService _audioService;
+        private FollowCamera _followCamera;
 
         private bool _isMenuOpen = false;
         private bool _isTutorialEnded = false;
 
         [Inject]
-        private void Construct(IEventBus eventBus) => 
+        private void Construct(IEventBus eventBus, IAudioService audioService, FollowCamera followCamera)
+        {
             _eventBus = eventBus;
+            _audioService = audioService;
+            _followCamera = followCamera;
+        }
 
         public void Init()
         {
@@ -39,7 +48,7 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
 
         public RectTransform GetContainer() => _content;
 
-        public void Open()
+        public void OpenPanel()
         {
             _eventBus.Invoke(new OnRobotMenuOpenedSignal());
 
@@ -60,6 +69,21 @@ namespace LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel
         {
             foreach (Transform item in _content)
                 item.localScale = _isMenuOpen? Vector3.one : Vector3.zero;
+        }
+
+        private void Open()
+        {
+            _eventBus.Invoke(new OnRobotMenuOpenedSignal());
+            _audioService.PlayOnObject(Configs.Sound.SoundType.PanelOpen, _followCamera);
+
+            _root.gameObject.SetActive(true);
+            _root.DOScale(1f, ANIMATION_DURATION)
+                .SetEase(Ease.Linear)
+                .Play().OnComplete(() =>
+                {
+                    _isMenuOpen = true;
+                    UpdateChildrenScale();
+                });
         }
 
         private void PerformOpenAndClose()

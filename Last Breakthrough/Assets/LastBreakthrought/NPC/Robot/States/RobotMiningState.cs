@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Util;
@@ -21,13 +22,15 @@ namespace LastBreakthrought.NPC.Robot.States
         private readonly Animator _animator;
         private readonly RobotBattary _robotBattary;
         private readonly IEventBus _eventBus;
+        private readonly IAudioService _audioService;
         private readonly float _movingSpeed;
 
         private Coroutine _miningCoroutine;
         private bool _isMining = false;
 
-        public RobotMiningState(RobotMiner robot, ICoroutineRunner coroutineRunner, NavMeshAgent agent,
-            Animator animator, RobotBattary robotBattary, IEventBus eventBus, float followingSpeed)
+        public RobotMiningState(RobotMiner robot, ICoroutineRunner coroutineRunner
+            , NavMeshAgent agent, Animator animator, RobotBattary robotBattary, IEventBus eventBus
+            , IAudioService audioService, float followingSpeed)
         {
             _robot = robot;
             _coroutineRunner = coroutineRunner;
@@ -35,6 +38,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _animator = animator;
             _robotBattary = robotBattary;
             _eventBus = eventBus;
+            _audioService = audioService;
             _movingSpeed = followingSpeed;
         }
 
@@ -58,6 +62,8 @@ namespace LastBreakthrought.NPC.Robot.States
 
             if (_miningCoroutine != null)
                 _coroutineRunner.HandleStopCoroutine(_miningCoroutine);
+
+            ClearMiningSound();
 
             _eventBus.UnSubscribeEvent<OnGamePausedSignal>(StopMining);
             _eventBus.UnSubscribeEvent<OnGameResumedSignal>(ContinueMining);
@@ -85,21 +91,28 @@ namespace LastBreakthrought.NPC.Robot.States
         private IEnumerator StartMining()
         {
             if (_robot.CrashedShip == null) yield break;
-            
+
+            _animator.SetBool(IS_MINING, true);
+            PlayMiningSound();
+
             while (_robot.CrashedShip.Materials.Count > 0)
             {
-                _animator.SetBool(IS_MINING, true);
-
-                yield return new WaitForSecondsRealtime(MINING_TIME);
+                yield return new WaitForSeconds(MINING_TIME);
                 _robot.CrashedShip.MineEntireMaterial();
             }
             _robot.ClearCrashedShip();
         }
 
-        private void StopMining(OnGamePausedSignal signal) =>
+        private void StopMining(OnGamePausedSignal signal) => 
             _coroutineRunner.HandleStopCoroutine(_miningCoroutine);
 
-        private void ContinueMining(OnGameResumedSignal signal) =>
+        private void ContinueMining(OnGameResumedSignal signal) => 
             _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
+
+        private void PlayMiningSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.MinerMining, _robot, true);
+
+        private void ClearMiningSound() => 
+            _audioService.StopOnObject(_robot, Configs.Sound.SoundType.MinerMining);
     }
 }

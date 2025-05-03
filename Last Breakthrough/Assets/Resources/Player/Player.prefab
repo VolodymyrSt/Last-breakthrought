@@ -1021,6 +1021,7 @@ GameObject:
   - component: {fileID: 5778584683810721024}
   - component: {fileID: -3993696538639634542}
   - component: {fileID: 5595304493116836607}
+  - component: {fileID: 5529021426302553368}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1127,6 +1128,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _seekRange: 3
+--- !u!81 &5529021426302553368
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2926364450461060415}
+  m_Enabled: 1
 --- !u!1 &2968162813902293815
 GameObject:
   m_ObjectHideFlags: 0
