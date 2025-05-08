@@ -62,6 +62,12 @@ namespace LastBreakthrought.Configs.Sound
         WarningMassage,
         PanelOpen,
         Selected,
-        RobotTalking
+        RobotTalking,
+
+        GolemChassing,
+        BatChassing,
+        GolemAttack,
+        BatAttack,
+        None
     }
 }

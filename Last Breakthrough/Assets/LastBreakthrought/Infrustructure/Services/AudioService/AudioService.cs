@@ -26,8 +26,8 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
         {
             _eventBus = eventBus;
 
-            _eventBus.SubscribeEvent<OnGamePausedSignal>(PauseAllAudio);
-            _eventBus.SubscribeEvent<OnGameResumedSignal>(ResumeAllAudio);
+            _eventBus.SubscribeEvent((OnGamePausedSignal signal) => PauseAllAudio());
+            _eventBus.SubscribeEvent((OnGameResumedSignal signal) => ResumeAllAudio());
 
             _eventBus.SubscribeEvent((OnVideoPlayedSignal signal) => PauseAllAudio());
             _eventBus.SubscribeEvent((OnBeginningVideoEndedSignal signal) => ResumeAllAudio());
@@ -242,8 +242,8 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
             _eventBus?.UnSubscribeEvent<OnGameResumedSignal>(ResumeAllAudio);
             _eventBus?.UnSubscribeEvent((OnVideoPlayedSignal signal) => SetZeroVolume());
             _eventBus?.UnSubscribeEvent((OnBeginningVideoEndedSignal signal) => SetMaxVolume());
-            _eventBus?.SubscribeEvent((OnGameWonSignal signal) => PauseAllAudio());
-            _eventBus?.SubscribeEvent((OnGameEndedSignal signal) => PauseAllAudio());
+            _eventBus?.UnSubscribeEvent((OnGameWonSignal signal) => PauseAllAudio());
+            _eventBus?.UnSubscribeEvent((OnGameEndedSignal signal) => PauseAllAudio());
         }
     }
 }

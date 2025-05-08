@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace SimpleInputNamespace
 {
@@ -52,6 +53,7 @@ namespace SimpleInputNamespace
 
 		private Vector2 m_value = Vector2.zero;
 		public Vector2 Value { get { return m_value; } }
+
 
 		private void Awake()
 		{

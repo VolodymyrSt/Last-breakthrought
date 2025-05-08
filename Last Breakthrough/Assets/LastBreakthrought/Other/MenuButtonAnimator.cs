@@ -36,6 +36,7 @@ namespace LastBreakthrought.Other
         public void OnPointerEnter(PointerEventData eventData)
         {
             PlaySelectedSound();
+            _selectedArrowRoot.gameObject.SetActive(true);
 
             transform.DOScale(SCALED_VALUE, DURATIOIN)
                 .SetEase(Ease)

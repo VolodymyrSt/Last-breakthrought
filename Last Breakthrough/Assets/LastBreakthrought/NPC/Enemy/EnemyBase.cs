@@ -1,4 +1,6 @@
-﻿using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+﻿using LastBreakthrought.Configs.Enemy;
+using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Player;
 using LastBreakthrought.UI.NPC.Enemy;
@@ -12,8 +14,8 @@ namespace LastBreakthrought.NPC.Enemy
     public abstract class EnemyBase : MonoBehaviour, IEnemy, IDamagable
     {
         [Header("Base:")]
-        [SerializeField] private NavMeshAgent _agent;
-        [SerializeField] private Animator _animator;
+        [SerializeField] protected NavMeshAgent Agent;
+        [SerializeField] protected Animator Animator;
         [SerializeField] private EnemyAttackIndecator _attackIndecator;
         [SerializeField] private EnemyHealthHandler _healthHandler;
 
@@ -29,40 +31,39 @@ namespace LastBreakthrought.NPC.Enemy
 
         private float _visionRadious;
         private float _attakingRadious;
-        private float _wanderingSpeed;
-        private float _chassingSpeed;
 
-        private float _attackAnimationTime;
-        private float _dyingAnimationTime;
+        protected bool IsTargetInVisionRange = false;
+        protected bool IsTargetInAttakingRange = false;
+        protected bool IsDied = false;
 
-        private bool _isTargetInVisionRange = false;
-        private bool _isTargetInAttakingRange = false;
-        private bool _isDied = false;
-
-        private NPCStateMachine _stateMachine;
-        private PlayerHandler _playerHandler;
-        private ICoroutineRunner _coroutineRunner;
-        private BoxCollider _wanderingZone;
-        private IConfigProviderService _configProvider;
+        protected NPCStateMachine StateMachine;
+        protected PlayerHandler PlayerHandler;
+        protected ICoroutineRunner CoroutineRunner;
+        protected BoxCollider WanderingZone;
+        protected IConfigProviderService ConfigProvider;
+        protected IAudioService AudioService;
+        protected EnemyConfigSO EnemyData;
 
         [Inject]
-        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService)
+        private void Construct(PlayerHandler playerHandler, ICoroutineRunner coroutineRunner
+            , IConfigProviderService configProviderService, IAudioService audioService)
         {
-            _playerHandler = playerHandler;
-            _coroutineRunner = coroutineRunner;
-            _configProvider = configProviderService;
+            PlayerHandler = playerHandler;
+            CoroutineRunner = coroutineRunner;
+            ConfigProvider = configProviderService;
+            AudioService = audioService;
         }
 
         public void OnSpawned(BoxCollider wanderingZone, string id)
         {
-            _wanderingZone = wanderingZone;
+            WanderingZone = wanderingZone;
 
-            var enemyData = _configProvider.EnemyConfigHolderSO.GetEnemyDataById(id);
-            ConfigurateEnemy(enemyData);
+            EnemyData = ConfigProvider.EnemyConfigHolderSO.GetEnemyDataById(id);
+            ConfigurateEnemy(EnemyData);
 
             _healthHandler.OnHealthGone += Died;
 
-            _stateMachine = new NPCStateMachine();
+            StateMachine = new NPCStateMachine();
 
             AddStates();
         }
@@ -73,7 +74,7 @@ namespace LastBreakthrought.NPC.Enemy
         public void ApplyDamage(float damage) => 
             _healthHandler.Health -= damage;
 
-        private void Update() => _stateMachine.Tick();
+        private void Update() => StateMachine.Tick();
 
         public bool TryToFindTarget()
         {
@@ -89,21 +90,21 @@ namespace LastBreakthrought.NPC.Enemy
                         {
                             Target = enemyTarget;
                             _targetColliders[i] = null;
-                            _isTargetInVisionRange = true;
+                            IsTargetInVisionRange = true;
                             break;
                         }
                     }
                     else
-                        _isTargetInVisionRange = false;
+                        IsTargetInVisionRange = false;
                 }
             }
             else
             {
-                _isTargetInVisionRange = false;
+                IsTargetInVisionRange = false;
                 Target = null;
             }
 
-            return _isTargetInVisionRange;
+            return IsTargetInVisionRange;
         }
         
         public bool TryToAttackTarget()
@@ -112,45 +113,27 @@ namespace LastBreakthrought.NPC.Enemy
             var targets = Physics.OverlapSphereNonAlloc(position, _attakingRadious, _attackingTargetColliders, _layerMask);
 
             if (targets > 0)
-                _isTargetInAttakingRange = true;
+                IsTargetInAttakingRange = true;
             else
-                _isTargetInAttakingRange = false;
+                IsTargetInAttakingRange = false;
 
-            return _isTargetInAttakingRange;
+            return IsTargetInAttakingRange;
         }
 
-        public bool IsDied() => _isDied;
+        public bool IsEnemyDied() => IsDied;
 
-        private void AddStates()
-        {
-            var wandering = new EnemyWanderingState(this, _coroutineRunner, _agent, _wanderingZone, _animator, _wanderingSpeed);
-            var chassing = new EnemyChassingState(this, _coroutineRunner, _agent, _animator, _chassingSpeed);
-            var attacking = new EnemyAttackingState(this, _coroutineRunner, _agent, _animator, _attackAnimationTime);
-            var dying = new EnemyDyingState(this, _coroutineRunner, _agent, _animator, _dyingAnimationTime);
+        public abstract void AddStates();
 
-            _stateMachine.AddTransition(wandering, chassing, () => _isTargetInVisionRange);
-            _stateMachine.AddTransition(chassing, wandering, () => !_isTargetInVisionRange);
-            _stateMachine.AddTransition(chassing, attacking, () => _isTargetInAttakingRange);
-            _stateMachine.AddTransition(attacking, chassing, () => !_isTargetInAttakingRange);
-            _stateMachine.AddAnyTransition(dying, () => _isDied);
-
-            _stateMachine.EnterInState(wandering);
-        }
-
-        private void ConfigurateEnemy(Configs.Enemy.EnemyConfigSO enemyData)
+        private void ConfigurateEnemy(EnemyConfigSO enemyData)
         {
             _visionRadious = enemyData.VitionRadious;
             _attakingRadious = enemyData.AttakingRadious;
-            _wanderingSpeed = enemyData.WandaringSpeed;
-            _chassingSpeed = enemyData.ChassingSpeed;
-            _attackAnimationTime = enemyData.AttakAnimationTime;
-            _dyingAnimationTime = enemyData.DyingAnimationTime;
 
-            _attackIndecator.Init(enemyData.AttackDamage);
+            _attackIndecator.Init(enemyData.AttackDamage, AudioService);
             _healthHandler.Init(enemyData.MaxHealth);
         }
 
-        private void Died() => _isDied = true;
+        private void Died() => IsDied = true;
 
         private void OnDrawGizmosSelected()
         {

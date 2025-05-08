@@ -37,6 +37,7 @@ using LastBreakthrought.UI.Tutorial;
 using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Logic.Video;
 using LastBreakthrought.UI;
+using LastBreakthrought.MiniMap;
 
 namespace LastBreakthrought.Infrustructure.Installers
 {
@@ -48,6 +49,7 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("Camera")]
         [SerializeField] private FollowCamera _cameraPrefab;
+        [SerializeField] private MiniMapCameraHandler _miniMapCameraHandlerPrefab;
 
         [Header("UI")]
         [SerializeField] private GameplayHub _gameplayHubPrefab;
@@ -84,7 +86,6 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindTimeHandler();
             BindAudioService();
 
-            BindConfigProviderService();
             BindAssetProvider();
 
             BindSpawnersContainer();
@@ -108,6 +109,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindInventory();
 
             BindLight();
+            BindDayLightHandler();
             BindTimer();
         }
 
@@ -157,6 +159,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindLight() => 
             Container.Bind<Light>().FromInstance(_light).AsSingle();
+
+        private void BindDayLightHandler() => 
+            Container.BindInterfacesAndSelfTo<DayLightHandler>().AsSingle().NonLazy();
         
         private void BindVideoPlayerHandler() => 
             Container.Bind<VideoPlayerHandler>().FromInstance(_videoPlayerHandler).AsSingle().NonLazy();
@@ -238,10 +243,10 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindToolTip()
         {
             var toolTip = _gameplayHub.GetComponentInChildren<ToolTipView>();
-            var canva = _gameplayHub.GetComponent<Canvas>();
-            Container.Bind<ToolTipView>().FromInstance(toolTip).AsSingle();
+            var canvas = _gameplayHub.GetComponent<Canvas>();
 
-            Container.BindInterfacesAndSelfTo<ToolTipHandler>().AsSingle().WithArguments(toolTip, canva).NonLazy();
+            Container.Bind<ToolTipView>().FromInstance(toolTip).AsSingle();
+            Container.BindInterfacesAndSelfTo<ToolTipHandler>().AsSingle().WithArguments(toolTip, canvas).NonLazy();
         }
 
         private void BindVictoryMenu()
@@ -302,9 +307,6 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindCrashedShipFactory() => 
             Container.Bind<CrashedShipFactory>().AsSingle();
-
-        private void BindConfigProviderService() => 
-            Container.Bind<IConfigProviderService>().To<ConfigProviderService>().AsSingle();
 
         private void BindPlayerStats()
         {
@@ -382,6 +384,9 @@ namespace LastBreakthrought.Infrustructure.Installers
             var camera = Container.InstantiatePrefabForComponent<FollowCamera>(_cameraPrefab);
             Container.Bind<FollowCamera>().FromInstance(camera).AsSingle();
             Container.Bind<Camera>().FromInstance(camera.GetComponentInChildren<Camera>()).AsSingle();
+
+            var miniMapCamera = Container.InstantiatePrefabForComponent<MiniMapCameraHandler>(_miniMapCameraHandlerPrefab);
+            Container.Bind<MiniMapCameraHandler>().FromInstance(miniMapCamera).AsSingle();
         }
         private void BindHomePoint() => 
             Container.Bind<HomePoint>().FromInstance(_homePointPrefab).AsSingle();

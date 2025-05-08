@@ -15,3 +15,11 @@ MonoBehaviour:
   NeededMechanisms:
   - Data: {fileID: 11400000, guid: ef9e8bedb22ffa54eaf21d60c2a8d08c, type: 2}
     Quantity: 1
+  - Data: {fileID: 11400000, guid: 42cf63160184566419392234dffdffae, type: 2}
+    Quantity: 1
+  - Data: {fileID: 11400000, guid: 0bf492fec3ec8ef4392f165ecc4469d0, type: 2}
+    Quantity: 2
+  - Data: {fileID: 11400000, guid: 28459f8d595e0684aa2259e8442f49cd, type: 2}
+    Quantity: 2
+  - Data: {fileID: 11400000, guid: 42cf63160184566419392234dffdffae, type: 2}
+    Quantity: 1

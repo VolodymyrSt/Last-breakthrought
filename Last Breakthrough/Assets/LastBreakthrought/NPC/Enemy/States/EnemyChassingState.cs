@@ -1,5 +1,5 @@
+using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.NPC.Base;
-using LastBreakthrought.Player;
 using LastBreakthrought.Util;
 using System.Collections;
 using UnityEngine;
@@ -16,18 +16,22 @@ namespace LastBreakthrought.NPC.Enemy
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
+        private readonly IAudioService _audioService;
 
+        private readonly Configs.Sound.SoundType _chassingSound;
         private Coroutine _isTargetEscapeCoroutine;
 
         private float _chassingSpeed;
 
-        public EnemyChassingState(EnemyBase enemy, ICoroutineRunner  coroutineRunner,NavMeshAgent agent, Animator animator, float chassingSpeed)
+        public EnemyChassingState(EnemyBase enemy, ICoroutineRunner  coroutineRunner,NavMeshAgent agent, Animator animator
+            , IAudioService audioService, Configs.Sound.SoundType chassingSound,  float chassingSpeed)
         {
             _enemy = enemy;
             _coroutineRunner = coroutineRunner;
             _agent = agent;
             _animator = animator;
-
+            _audioService = audioService;
+            _chassingSound = chassingSound;
             _chassingSpeed = chassingSpeed;
         }
 
@@ -42,7 +46,11 @@ namespace LastBreakthrought.NPC.Enemy
         public void Update()
         {
             _agent.SetDestination(_enemy.Target.GetPosition());
-            _enemy.TryToAttackTarget();
+
+            if (_enemy.TryToAttackTarget())
+                ClearChassingSound();
+            else
+                PlayChassingSound();
         }
 
         public void Exit()
@@ -51,6 +59,7 @@ namespace LastBreakthrought.NPC.Enemy
                 _coroutineRunner.HandleStopCoroutine(_isTargetEscapeCoroutine);
 
             SetChassingAnimation(false);
+            ClearChassingSound();
         }
 
         private IEnumerator CheckIfTargetEscaped()
@@ -65,5 +74,17 @@ namespace LastBreakthrought.NPC.Enemy
 
         private void SetChassingAnimation(bool isChassing) =>
             _animator.SetBool(IS_CHASSING, isChassing);
+
+        private void PlayChassingSound()
+        {
+            if (_chassingSound != Configs.Sound.SoundType.None)
+                _audioService.PlayOnObject(_chassingSound, _enemy, true);
+        }
+
+        private void ClearChassingSound()
+        {
+            if (_chassingSound != Configs.Sound.SoundType.None)
+                _audioService.StopOnObject(_enemy, _chassingSound);
+        }
     }
 }

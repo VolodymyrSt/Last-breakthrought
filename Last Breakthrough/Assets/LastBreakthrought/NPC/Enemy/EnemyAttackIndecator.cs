@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Player;
+﻿using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Player;
 using UnityEngine;
 
 namespace LastBreakthrought.NPC.Enemy
@@ -14,10 +15,14 @@ namespace LastBreakthrought.NPC.Enemy
         [SerializeField] private float _forwardOffset = 1f;
 
         private Collider[] _attackedTargets = new Collider[3];
-        private float _attackDamage; 
+        private IAudioService _audioService;
+        private float _attackDamage;
 
-        public void Init(float attackDamage) =>
+        public void Init(float attackDamage, IAudioService audioService)
+        {
             _attackDamage = attackDamage;
+            _audioService = audioService;
+        }
 
         public void Attack() 
         {
@@ -39,6 +44,12 @@ namespace LastBreakthrought.NPC.Enemy
                 }
             }
         }
+
+        public void PlayGolemAttackSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.GolemAttack, this);
+        
+        public void PlayBatAttackSound() =>
+            _audioService.PlayOnObject(Configs.Sound.SoundType.BatAttack, this);
 
         private void OnDrawGizmosSelected()
         {

@@ -6,6 +6,7 @@ using LastBreakthrought.Configs.Robot;
 using LastBreakthrought.Configs.Sound;
 using LastBreakthrought.Infrustructure.AssetManagment;
 using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.Input;
 using LastBreakthrought.Logic;
@@ -23,7 +24,6 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         [Header("Configs")]
         [SerializeField] private PlayerConfigSO _playerConfigSO;
-        [SerializeField] private GameConfigSO _gameConfigSO;
         [SerializeField] private EnemyConfigHolderSO _enemyConfigHolderSO;
         [SerializeField] private RobotConfigHolderSO _robotConfigHolderSO;
         [SerializeField] private DialogueConfigSO _dialogueConfigSO;
@@ -37,6 +37,8 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindInput();
             BindConfigs();
 
+            BindConfigProviderService();
+
             BindSceneLoader();
             BindAudioService();
 
@@ -46,9 +48,11 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindGame() => 
             Container.Bind<Game>().AsSingle().NonLazy();
 
+        private void BindConfigProviderService() =>
+            Container.Bind<IConfigProviderService>().To<ConfigProviderService>().AsSingle();
+
         private void BindConfigs()
         {
-            Container.Bind<GameConfigSO>().FromInstance(_gameConfigSO).AsSingle();
             Container.Bind<PlayerConfigSO>().FromInstance(_playerConfigSO).AsSingle();
             Container.Bind<EnemyConfigHolderSO>().FromInstance(_enemyConfigHolderSO).AsSingle();
             Container.Bind<RobotConfigHolderSO>().FromInstance(_robotConfigHolderSO).AsSingle();

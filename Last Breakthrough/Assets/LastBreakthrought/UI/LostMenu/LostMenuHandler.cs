@@ -23,23 +23,17 @@ namespace LastBreakthrought.UI.LostMenu
         {
             _view.Init();
 
-            _eventBus.SubscribeEvent<OnGamePausedSignal>(Pause);
             _eventBus.SubscribeEvent<OnExploededStarVideoEndedSignal>(ShowPopup);
             _eventBus.SubscribeEvent<OnPlayerDiedSignal>(ShowPopup);
             _view.OnGoneToMenu += GoToMenu;
-
         }
 
-        private void ShowPopup() => _view.Show();
-
-        private void Pause(OnGamePausedSignal signal) =>
-            _timeHandler.StopTime();
-
+        private void ShowPopup(OnExploededStarVideoEndedSignal signal) => _view.Show();
+        private void ShowPopup(OnPlayerDiedSignal signal) => _view.Show();
         private void GoToMenu() => _timeHandler.ResetTime();
 
         public void Dispose()
         {
-            _eventBus?.UnSubscribeEvent<OnGamePausedSignal>(Pause);
             _eventBus?.UnSubscribeEvent<OnExploededStarVideoEndedSignal>(ShowPopup);
             _eventBus?.UnSubscribeEvent<OnPlayerDiedSignal>(ShowPopup);
         }

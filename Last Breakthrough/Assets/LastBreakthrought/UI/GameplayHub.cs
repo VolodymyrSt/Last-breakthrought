@@ -44,7 +44,7 @@ namespace LastBreakthrought.UI
             _eventBus?.UnSubscribeEvent((OnBeginningVideoEndedSignal signal) => Show());
             _eventBus?.UnSubscribeEvent((OnGameEndedSignal signal) => HideUiRoots());
             _eventBus?.UnSubscribeEvent((OnGameWonSignal signal) => HideUiRoots());
-            _eventBus?.SubscribeEvent((OnPlayerDiedSignal signal) => HideUiRoots());
+            _eventBus?.UnSubscribeEvent((OnPlayerDiedSignal signal) => HideUiRoots());
         }
     }
 }

@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc100f44959ea44c83b2153e21f1f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 463634500207026487}
-  _animator: {fileID: 3169850675697070072}
+  Agent: {fileID: 463634500207026487}
+  Animator: {fileID: 3169850675697070072}
   _attackIndecator: {fileID: 8752353936052567139}
   _healthHandler: {fileID: 8586693016544211674}
   _layerMask:

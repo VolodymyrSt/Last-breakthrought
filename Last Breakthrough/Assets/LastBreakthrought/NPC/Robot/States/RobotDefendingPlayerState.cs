@@ -99,7 +99,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private bool CheckIfTargetDied()
         {
-            if (_robot.Target.IsDied())
+            if (_robot.Target.IsEnemyDied())
             {
                 _robot.ClearTarget();
                 return true;

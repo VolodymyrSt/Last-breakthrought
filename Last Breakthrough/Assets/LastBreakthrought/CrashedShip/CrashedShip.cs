@@ -7,6 +7,7 @@ using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Map;
 using LastBreakthrought.UI.Other.Marker;
 using LastBreakthrought.UI.Windows.CrashedShipWindow;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace LastBreakthrought.CrashedShip
     public class CrashedShip : MonoBehaviour, ICrashedShip
     {
         private const float DESCTRUCTION_TIME = 5f;
+
+        public event Action OnDestroyed;
 
         [Header("Setting:")]
         [SerializeField] private ShipRarity _rarity;
@@ -110,6 +113,7 @@ namespace LastBreakthrought.CrashedShip
             _shipsContainer.CrashedShips.Remove(this);
             _marker?.SelfDestroy();
             Destroy(gameObject);
+            OnDestroyed?.Invoke();
         }
 
         public List<ShipMaterialEntity> GetMaterialsForMarker() => _materials;

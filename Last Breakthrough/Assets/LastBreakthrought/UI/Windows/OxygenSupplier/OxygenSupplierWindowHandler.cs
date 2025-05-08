@@ -2,6 +2,7 @@
 using DG.Tweening;
 using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Logic.OxygenSuppIier;
 using LastBreakthrought.UI.PlayerStats;
 using UnityEngine;
@@ -15,20 +16,20 @@ namespace LastBreakthrought.UI.Windows.OxygenSupplier
 
         private PlayerStatsHandler _playerStats;
         private PlayerStatsModel _playerStatsModel;
-        private GameConfigSO _gameConfig;
+        private IConfigProviderService _configProviderService;
 
         [Inject]
-        private void Construct(PlayerStatsHandler playerStats, PlayerStatsModel playerStatsModel, GameConfigSO gameConfig, IAudioService audioService)
+        private void Construct(PlayerStatsHandler playerStats, PlayerStatsModel playerStatsModel, IConfigProviderService configProviderService, IAudioService audioService)
         {
             _playerStats = playerStats;
             _playerStatsModel = playerStatsModel;
-            _gameConfig = gameConfig;
+            _configProviderService = configProviderService;
         }
 
         private void Update()
         {
             if (_playerStats.IsOxygenCharging)
-                _playerStatsModel.IncreaseOxygen(_gameConfig.OxygenIncreasingIndex);
+                _playerStatsModel.IncreaseOxygen(_configProviderService.GameConfigSO.OxygenIncreasingIndex);
         }
 
         public override void ActivateWindow() => View.ShowView();

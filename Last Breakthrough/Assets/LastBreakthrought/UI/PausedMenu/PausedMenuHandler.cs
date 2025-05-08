@@ -27,7 +27,6 @@ namespace LastBreakthrought.UI.PausedMenu
             _eventBus.SubscribeEvent<OnGamePausedSignal>(Pause);
             _eventBus.SubscribeEvent<OnGameResumedSignal>(Resume);
             _view.OnGoneToMenu += GoToMenu;
-
         }
 
         public void Tick() => PerformEscapeInput();

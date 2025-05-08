@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using LastBreakthrought.UI.ToolTip;
+using TMPro;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.Home

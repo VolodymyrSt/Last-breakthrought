@@ -9,7 +9,7 @@ namespace LastBreakthrought.Infrustructure.Services.ConfigProvider
     public interface IConfigProviderService
     {
         PlayerConfigSO PlayerConfigSO { get; }
-        GameConfigSO GameConfigSO { get; }
+        GameConfigSO GameConfigSO { get; set; }
         EnemyConfigHolderSO EnemyConfigHolderSO { get; }
         RobotConfigHolderSO RobotConfigHolderSO { get; }
         DialogueConfigSO DialogueConfigSO { get; }

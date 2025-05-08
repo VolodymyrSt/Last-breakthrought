@@ -6,6 +6,6 @@ namespace LastBreakthrought.NPC.Enemy
     {
         void OnSpawned(BoxCollider wanderingZone, string id);
         Vector3 GetPosition();
-        bool IsDied();
+        bool IsEnemyDied();
     }
 }

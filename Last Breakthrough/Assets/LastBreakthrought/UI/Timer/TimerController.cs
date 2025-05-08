@@ -14,25 +14,20 @@ namespace LastBreakthrought.UI.Timer
         private readonly TimerView _timerView;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IEventBus _eventBus;
-        private readonly Light _light;
 
         private bool _isTimeRunUp;
         private int _currentDays;
         private int _currentMinutes;
         private int _currentSeconds;
 
-        private float _maxLightIntensity = 1f;
-        private float _minLightIntensity = 0f;
-        private bool _isDay = true;
-
         private bool _isGamePaused;
+        private bool _isTimerPaused;
 
-        public TimerController(TimerView timerView, ICoroutineRunner coroutineRunner, IEventBus eventBus, IConfigProviderService configProvider, Light light)
+        public TimerController(TimerView timerView, ICoroutineRunner coroutineRunner, IEventBus eventBus, IConfigProviderService configProvider)
         {
             _timerView = timerView;
             _coroutineRunner = coroutineRunner;
             _eventBus = eventBus;
-            _light = light;
 
             _currentDays = configProvider.GameConfigSO.StartedDay;
             _currentMinutes = configProvider.GameConfigSO.StartedMinute;
@@ -40,17 +35,20 @@ namespace LastBreakthrought.UI.Timer
 
             _timerView.UpdateDay(_currentDays);
             _timerView.UpdateClock(_currentMinutes, _currentSeconds);
-
-            _light.intensity = _maxLightIntensity;
         }
 
         public void Initialize()
         {
             _isTimeRunUp = false;
             _isGamePaused = false;
+            _isTimerPaused = false;
 
-            _eventBus.SubscribeEvent<OnGamePausedSignal>(StopTimer);
-            _eventBus.SubscribeEvent<OnGameResumedSignal>(ResumeTimer);
+            _eventBus.SubscribeEvent((OnGamePausedSignal signal) => StopTimer());
+            _eventBus.SubscribeEvent((OnGameResumedSignal signal) => ResumeTimer());
+
+            _eventBus.SubscribeEvent((OnGameEndedSignal signal) => SetTimerOnPause());
+            _eventBus.SubscribeEvent((OnGameWonSignal signal) => SetTimerOnPause());
+            _eventBus.SubscribeEvent((OnPlayerDiedSignal signal) => SetTimerOnPause());
 
             _coroutineRunner.PerformCoroutine(StartTimer());
         }
@@ -65,40 +63,26 @@ namespace LastBreakthrought.UI.Timer
             {
                 if (!_isGamePaused)
                 {
-                    yield return new WaitForSecondsRealtime(1);
-
-                    _currentSeconds++;
-
-                    if (_currentSeconds == 60)
+                    if (!_isTimerPaused)
                     {
-                        _currentSeconds = 0;
-                        ChangeTime();
+                        yield return new WaitForSecondsRealtime(1);
 
+                        _currentSeconds++;
+
+                        if (_currentSeconds == 60)
+                        {
+                            _currentSeconds = 0;
+                            ChangeTime();
+
+                        }
+
+                        _timerView.UpdateClock(_currentMinutes, _currentSeconds);
+
+                        if (_isTimeRunUp) yield break;
                     }
-                    UpdateLight();
-
-                    _timerView.UpdateClock(_currentMinutes, _currentSeconds);
-
-                    if (_isTimeRunUp) yield break;
                 }
                 yield return null;
             }
-        }
-
-        private void UpdateLight()
-        {
-            if (_isDay)
-            {
-                _light.intensity -= Time.deltaTime;
-                if (_light.intensity == _minLightIntensity)
-                    _isDay = false;
-            }
-            else
-            {
-                _light.intensity += Time.deltaTime;
-                if (_light.intensity == _maxLightIntensity)
-                    _isDay = true;
-            }      
         }
 
         private void ChangeTime()
@@ -126,16 +110,22 @@ namespace LastBreakthrought.UI.Timer
             _timerView.UpdateDay(_currentDays);
         }
 
-        private void StopTimer(OnGamePausedSignal signal) =>
+        private void StopTimer() =>
             _isGamePaused = true;
 
-        private void ResumeTimer(OnGameResumedSignal signal) =>
+        private void ResumeTimer() =>
             _isGamePaused = false;
+
+        private void SetTimerOnPause() =>
+            _isTimerPaused = true;
 
         public void Dispose()
         {
             _eventBus?.UnSubscribeEvent<OnGamePausedSignal>(StopTimer);
             _eventBus?.UnSubscribeEvent<OnGameResumedSignal>(ResumeTimer);
+            _eventBus?.UnSubscribeEvent<OnGameEndedSignal>(SetTimerOnPause);
+            _eventBus?.UnSubscribeEvent<OnGameWonSignal>(SetTimerOnPause);
+            _eventBus?.UnSubscribeEvent<OnPlayerDiedSignal>(SetTimerOnPause);
         }
     }
 }

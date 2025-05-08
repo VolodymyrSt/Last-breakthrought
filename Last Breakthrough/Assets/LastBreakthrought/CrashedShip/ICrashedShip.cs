@@ -1,4 +1,5 @@
 ﻿using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace LastBreakthrought.CrashedShip
     {
         List<ShipMaterialEntity> Materials { get; }
         List<ShipMaterialEntity> MinedMaterials { get; }
+
+        event Action OnDestroyed;
 
         Vector3 GetPosition();
         void OnInitialized();

@@ -333,8 +333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1c457f4066259438beb1d6ec8bbe66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 7877991434606600987}
-  _animator: {fileID: 1487028193860993796}
+  Agent: {fileID: 7877991434606600987}
+  Animator: {fileID: 1487028193860993796}
   _attackIndecator: {fileID: 1042751740390355262}
   _healthHandler: {fileID: 7643675266275782808}
   _layerMask:

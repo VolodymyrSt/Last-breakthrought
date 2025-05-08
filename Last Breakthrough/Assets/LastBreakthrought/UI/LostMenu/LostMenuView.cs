@@ -51,9 +51,7 @@ namespace LastBreakthrought.UI.LostMenu
             _menuRoot.gameObject.SetActive(true);
             _menuRoot.DOScale(1f, ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
-                .Play()
-                .OnComplete(() =>
-                    _eventBus.Invoke(new OnGamePausedSignal()));
+                .Play();
         }
 
         private void HideAtStart()

@@ -1,6 +1,5 @@
 ﻿using LastBreakthrought.Infrustructure;
 using LastBreakthrought.NPC.Enemy.Factory;
-using LastBreakthrought.Other;
 using UnityEngine;
 using Zenject;
 
@@ -21,8 +20,17 @@ namespace LastBreakthrought.NPC.Enemy
 
         public void SpawnEnemy()
         {
-            var enemy = _enemyFactory.SpawnAt(transform.position, transform);
-            enemy.OnSpawned(_wanderingZone, _enemyFactory.EnemyID);
+            if (ShouldSpawnEnemy())
+            {
+                var enemy = _enemyFactory.SpawnAt(transform.position, transform);
+                enemy.OnSpawned(_wanderingZone, _enemyFactory.EnemyID);
+            }
+        }
+
+        private bool ShouldSpawnEnemy()
+        {
+            int randomNumber = Random.Range(1, 101);
+            return randomNumber % 2 == 0;
         }
     }
 }

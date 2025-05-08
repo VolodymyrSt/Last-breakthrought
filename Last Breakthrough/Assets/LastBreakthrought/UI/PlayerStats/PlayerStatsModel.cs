@@ -39,7 +39,7 @@ namespace LastBreakthrought.UI.PlayerStats
         public void DecreaseOxygen() =>
             CurrentOxygen = Mathf.Min(CurrentOxygen - _playerConfig.OxygenSuppletion * Time.deltaTime, _playerConfig.MaxOxygen);
 
-        public bool IsRunOutOfHealth() => CurrentHealth < 0;
+        public bool IsRunOutOfHealth() => CurrentHealth <= 0;
         public bool CanRegenerate() => CurrentHealth < _playerConfig.MaxHealth;
 
         public void UpdateHealth() => 

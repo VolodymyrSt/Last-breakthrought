@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 8
+      value: Recycle  8
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -447,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 9
+      value: Recycle  9
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -599,6 +599,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2087623730413181244}
     m_Modifications:
+    - target: {fileID: 437697314449274590, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 115
+      objectReference: {fileID: 0}
     - target: {fileID: 1671455130905642038, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -617,7 +621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 9
+      value: Recycle 10
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -787,7 +791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 4
+      value: Recycle  4
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -953,7 +957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 6
+      value: Recycle  6
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -1120,6 +1124,10 @@ PrefabInstance:
     - target: {fileID: 3711839762410483319, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
+      propertyPath: m_text
+      value: Recycle  1
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -1289,7 +1297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 5
+      value: Recycle  5
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -1580,7 +1588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 7
+      value: Recycle  7
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -1746,7 +1754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 3
+      value: Recycle  3
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
@@ -1916,7 +1924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768976371325241569, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_text
-      value: Craft 2
+      value: Recycle  2
       objectReference: {fileID: 0}
     - target: {fileID: 3945487966538821139, guid: 8ef6f216ecf0c1a4c8b55aced818b12c, type: 3}
       propertyPath: m_Sprite
