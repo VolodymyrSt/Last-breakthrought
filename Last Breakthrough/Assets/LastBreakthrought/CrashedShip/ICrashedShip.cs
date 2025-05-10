@@ -8,10 +8,10 @@ namespace LastBreakthrought.CrashedShip
 {
     public interface ICrashedShip
     {
+        event Action OnDestroyed;
+
         List<ShipMaterialEntity> Materials { get; }
         List<ShipMaterialEntity> MinedMaterials { get; }
-
-        event Action OnDestroyed;
 
         Vector3 GetPosition();
         void OnInitialized();

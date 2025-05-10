@@ -24,7 +24,7 @@ namespace LastBreakthrought.Logic.ShipMaterial
 
             foreach (var material in selectedMaterials)
             {
-                int quantity = UnityEngine.Random.Range(9, material.MaxQuantity + 1);
+                int quantity = UnityEngine.Random.Range(1, material.MaxQuantity + 1);
                 materialEntities.Add(new ShipMaterialEntity(material, quantity));
             }
 

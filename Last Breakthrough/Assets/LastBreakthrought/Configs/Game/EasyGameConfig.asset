@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EasyGameConfig
   m_EditorClassIdentifier: 
   <StartedDay>k__BackingField: 1
-  <StartedMinute>k__BackingField: 5
-  <StartedSecond>k__BackingField: 45
+  <StartedMinute>k__BackingField: 4
+  <StartedSecond>k__BackingField: 28
   <OxygenIncreasingIndex>k__BackingField: 10
+  <CurrentLightIntensity>k__BackingField: 0.8

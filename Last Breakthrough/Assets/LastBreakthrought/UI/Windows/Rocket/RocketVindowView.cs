@@ -1,6 +1,4 @@
-﻿using Assets.LastBreakthrought.UI.Inventory.ShipDetail;
-using LastBreakthrought.Logic.Mechanisms;
-using LastBreakthrought.Logic.ShipDetail;
+﻿using LastBreakthrought.Logic.Mechanisms;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

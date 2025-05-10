@@ -2092,7 +2092,6 @@ MonoBehaviour:
   _doWorkButton: {fileID: 437556169084274719}
   _normalColor: {r: 1, g: 0.93333334, b: 0.7882353, a: 1}
   _pressedColor: {r: 0.74562216, g: 1, b: 0.48584908, a: 1}
-  _selectedColor: {r: 1, g: 0.7309886, b: 0.5882353, a: 1}
 --- !u!1 &6538081802880638995
 GameObject:
   m_ObjectHideFlags: 0

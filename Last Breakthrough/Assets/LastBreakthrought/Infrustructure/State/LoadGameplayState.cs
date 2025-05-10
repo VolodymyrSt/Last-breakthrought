@@ -33,7 +33,6 @@ namespace LastBreakthrought.Infrustructure.State
             //_game.NavMeshSurface.BuildNavMesh();
 
             _game.RobotFactoryMachine.CreateStartedRobotsAtTheBeginning();
-            //_game.RobotFactoryMachine.CreateStartedRobotsAtTheBeginning();
 
             spawnersContainer.SpawnAllEnemies();
         }

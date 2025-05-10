@@ -9,7 +9,6 @@ namespace LastBreakthrought.Infrustructure
     public class Game
     {
         public GameStateMachine StateMachine { get; private set; }
-
         public SpawnersContainer SpawnersContainer { get; set; }
         public RobotFactoryMachine RobotFactoryMachine { get; set; }
         public NavMeshSurface NavMeshSurface { get; set; }

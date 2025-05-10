@@ -13,8 +13,6 @@ namespace LastBreakthrought.NPC.Robot.States
     {
         private const string IS_Moving = "isMoving";
         private const string IS_MINING = "isMining";
-        private const float MINING_TIME = 4f;
-        private const float STOP_DISTANCE = 4f;
 
         private readonly RobotMiner _robot;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -46,7 +44,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _movingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.MINING_STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
 
             _eventBus.SubscribeEvent<OnGamePausedSignal>(StopMining);
@@ -75,7 +73,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
             _agent.SetDestination(_robot.CrashedShip.GetPosition());
 
-            var isArrived = Vector3.Distance(_agent.transform.position, _robot.CrashedShip.GetPosition()) <= 0.1f + STOP_DISTANCE;
+            var isArrived = Vector3.Distance(_agent.transform.position, _robot.CrashedShip.GetPosition()) <= 0.1f + Constants.MINING_STOP_DISTANCE;
 
             if (isArrived && !_isMining)
             {
@@ -93,11 +91,11 @@ namespace LastBreakthrought.NPC.Robot.States
             if (_robot.CrashedShip == null) yield break;
 
             _animator.SetBool(IS_MINING, true);
-            PlayMiningSound();
 
             while (_robot.CrashedShip.Materials.Count > 0)
             {
-                yield return new WaitForSeconds(MINING_TIME);
+                PlayMiningSound();
+                yield return new WaitForSeconds(Constants.MINING_TIME);
                 _robot.CrashedShip.MineEntireMaterial();
             }
             _robot.ClearCrashedShip();
@@ -110,7 +108,7 @@ namespace LastBreakthrought.NPC.Robot.States
             _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
 
         private void PlayMiningSound() =>
-            _audioService.PlayOnObject(Configs.Sound.SoundType.MinerMining, _robot, true);
+            _audioService.PlayOnObject(Configs.Sound.SoundType.MinerMining, _robot);
 
         private void ClearMiningSound() => 
             _audioService.StopOnObject(_robot, Configs.Sound.SoundType.MinerMining);

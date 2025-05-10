@@ -7,9 +7,6 @@ namespace LastBreakthrought.UI.ToolTip
 {
     public class ToolTipView : MonoBehaviour
     {
-        private const float ANIMATION_DURATION = 0.2f;
-        private const int CHARACTER_WRAP_LIMIT = 20;
-
         [Header("Base")]
         [SerializeField] private RectTransform _root;
         [SerializeField] private TextMeshProUGUI _headerText;
@@ -24,7 +21,8 @@ namespace LastBreakthrought.UI.ToolTip
         {
             var headerTextLength = _headerText.text.Length;
             var contentTextLength = _contentText.text.Length;
-            _layoutElement.enabled = headerTextLength > CHARACTER_WRAP_LIMIT || contentTextLength  > CHARACTER_WRAP_LIMIT ? true : false;
+            _layoutElement.enabled = headerTextLength > Constants.CHARACTER_WRAP_LIMIT || 
+                contentTextLength  > Constants.CHARACTER_WRAP_LIMIT ? true : false;
         }
 
         public void Show(string headerText, string contentText)
@@ -35,7 +33,7 @@ namespace LastBreakthrought.UI.ToolTip
             _root.gameObject.SetActive(true);
 
             _root.DOKill();
-            _root.DOScale(1f, ANIMATION_DURATION)
+            _root.DOScale(1f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.OutQuad)
                 .Play();
         }
@@ -43,7 +41,7 @@ namespace LastBreakthrought.UI.ToolTip
         public void Hide()
         {
             _root.DOKill();
-            _root.DOScale(0f, ANIMATION_DURATION)
+            _root.DOScale(0f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.InQuad)
                 .Play()
                 .OnComplete(() => _root.gameObject.SetActive(false));

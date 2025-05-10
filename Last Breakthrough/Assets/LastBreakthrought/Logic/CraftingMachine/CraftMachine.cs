@@ -2,7 +2,6 @@
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
-using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Inventory;
 using System.Collections.Generic;
 using UnityEngine;

@@ -2,7 +2,7 @@
 using LastBreakthrought.Player;
 using Zenject;
 using UnityEngine;
-using Unity.VisualScripting;
+using LastBreakthrought.Infrustructure.Services.Massage;
 
 namespace LastBreakthrought.UI.SlotItem.WreckageDetector
 {
@@ -30,17 +30,10 @@ namespace LastBreakthrought.UI.SlotItem.WreckageDetector
 
         private void UpdateDistance()
         {
-            if (_shipsContainer.IsEmpty())
-            {
-                //write like undetected
-            }
-            else
-            {
-                var closestCrashedShipPosition = _shipsContainer.GetClosestCrashedShipPosition(_player.transform.position);
-                var distance = (int)(_player.transform.position - closestCrashedShipPosition).magnitude;
+            var closestCrashedShipPosition = _shipsContainer.GetClosestCrashedShipPosition(_player.transform.position);
+            var distance = (int)(_player.transform.position - closestCrashedShipPosition).magnitude;
 
-                _wreckageDetectorItemView.SetDistanceUI(distance);
-            }
+            _wreckageDetectorItemView.SetDistanceUI(distance);
         }
 
         public override void Select()

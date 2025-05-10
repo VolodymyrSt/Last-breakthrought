@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using LastBreakthrought.Infrustructure.Services.EventBus;
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,9 +7,9 @@ namespace LastBreakthrought.Infrustructure.UI
 {
     public abstract class MainMenuPanel : MonoBehaviour
     {
-        private bool _isHidden = true;
-
         protected IEventBus EventBus;
+
+        private bool _isHidden = true;
 
         [Inject]
         private void Consturct(IEventBus eventBus) =>

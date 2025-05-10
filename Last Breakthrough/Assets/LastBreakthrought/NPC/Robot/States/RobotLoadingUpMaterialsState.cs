@@ -13,8 +13,6 @@ namespace LastBreakthrought.NPC.Robot.States
     {
         private const string IS_Moving = "isMoving";
         private const string IS_TRANSPORTING = "isTransporting";
-        private const float LOADING_ONE_METERIAL_TIME = 4f;
-        private const float STOP_DISTANCE = 4f;
 
         private readonly RobotTransporter _robot;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -46,7 +44,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _movingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.LOADING_STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
 
             _eventBus.SubscribeEvent<OnGamePausedSignal>(StopLoading);
@@ -85,7 +83,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private void CheckForWhenToStartLoading()
         {
-            var isArrived = Vector3.Distance(_agent.transform.position, _robot.CrashedShip.GetPosition()) <= 0.1f + STOP_DISTANCE;
+            var isArrived = Vector3.Distance(_agent.transform.position, _robot.CrashedShip.GetPosition()) <= 0.1f + Constants.LOADING_STOP_DISTANCE;
 
             if (isArrived && !_isTransporting)
             {
@@ -105,7 +103,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
             while (_robot.CrashedShip.MinedMaterials.Count > 0)
             {
-                yield return new WaitForSecondsRealtime(LOADING_ONE_METERIAL_TIME);
+                yield return new WaitForSecondsRealtime(Constants.LOADING_ONE_METERIAL_TIME);
 
                 HandleLoading();
             }
@@ -145,16 +143,17 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private void ContinueLoading(OnGameResumedSignal signal)
         {
-            _loadingUpCoroutine = _coroutineRunner.PerformCoroutine(StartLoadingUp());
-            PlayLoadingSound();
+            if (_isTransporting)
+            {
+                _loadingUpCoroutine = _coroutineRunner.PerformCoroutine(StartLoadingUp());
+                PlayLoadingSound();
+            }
         }
 
         private void PlayLoadingSound() =>
             _audioService.PlayOnObject(Configs.Sound.SoundType.TransporterTransporting, _robot, true);
 
-        private void ClearLoadingSound()
-        {
+        private void ClearLoadingSound() => 
             _audioService.StopOnObject(_robot, Configs.Sound.SoundType.TransporterTransporting);
-        }
     }
 }

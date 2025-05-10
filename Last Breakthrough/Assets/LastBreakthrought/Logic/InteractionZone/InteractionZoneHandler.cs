@@ -21,8 +21,8 @@ namespace LastBreakthrought.Logic.InteractionZone
         private FollowCamera _followCamera;
         private IEventBus _eventBus;
 
-        private Collider[] _playerActivation = new Collider[1];
-        private Collider[] _playerInteraction = new Collider[1];
+        private readonly Collider[] _playerActivation = new Collider[1];
+        private readonly Collider[] _playerInteraction = new Collider[1];
 
         private float _interactionRadious;
         private float _activationRadious;

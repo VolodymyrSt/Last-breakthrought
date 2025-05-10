@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WandaringSpeed>k__BackingField: 2
   <GeneralSpeed>k__BackingField: 2.5
-  <MaxBattaryCapacity>k__BackingField: 150
+  <MaxBattaryCapacity>k__BackingField: 450
   <CapacityLimit>k__BackingField: 3
   <MaxHealth>k__BackingField: 100

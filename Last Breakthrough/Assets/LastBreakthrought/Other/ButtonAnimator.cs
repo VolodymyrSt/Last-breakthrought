@@ -11,9 +11,6 @@ namespace LastBreakthrought.Other
 {
     public class ButtonAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        private const float DURATIOIN = 0.2f;
-        private const float UNSCALED_VALUE = 1f;
-
         [SerializeField] private Ease _ease;
         [SerializeField] private float _scaleValue = 1.1f;
 
@@ -33,7 +30,7 @@ namespace LastBreakthrought.Other
         {
             PlaySelectedSound();
 
-            transform.DOScale(_scaleValue, DURATIOIN)
+            transform.DOScale(_scaleValue, Constants.ANIMATION_DURATION)
                 .SetEase(_ease)
                 .Play();
         }
@@ -41,7 +38,7 @@ namespace LastBreakthrought.Other
         public void OnPointerExit(PointerEventData eventData)
         {
 
-            transform.DOScale(UNSCALED_VALUE, DURATIOIN)
+            transform.DOScale(Constants.UNSCALED_VALUE, Constants.ANIMATION_DURATION)
                 .SetEase(_ease)
                 .Play();
         }

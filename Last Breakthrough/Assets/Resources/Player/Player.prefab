@@ -1127,7 +1127,7 @@ MonoBehaviour:
   _crashedShipLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  _seekRange: 3
+  _seekRange: 5
 --- !u!81 &5529021426302553368
 AudioListener:
   m_ObjectHideFlags: 0

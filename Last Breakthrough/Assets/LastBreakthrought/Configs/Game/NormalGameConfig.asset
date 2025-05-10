@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NormalGameConfig
   m_EditorClassIdentifier: 
   <StartedDay>k__BackingField: 2
-  <StartedMinute>k__BackingField: 5
-  <StartedSecond>k__BackingField: 45
-  <OxygenIncreasingIndex>k__BackingField: 10
+  <StartedMinute>k__BackingField: 3
+  <StartedSecond>k__BackingField: 34
+  <OxygenIncreasingIndex>k__BackingField: 8
+  <CurrentLightIntensity>k__BackingField: 0.9

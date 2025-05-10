@@ -1,5 +1,4 @@
 ﻿using LastBreakthrought.Logic.Mechanisms;
-using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;

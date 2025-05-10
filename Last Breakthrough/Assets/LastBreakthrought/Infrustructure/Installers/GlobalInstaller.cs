@@ -35,8 +35,8 @@ namespace LastBreakthrought.Infrustructure.Installers
             BindCoroutineRunner();
 
             BindInput();
-            BindConfigs();
 
+            BindConfigs();
             BindConfigProviderService();
 
             BindSceneLoader();
@@ -80,7 +80,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             if (SystemInfo.deviceType == DeviceType.Handheld)
                 Container.Bind<IInputService>().To<MobileInput>().AsSingle();
             else
-                Container.Bind<IInputService>().To<StandeloneInput>().AsSingle();
+                Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
         }
 
         private void BindAudioService() =>

@@ -21,9 +21,6 @@ namespace LastBreakthrought.Infrustructure.State
             _sceneLoader.Load(SceneName.Menu, null);
         }
 
-        public void Exit()
-        {
-
-        }
+        public void Exit(){}
     }
 }

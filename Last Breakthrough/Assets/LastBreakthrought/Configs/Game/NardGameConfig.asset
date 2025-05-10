@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b89b669db3d164ea10c77b6bb4525a, type: 3}
   m_Name: NardGameConfig
   m_EditorClassIdentifier: 
-  <StartedDay>k__BackingField: 3
-  <StartedMinute>k__BackingField: 5
-  <StartedSecond>k__BackingField: 45
-  <OxygenIncreasingIndex>k__BackingField: 10
+  <StartedDay>k__BackingField: 2
+  <StartedMinute>k__BackingField: 23
+  <StartedSecond>k__BackingField: 33
+  <OxygenIncreasingIndex>k__BackingField: 5
+  <CurrentLightIntensity>k__BackingField: 0

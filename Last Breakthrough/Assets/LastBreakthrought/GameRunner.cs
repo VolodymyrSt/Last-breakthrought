@@ -13,10 +13,7 @@ namespace LastBreakthrought
         private void Construct(IInstantiator instantiator) 
             => _instantiator = instantiator;
 
-        private void Awake()
-        {
-            InitializeBootstrapper();
-        }
+        private void Awake() => InitializeBootstrapper();
 
         private void InitializeBootstrapper()
         {

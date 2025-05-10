@@ -2,9 +2,7 @@
 {
     public class RecycleMachineWindowView : WindowView<RecycleMachineWindowHandler>
     {
-        public override void Initialize()
-        {
-        }
+        public override void Initialize(){}
 
         public override void Dispose(){}
     }

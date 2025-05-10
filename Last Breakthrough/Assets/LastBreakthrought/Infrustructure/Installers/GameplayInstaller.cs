@@ -368,7 +368,7 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindJoyStick()
         {
-            //if (SystemInfo.deviceType == DeviceType.Handheld)
+            if (SystemInfo.deviceType == DeviceType.Handheld)
                 Container.InstantiatePrefab(_joyStickPrefab, _gameplayHub.transform);
         }
 

@@ -1,7 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace LastBreakthrought.Infrustructure.UI
 {

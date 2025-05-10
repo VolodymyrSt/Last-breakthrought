@@ -4,7 +4,6 @@ using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.NPC.Base;
 using LastBreakthrought.Player;
 using LastBreakthrought.Util;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,7 +12,6 @@ namespace LastBreakthrought.NPC.Robot.States
     public class RobotFollowingPlayerState : INPCState
     {
         private const string IS_MOVING = "isMoving";
-        private const float STOP_DISTANCE = 2.5f;
 
         private readonly RobotBase _robotBase;
         private readonly NavMeshAgent _agent;
@@ -45,7 +43,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _followingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.ROBOT_STOP_FOLLOWING_DISTANCE;
             _animator.SetBool(IS_MOVING, true);
 
             _eventBus.SubscribeEvent<OnGamePausedSignal>(StopFollowing);
@@ -62,7 +60,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.SetDestination(_playerHandler.GetPosition());
 
-            if (_agent.remainingDistance < STOP_DISTANCE + 0.01f)
+            if (_agent.remainingDistance < Constants.ROBOT_STOP_FOLLOWING_DISTANCE + 0.01f)
             {
                 SetFollowingAnimation(false);
                 ClearFollowingSound();

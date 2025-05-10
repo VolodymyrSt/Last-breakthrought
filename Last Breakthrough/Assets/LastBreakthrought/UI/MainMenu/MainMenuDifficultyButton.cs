@@ -10,8 +10,6 @@ namespace LastBreakthrought.Infrustructure.UI
 {
     public class MainMenuDifficultyButton : MonoBehaviour 
     {
-        private const int MAX_DIFFICULTY_INDEX = 3;
-
         public enum Difficulty {
             Easy = 1, Normal = 2, Hard = 3
         }
@@ -45,7 +43,7 @@ namespace LastBreakthrought.Infrustructure.UI
 
         private void ChangeDifficulty()
         {
-            if (_currentDifficultyIndex < MAX_DIFFICULTY_INDEX)
+            if (_currentDifficultyIndex < Constants.MAX_DIFFICULTY_INDEX)
             {
                 _currentDifficultyIndex++;
                 UpdateDifficulty(_currentDifficultyIndex);

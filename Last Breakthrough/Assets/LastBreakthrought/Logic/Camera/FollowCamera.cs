@@ -6,6 +6,7 @@ namespace LastBreakthrought.Logic.Camera
 {
     public class FollowCamera : MonoBehaviour
     {
+        [Header("Setting:")]
         [SerializeField] private float _rotationAngleX;
         [SerializeField] private float _distance;
         [SerializeField] private float _offSetY;

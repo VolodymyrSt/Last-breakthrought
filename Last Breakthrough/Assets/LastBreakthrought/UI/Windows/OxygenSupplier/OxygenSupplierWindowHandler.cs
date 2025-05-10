@@ -1,6 +1,4 @@
-﻿
-using DG.Tweening;
-using LastBreakthrought.Configs.Game;
+﻿using DG.Tweening;
 using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
 using LastBreakthrought.Logic.OxygenSuppIier;

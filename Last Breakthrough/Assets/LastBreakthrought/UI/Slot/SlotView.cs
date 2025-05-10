@@ -50,7 +50,7 @@ namespace LastBreakthrought.UI.Slot
             PlaySelectedSound();
 
             var scaledSize = 1.1f;
-            transform.DOScale(scaledSize, 0.2f)
+            transform.DOScale(scaledSize, Constants.ANIMATION_DURATION)
             .SetEase(Ease.InOutCubic)
             .Play();
         }
@@ -61,7 +61,7 @@ namespace LastBreakthrought.UI.Slot
 
             var normalSize = 1f;
 
-            transform.DOScale(normalSize, 0.2f)
+            transform.DOScale(normalSize, Constants.ANIMATION_DURATION)
             .SetEase(Ease.InOutCubic)
             .Play();
         }

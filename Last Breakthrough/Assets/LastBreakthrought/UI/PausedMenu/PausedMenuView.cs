@@ -14,8 +14,6 @@ namespace LastBreakthrought.UI.PausedMenu
 {
     public class PausedMenuView : MonoBehaviour
     {
-        private const float ANIMATION_DURATION = 0.2f;
-
         public event Action OnGoneToMenu;
 
         [Header("UI")]
@@ -59,7 +57,7 @@ namespace LastBreakthrought.UI.PausedMenu
             _openButton.gameObject.SetActive(false);
 
             _menuRoot.gameObject.SetActive(true);
-            _menuRoot.DOScale(1f, ANIMATION_DURATION)
+            _menuRoot.DOScale(1f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
                 .Play()
                 .OnComplete(() => 
@@ -71,7 +69,7 @@ namespace LastBreakthrought.UI.PausedMenu
             IsClicked = false;
             _eventBus.Invoke(new OnGameResumedSignal());
 
-            _menuRoot.DOScale(0, ANIMATION_DURATION)
+            _menuRoot.DOScale(0, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
                 .Play()
                 .OnComplete(() =>

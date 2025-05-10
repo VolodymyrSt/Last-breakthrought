@@ -17,8 +17,6 @@ namespace LastBreakthrought.CrashedShip
 {
     public class CrashedShip : MonoBehaviour, ICrashedShip
     {
-        private const float DESCTRUCTION_TIME = 5f;
-
         public event Action OnDestroyed;
 
         [Header("Setting:")]
@@ -109,7 +107,7 @@ namespace LastBreakthrought.CrashedShip
 
         public IEnumerator DestroySelf()
         {
-            yield return new WaitForSecondsRealtime(DESCTRUCTION_TIME);
+            yield return new WaitForSecondsRealtime(Constants.CRASHED_SHIP_DESCTRUCTION_TIME);
             _shipsContainer.CrashedShips.Remove(this);
             _marker?.SelfDestroy();
             Destroy(gameObject);

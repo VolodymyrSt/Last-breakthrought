@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.Services.ConfigProvider;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Util;
 using System.Collections;
@@ -9,23 +10,20 @@ namespace LastBreakthrought.Other
 {
     public class DayLightHandler : IInitializable
     {
-        private const float TIME_MULTIPLAYER = 0.003f;
-        private const float MAX_LIGHT_INTENSITY = 1f;
-        private const float MIN_LIGHT_INTENSITY = 0f;
-        private const float WAITING_TIME = 120f;
-
         private readonly Light _light;
         private readonly IEventBus _eventBus;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IConfigProviderService _configProviderService;
         private bool _isDay;
 
         private bool _isGamePaused = false;
 
-        public DayLightHandler(Light light, IEventBus eventBus, ICoroutineRunner coroutineRunner)
+        public DayLightHandler(Light light, IEventBus eventBus, ICoroutineRunner coroutineRunner, IConfigProviderService configProviderService)
         {
             _light = light;
             _eventBus = eventBus;
             _coroutineRunner = coroutineRunner;
+            _configProviderService = configProviderService;
         }
 
         ~DayLightHandler() 
@@ -36,7 +34,7 @@ namespace LastBreakthrought.Other
 
         public void Initialize()
         {
-            _light.intensity = MAX_LIGHT_INTENSITY;
+            _light.intensity = _configProviderService.GameConfigSO.CurrentLightIntensity;
             _isDay = true;
 
             _eventBus.SubscribeEvent((OnGamePausedSignal signal) => _isGamePaused = true);
@@ -53,23 +51,23 @@ namespace LastBreakthrought.Other
 
                 if (_isDay)
                 {
-                    _light.intensity -= Time.deltaTime * TIME_MULTIPLAYER;
-                    if (_light.intensity <= MIN_LIGHT_INTENSITY)
+                    _light.intensity -= Time.deltaTime * Constants.LIGHT_TIME_MULTIPLAYER;
+                    if (_light.intensity <= Constants.MIN_LIGHT_INTENSITY)
                     {
-                        _light.intensity = MIN_LIGHT_INTENSITY;
+                        _light.intensity = Constants.MIN_LIGHT_INTENSITY;
                         _isDay = false;
-                        yield return new WaitForSeconds(WAITING_TIME);
+                        yield return new WaitForSeconds(Constants.WAITING_TIME_LIGHT);
                     }
                     yield return null;
                 }
                 else
                 {
-                    _light.intensity += Time.deltaTime * TIME_MULTIPLAYER;
-                    if (_light.intensity >= MAX_LIGHT_INTENSITY)
+                    _light.intensity += Time.deltaTime * Constants.LIGHT_TIME_MULTIPLAYER;
+                    if (_light.intensity >= Constants.MAX_LIGHT_INTENSITY)
                     {
-                        _light.intensity = MAX_LIGHT_INTENSITY;
+                        _light.intensity = Constants.MAX_LIGHT_INTENSITY;
                         _isDay = true;
-                        yield return new WaitForSeconds(WAITING_TIME);
+                        yield return new WaitForSeconds(Constants.WAITING_TIME_LIGHT);
                     }
                     yield return null;
                 }

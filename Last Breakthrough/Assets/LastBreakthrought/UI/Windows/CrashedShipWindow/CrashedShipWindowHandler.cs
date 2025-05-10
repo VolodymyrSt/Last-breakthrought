@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using LastBreakthrought.Logic.ShipMaterial;
+﻿using LastBreakthrought.Logic.ShipMaterial;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.NPC.Robot.RobotsMenuPanel;
 using LastBreakthrought.UI.ShipMaterial;

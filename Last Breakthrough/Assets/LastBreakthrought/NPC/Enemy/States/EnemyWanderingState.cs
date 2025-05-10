@@ -9,10 +9,6 @@ namespace LastBreakthrought.NPC.Enemy
     public class EnemyWanderingState : INPCState
     {
         private const string IS_WALKING = "isWalking";
-        private const float NAVMESH_SAMPLE_RANGE = 2f;
-        private const float MIN_WAIT_TIME = 1f;
-        private const float MAX_WAIT_TIME = 3f;
-        private const float MOVEMENT_TIME_OUT = 5f;
 
         private readonly EnemyBase _enemy;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -22,7 +18,7 @@ namespace LastBreakthrought.NPC.Enemy
 
         private Coroutine _wanderingCoroutine;
 
-        private float _wanderingSpeed;
+        private readonly float _wanderingSpeed;
 
         public EnemyWanderingState(EnemyBase enemy ,ICoroutineRunner coroutineRunner, NavMeshAgent agent, BoxCollider wanderingZone
             , Animator animator, float wanderingSpeed)
@@ -75,7 +71,7 @@ namespace LastBreakthrought.NPC.Enemy
         private IEnumerator WaitForDestinationReached()
         {
             float elapsedTime = 0f;
-            while (elapsedTime < MOVEMENT_TIME_OUT)
+            while (elapsedTime < Constants.ENEMY_MOVEMENT_TIME_OUT)
             {
                 if (_agent != null && _agent.isActiveAndEnabled && _agent.isOnNavMesh)
                 {
@@ -101,7 +97,7 @@ namespace LastBreakthrought.NPC.Enemy
             Vector3 randomPoint = GetRandomPointInZone();
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, NAVMESH_SAMPLE_RANGE, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out hit, Constants.ENEMY_NAVMESH_SAMPLE_RANGE, NavMesh.AllAreas))
             {
                 return hit.position;
             }
@@ -123,7 +119,7 @@ namespace LastBreakthrought.NPC.Enemy
 
         private IEnumerator WaitBeforeNext()
         {
-            float waitTime = Random.Range(MIN_WAIT_TIME, MAX_WAIT_TIME);
+            float waitTime = Random.Range(Constants.ENEMY_MIN_WAIT_TIME, Constants.ENEMY_MAX_WAIT_TIME);
             yield return new WaitForSeconds(waitTime);
         }
 

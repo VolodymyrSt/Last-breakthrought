@@ -8,7 +8,6 @@ namespace LastBreakthrought.NPC.Robot.States
     public class RobotRechargingState : INPCState
     {
         private const string IS_Moving = "isMoving";
-        private const float STOP_DISTANCE = 1f;
 
         private readonly RobotBase _robot;
         private readonly NavMeshAgent _agent;
@@ -34,7 +33,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _followingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.RECHARGING_STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
 
             _chargingPlace = _robot.FindAvelableCharingPlace();
@@ -57,7 +56,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private void CheckIfRobotRechedChargingPlace()
         {
-            if (_agent.remainingDistance <= STOP_DISTANCE && !_agent.pathPending)
+            if (_agent.remainingDistance <= Constants.RECHARGING_STOP_DISTANCE && !_agent.pathPending)
                 _isRechedChargingPlace = true;
         }
 

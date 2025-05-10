@@ -1,6 +1,5 @@
 using LastBreakthrought.Configs.Player;
 using LastBreakthrought.Infrustructure.Services.EventBus;
-using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using UnityEngine;
 
 namespace LastBreakthrought.UI.PlayerStats

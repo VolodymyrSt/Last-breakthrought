@@ -17,10 +17,6 @@ namespace LastBreakthrought.Logic.RobotFactory
 {
     public class RobotFactoryMachine : MonoBehaviour
     {
-        private const int MAX_MINERS_COUNT = 3;
-        private const int MAX_TRANSPORTERS_COUNT = 3;
-        private const int MAX_DEFENDERS_COUNT = 3;
-
         public event Action<int> OnMinersCountChanged;
         public event Action<int> OnTransportersCountChanged;
         public event Action<int> OnDefendersCountChanged;
@@ -77,7 +73,7 @@ namespace LastBreakthrought.Logic.RobotFactory
 
         public void CreateRobotMiner()
         {
-            if (_currentMinersCount < MAX_MINERS_COUNT)
+            if (_currentMinersCount < Constants.MAX_MINERS_COUNT)
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateMiner()))
                 {
@@ -102,7 +98,7 @@ namespace LastBreakthrought.Logic.RobotFactory
 
         public void CreateRobotTransporter()
         {
-            if (_currentTransportersCount < MAX_TRANSPORTERS_COUNT)
+            if (_currentTransportersCount < Constants.MAX_TRANSPORTERS_COUNT)
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateTransporter()))
                 {
@@ -127,7 +123,7 @@ namespace LastBreakthrought.Logic.RobotFactory
 
         public void CreateRobotDefender()
         {
-            if (_currentDefendersCount < MAX_DEFENDERS_COUNT)
+            if (_currentDefendersCount < Constants.MAX_DEFENDERS_COUNT)
             {
                 if (_mechanismsContainer.IsSearchedMechanismsAllFound(GetMechanismsToCreateDefender()))
                 {

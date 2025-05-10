@@ -22,9 +22,8 @@ namespace LastBreakthrought.UI.Windows
         {
             if (!_isHidden) return;
 
-            var duraction = 0.2f;
             gameObject.SetActive(true);
-            transform.DOScale(1f, duraction)
+            transform.DOScale(1f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
                 .Play()
                 .OnComplete(() => _isHidden = false);
@@ -34,9 +33,8 @@ namespace LastBreakthrought.UI.Windows
         {
             if (_isHidden) return;
 
-            var duraction = 0.2f;
             gameObject.SetActive(true);
-            transform.DOScale(0f, duraction)
+            transform.DOScale(0f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
                 .Play()
                 .OnComplete(() => {

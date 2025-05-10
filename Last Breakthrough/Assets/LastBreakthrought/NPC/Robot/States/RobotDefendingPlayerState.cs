@@ -17,8 +17,6 @@ namespace LastBreakthrought.NPC.Robot.States
     {
         private const string IS_MOVING = "isMoving";
         private const string IS_Defending = "isDefending";
-        private const float STOP_DISTANCE = 2.5f;
-        private const float ATTACK_COOLDOWN = 2f;
 
         private readonly RobotDefender _robot;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -50,7 +48,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _followingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.ROBOT_STOP_DEFENDING_DISTANCE;
             _animator.SetBool(IS_MOVING, true);
             _defendingCoroutine = _coroutineRunner.PerformCoroutine(PerformDefending());
 
@@ -82,10 +80,10 @@ namespace LastBreakthrought.NPC.Robot.States
 
                 _agent.SetDestination(_robot.Target.GetPosition());
 
-                if (_agent.remainingDistance < STOP_DISTANCE + 0.01f)
+                if (_agent.remainingDistance < Constants.ROBOT_STOP_DEFENDING_DISTANCE + 0.01f)
                 {
                     PerformAttack();
-                    yield return new WaitForSecondsRealtime(ATTACK_COOLDOWN);
+                    yield return new WaitForSecondsRealtime(Constants.ROBOT_ATTACK_COOLDOWN);
 
                     if (CheckIfTargetDied())
                         yield break;

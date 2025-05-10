@@ -1,5 +1,4 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace LastBreakthrought.Infrustructure.UI

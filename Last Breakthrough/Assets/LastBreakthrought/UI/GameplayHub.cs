@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using DG.Tweening;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using System.Collections.Generic;
 using UnityEngine;

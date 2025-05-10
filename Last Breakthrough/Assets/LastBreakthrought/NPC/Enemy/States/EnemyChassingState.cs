@@ -10,7 +10,6 @@ namespace LastBreakthrought.NPC.Enemy
     public class EnemyChassingState : INPCState
     {
         private const string IS_CHASSING = "isWalking";
-        private const float CHASSING_TIME_AFTER_WHICH_CHECK_TARGET = 5f;
 
         private readonly EnemyBase _enemy;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -66,7 +65,7 @@ namespace LastBreakthrought.NPC.Enemy
         {
             while (true)
             {
-                yield return new WaitForSecondsRealtime(CHASSING_TIME_AFTER_WHICH_CHECK_TARGET);
+                yield return new WaitForSecondsRealtime(Constants.CHASSING_TIME_AFTER_WHICH_CHECK_TARGET);
 
                 _enemy.TryToFindTarget();
             }

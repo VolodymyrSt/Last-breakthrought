@@ -12,8 +12,6 @@ namespace LastBreakthrought.UI.LostMenu
 {
     public class LostMenuView : MonoBehaviour
     {
-        private const float ANIMATION_DURATION = 0.2f;
-
         public event Action OnGoneToMenu;
 
         [Header("UI")]
@@ -49,7 +47,7 @@ namespace LastBreakthrought.UI.LostMenu
             _generalBackground.gameObject.SetActive(true);
 
             _menuRoot.gameObject.SetActive(true);
-            _menuRoot.DOScale(1f, ANIMATION_DURATION)
+            _menuRoot.DOScale(1f, Constants.ANIMATION_DURATION)
                 .SetEase(Ease.Linear)
                 .Play();
         }

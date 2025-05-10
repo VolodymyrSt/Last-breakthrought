@@ -6,8 +6,8 @@ namespace LastBreakthrought.Other
 {
     public class SpawnersContainer
     {
-        private List<CrashedShipSpawner> _crashedShipSpawners = new();
-        private List<EnemySpawner> _enemySpawners = new();
+        private readonly List<CrashedShipSpawner> _crashedShipSpawners = new();
+        private readonly List<EnemySpawner> _enemySpawners = new();
 
         public void AddEnemySpawner(EnemySpawner enemySpawner) => _enemySpawners.Add(enemySpawner);
         public void AddCrashedShipSpawner(CrashedShipSpawner crashedShipSpawner) => _crashedShipSpawners.Add(crashedShipSpawner);

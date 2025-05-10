@@ -16,7 +16,8 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
         private readonly Dictionary<MonoBehaviour, Dictionary<SoundType, AudioSource>> _loopedSources = new();
         private readonly Dictionary<MonoBehaviour, List<AudioSource>> _activeSources = new();
 
-        private float _currentVolume = 1f;
+        private readonly float _maxVolume = 1f;
+        private float _currentVolume;
 
         [Inject]
         private void Construct(SoundConfigSO soundConfigSO) => 
@@ -156,7 +157,7 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
 
         public void SetMaxVolume()
         {
-            _currentVolume = 1f;
+            _currentVolume = _maxVolume;
             UpdateVolumeListeners();
         }
 

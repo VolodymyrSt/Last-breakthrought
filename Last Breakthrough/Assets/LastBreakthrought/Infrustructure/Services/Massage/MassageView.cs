@@ -7,8 +7,6 @@ namespace LastBreakthrought.Infrustructure.Services.Massage
 {
     public class MassageView : MonoBehaviour
     {
-        private const float TIME_AFTER_HIDE = 1.5f;
-
         [Header("UI")]
         [SerializeField] private RectTransform _root;
         [SerializeField] private TextMeshProUGUI _massage;
@@ -35,7 +33,7 @@ namespace LastBreakthrought.Infrustructure.Services.Massage
 
         public IEnumerator Hide()
         {
-            yield return new WaitForSecondsRealtime(TIME_AFTER_HIDE);
+            yield return new WaitForSecondsRealtime(Constants.TIME_AFTER_HIDE_MASSAGE);
 
             var duration = 0.2f;
             _root.gameObject.SetActive(true);

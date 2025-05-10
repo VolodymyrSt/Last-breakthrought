@@ -1,7 +1,6 @@
 ﻿using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Other;
-using LastBreakthrought.UI.PausedMenu;
 using Zenject;
 using System;
 using LastBreakthrought.UI.Timer;

@@ -6,8 +6,8 @@ namespace LastBreakthrought.UI.Map
 {
     public class MapMenuPanelHandler : IInitializable
     {
-        private MapMenuPanelView _view;
-        private CrashedShipMarkerFactoryUI _shipMarkerFactoryUI;
+        private readonly MapMenuPanelView _view;
+        private readonly CrashedShipMarkerFactoryUI _shipMarkerFactoryUI;
 
         public MapMenuPanelHandler(MapMenuPanelView view, CrashedShipMarkerFactoryUI shipMarkerFactoryUI)
         {

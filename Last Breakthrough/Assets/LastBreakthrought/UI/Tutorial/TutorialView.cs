@@ -15,8 +15,6 @@ namespace LastBreakthrought.UI.Tutorial
 {
     public class TutorialView : MonoBehaviour, IPointerClickHandler
     {
-        private const float ANIMATION_DURATION = 0.2f;
-
         public event Action OnDialogueEnded;
 
         [Header("UI")]
@@ -116,13 +114,13 @@ namespace LastBreakthrought.UI.Tutorial
         {
             _audioService.StopOnObject(_followCamera, Configs.Sound.SoundType.RobotTalking);
             _robotSpeaker.DOKill();
-            _robotSpeaker.DOScale(1f, ANIMATION_DURATION).SetEase(Ease.Linear).Play();
+            _robotSpeaker.DOScale(1f, Constants.ANIMATION_DURATION).SetEase(Ease.Linear).Play();
         }
 
         private void PlayAnimation()
         {
             _audioService.PlayOnObject(Configs.Sound.SoundType.RobotTalking, _followCamera, false, 1);
-            _robotSpeaker.DOScale(1.05f, ANIMATION_DURATION)
+            _robotSpeaker.DOScale(1.05f, Constants.ANIMATION_DURATION)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Yoyo)
             .Play();

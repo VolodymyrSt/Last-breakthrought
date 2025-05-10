@@ -17,7 +17,7 @@ namespace LastBreakthrought.NPC.Enemy
 
         private Coroutine _dyingCoroutine;
 
-        private float _animationTime;
+        private readonly float _animationTime;
 
         public EnemyDyingState(EnemyBase enemyBase, ICoroutineRunner coroutineRunner, NavMeshAgent navMeshAgent, Animator animator, float animationTime)
         {

@@ -14,8 +14,6 @@ namespace LastBreakthrought.NPC.Robot.States
     {
         private const string IS_Moving = "isMoving";
         private const string IS_TRANSPORTING = "isTransporting";
-        private const float TRANSPORTING_TIME = 4f;
-        private const float STOP_DISTANCE = 2f;
 
         private readonly RobotTransporter _robot;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -50,7 +48,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.isStopped = false;
             _agent.speed = _movingSpeed;
-            _agent.stoppingDistance = STOP_DISTANCE;
+            _agent.stoppingDistance = Constants.TRANSPORTING_STOP_DISTANCE;
             _animator.SetBool(IS_Moving, true);
 
             _eventBus.SubscribeEvent<OnGamePausedSignal>(StopTransporting);
@@ -77,7 +75,7 @@ namespace LastBreakthrought.NPC.Robot.States
         {
             _agent.SetDestination(_recycleMachine.GetMachinePosition());
 
-            var isArrived = Vector3.Distance(_agent.transform.position, _recycleMachine.GetMachinePosition()) <= STOP_DISTANCE + 1f;
+            var isArrived = Vector3.Distance(_agent.transform.position, _recycleMachine.GetMachinePosition()) <= Constants.TRANSPORTING_STOP_DISTANCE + 1f;
 
             if (isArrived && !_isCarring)
             {
@@ -103,7 +101,7 @@ namespace LastBreakthrought.NPC.Robot.States
 
                     if (transportedMaterial != null)
                     {
-                        yield return new WaitForSecondsRealtime(TRANSPORTING_TIME);
+                        yield return new WaitForSecondsRealtime(Constants.TRANSPORTING_TIME);
                         _recycleMachine.RecycleEntireMaterial(transportedMaterial);
                         _robot.TransportedMaterials.Remove(transportedMaterial);
                     }
