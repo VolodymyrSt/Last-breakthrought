@@ -1,4 +1,5 @@
-﻿using LastBreakthrought.Infrustructure.Services.EventBus;
+﻿using LastBreakthrought.Infrustructure.AssetManagment;
+using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Logic.Camera;
 using System;
@@ -23,9 +24,12 @@ namespace LastBreakthrought.Logic.Video
         {
             _camera = camera;
             _eventBus = eventBus;
+
+            InitVideos();
         }
 
-        private void Awake() =>
+
+        private void Awake() => 
             PlayBeginningVideo(() => _eventBus.Invoke(new OnBeginningVideoEndedSignal()));
 
         private void Start()
@@ -37,21 +41,32 @@ namespace LastBreakthrought.Logic.Video
                 PlayVictoryVideo(() => _eventBus.Invoke(new OnVictoryVideoEndedSignal())));
         }
 
-        public void PlayBeginningVideo(Action onEnded) => StartCoroutine(Play(_beginningVideo, onEnded));
+        public void PlayBeginningVideo(Action onEnded) => StartCoroutine(Play(_beginningVideo, onEnded, 9f));
 
-        private void PlayStarExplodingVideo(Action onEnded) => StartCoroutine(Play(_startExplodingVideo, onEnded, false));
+        private void PlayStarExplodingVideo(Action onEnded) => StartCoroutine(Play(_startExplodingVideo, onEnded, 24f, false));
 
-        private void PlayVictoryVideo(Action onEnded) => StartCoroutine(Play(_victoryVideo, onEnded, false));
+        private void PlayVictoryVideo(Action onEnded) => StartCoroutine(Play(_victoryVideo, onEnded, 6f, false));
 
-        private IEnumerator Play(VideoPlayer video, Action onEnded, bool needToHideAtTheEnd = true)
+        private IEnumerator Play(VideoPlayer video, Action onEnded, float videoLenght, bool needToHideAtTheEnd = true)
         {
             _eventBus.Invoke(new OnVideoPlayedSignal());
             video.gameObject.SetActive(true);
             video.targetCamera = _camera;
             video.Play();
-            yield return new WaitForSeconds((float)video.clip.length);
+            yield return new WaitForSeconds(videoLenght);
             video.gameObject.SetActive(!needToHideAtTheEnd);
             onEnded?.Invoke();
+        }
+
+        private void InitVideos()
+        {
+            _beginningVideo.source = VideoSource.Url;
+            _startExplodingVideo.source = VideoSource.Url;
+            _victoryVideo.source = VideoSource.Url;
+
+            _beginningVideo.url = System.IO.Path.Combine(Application.streamingAssetsPath, AssetPath.BEGINNING_VIDEO_PATH);
+            _startExplodingVideo.url = System.IO.Path.Combine(Application.streamingAssetsPath, AssetPath.STAR_EXPLOTION_VIDEO_PATH);
+            _victoryVideo.url = System.IO.Path.Combine(Application.streamingAssetsPath, AssetPath.VICTORY_VIDEO_PATH);
         }
 
         private void OnDestroy()

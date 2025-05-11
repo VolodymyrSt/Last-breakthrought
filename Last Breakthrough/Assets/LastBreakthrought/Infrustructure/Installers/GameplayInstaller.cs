@@ -142,7 +142,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindUI()
         {
             BindGamePlayHub();
-            BindJoyStick();
+            //BindJoyStick();
             BindHomePoint();
             BindHomeDistanceInformer();
             BindRobotMenuPanel();

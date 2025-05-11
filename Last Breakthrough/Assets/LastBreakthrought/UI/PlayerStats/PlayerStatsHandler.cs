@@ -85,6 +85,7 @@ namespace LastBreakthrought.UI.PlayerStats
             _playerStatsModel.CurrentHealth = Mathf.Max(_playerStatsModel.CurrentHealth - arg1, 0);
 
             _playerStatsModel.UpdateHealth();
+            CheckForEnd();
         }
 
         public void Dispose() => 

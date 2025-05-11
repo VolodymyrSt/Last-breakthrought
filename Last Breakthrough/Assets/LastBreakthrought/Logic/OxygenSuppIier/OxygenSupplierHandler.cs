@@ -1,5 +1,6 @@
 ﻿using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.UI.PlayerStats;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace LastBreakthrought.Logic.OxygenSuppIier
         [Inject]
         private void Construct(IAudioService audioService) => 
             _audioService = audioService;
+
+        private void OnEnable() =>
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
         public void PlayOxygenSupplierSound() =>
             _audioService.PlayOnObject(Configs.Sound.SoundType.OxygenSupplierSound, this, true);

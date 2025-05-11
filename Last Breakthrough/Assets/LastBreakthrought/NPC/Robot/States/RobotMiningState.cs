@@ -104,8 +104,11 @@ namespace LastBreakthrought.NPC.Robot.States
         private void StopMining(OnGamePausedSignal signal) => 
             _coroutineRunner.HandleStopCoroutine(_miningCoroutine);
 
-        private void ContinueMining(OnGameResumedSignal signal) => 
-            _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
+        private void ContinueMining(OnGameResumedSignal signal)
+        {
+            if (_isMining)
+                _miningCoroutine = _coroutineRunner.PerformCoroutine(StartMining());
+        }
 
         private void PlayMiningSound() =>
             _audioService.PlayOnObject(Configs.Sound.SoundType.MinerMining, _robot);

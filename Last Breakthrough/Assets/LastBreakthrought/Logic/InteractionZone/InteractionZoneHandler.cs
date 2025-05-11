@@ -43,7 +43,7 @@ namespace LastBreakthrought.Logic.InteractionZone
             _interactionRadious = _interationZoneView.transform.localScale.x / 2;
             _activationRadious = 1.25f * _interationZoneView.transform.localScale.x;
         }
-
+        
         public void Init()
         {
             _interactionRadious = _interationZoneView.transform.localScale.x / 2;

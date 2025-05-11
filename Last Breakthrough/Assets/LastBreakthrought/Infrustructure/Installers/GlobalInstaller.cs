@@ -1,17 +1,13 @@
 using LastBreakthrought.Configs.Dialogue;
 using LastBreakthrought.Configs.Enemy;
-using LastBreakthrought.Configs.Game;
 using LastBreakthrought.Configs.Player;
 using LastBreakthrought.Configs.Robot;
 using LastBreakthrought.Configs.Sound;
-using LastBreakthrought.Infrustructure.AssetManagment;
 using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.ConfigProvider;
-using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.Input;
 using LastBreakthrought.Logic;
 using LastBreakthrought.Util;
-using Unity.AI.Navigation;
 using UnityEngine;
 using Zenject;
 
@@ -77,10 +73,12 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindInput()
         {
-            if (SystemInfo.deviceType == DeviceType.Handheld)
-                Container.Bind<IInputService>().To<MobileInput>().AsSingle();
-            else
-                Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
+            //if (SystemInfo.deviceType == DeviceType.Handheld)
+            //    Container.Bind<IInputService>().To<MobileInput>().AsSingle();
+            //else
+            //    Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
+
+            Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
         }
 
         private void BindAudioService() =>

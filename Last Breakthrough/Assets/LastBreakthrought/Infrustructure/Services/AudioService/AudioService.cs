@@ -17,11 +17,11 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
         private readonly Dictionary<MonoBehaviour, List<AudioSource>> _activeSources = new();
 
         private readonly float _maxVolume = 1f;
-        private float _currentVolume;
+        private float _currentVolume = 1f;
 
         [Inject]
         private void Construct(SoundConfigSO soundConfigSO) => 
-            _soundConfig = soundConfigSO;
+            _soundConfig = soundConfigSO;     
 
         public void Initialize(IEventBus eventBus)
         {
@@ -35,8 +35,6 @@ namespace LastBreakthrought.Infrustructure.Services.AudioService
 
             _eventBus.SubscribeEvent((OnGameWonSignal signal) => PauseAllAudio());
             _eventBus.SubscribeEvent((OnGameEndedSignal signal) => PauseAllAudio());
-
-            SetMaxVolume();
         }
 
         public void PlayOnObject(SoundType soundType, MonoBehaviour target, bool loop = false, float volumeMultiplier = 1f, float maxDistance = 8f)

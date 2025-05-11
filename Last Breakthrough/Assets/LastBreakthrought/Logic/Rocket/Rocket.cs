@@ -1,6 +1,7 @@
 ﻿using LastBreakthrought.Infrustructure.Services.EventBus;
 using LastBreakthrought.Infrustructure.Services.EventBus.Signals;
 using LastBreakthrought.Infrustructure.Services.Massage;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.UI.Inventory;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ namespace LastBreakthrought.Logic.Rocket
             _massageHandler = massageHandler;
             _requireMechanismsProvider = mechanismsProvider;
         }
+
+        private void OnEnable() =>
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
         public void TryToRepair()
         {

@@ -2,6 +2,7 @@ using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.Massage;
 using LastBreakthrought.Logic.ChargingPlace;
 using LastBreakthrought.Logic.FSX;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.NPC.Robot.Factory;
@@ -63,6 +64,9 @@ namespace LastBreakthrought.Logic.RobotFactory
             _audioService = audioService;
             _effectCreator = effectCreator;
         }
+
+        private void OnEnable() =>
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
         public void CreateStartedRobotsAtTheBeginning()
         {

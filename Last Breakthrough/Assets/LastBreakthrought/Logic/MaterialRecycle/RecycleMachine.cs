@@ -1,4 +1,5 @@
 using LastBreakthrought.Infrustructure.Services.AudioService;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.Logic.ShipMaterial.ScriptableObjects;
 using LastBreakthrought.UI.Inventory;
@@ -21,6 +22,9 @@ namespace LastBreakthrought.Logic.MaterialRecycler
             _detailInventory = detailInventoryMenuPanelHandler;
             _audioService = audioService;
         }
+
+        private void OnEnable() =>
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
         public void RecycleEntireMaterial(ShipMaterialEntity shipMaterialEntity)
         {

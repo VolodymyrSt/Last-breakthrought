@@ -34,6 +34,10 @@ namespace LastBreakthrought.Infrustructure.AssetManagment
         public static string FireEffectPath = "Effects/Fire Hit";
         public static string FireExplosionPath = "Effects/Explosion";
 
+        public const string BEGINNING_VIDEO_PATH = "Video/Beginning.mp4";
+        public const string STAR_EXPLOTION_VIDEO_PATH = "Video/StarExplotion.mp4";
+        public const string VICTORY_VIDEO_PATH = "Video/Victory.mp4";
+
         public static string GetRandomEnemyPath()
         {
             var randomPath = UnityEngine.Random.Range(1, 3);

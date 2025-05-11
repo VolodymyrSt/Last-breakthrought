@@ -1,5 +1,6 @@
 ﻿using LastBreakthrought.Infrustructure.Services.AudioService;
 using LastBreakthrought.Infrustructure.Services.Massage;
+using LastBreakthrought.Logic.InteractionZone;
 using LastBreakthrought.Logic.Mechanisms;
 using LastBreakthrought.Logic.ShipDetail;
 using LastBreakthrought.UI.Inventory;
@@ -27,6 +28,9 @@ namespace LastBreakthrought.Logic.CraftingMachine
             _mechanismsContainer = mechanismsContainer;
             _audioService = audioService;
         }
+
+        private void OnEnable() => 
+            GetComponentInChildren<InteractionZoneHandler>().Init();
 
         public void TryToCraft(List<ShipDetailEntity> requiredDetails, MechanismSO mechanism)
         {

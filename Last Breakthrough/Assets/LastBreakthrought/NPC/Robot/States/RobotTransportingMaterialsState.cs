@@ -120,16 +120,17 @@ namespace LastBreakthrought.NPC.Robot.States
 
         private void ContinueTransporting(OnGameResumedSignal signal)
         {
-            _transportingCoroutine = _coroutineRunner.PerformCoroutine(StartTransporting());
-            PlayTransportingSound();
+            if (_isCarring)
+            {
+                _transportingCoroutine = _coroutineRunner.PerformCoroutine(StartTransporting());
+                PlayTransportingSound();
+            }
         }
 
         private void PlayTransportingSound() =>
              _audioService.PlayOnObject(Configs.Sound.SoundType.TransporterTransporting, _robot, true);
 
-        private void ClearTransportingSound()
-        {
+        private void ClearTransportingSound() => 
             _audioService.StopOnObject(_robot, Configs.Sound.SoundType.TransporterTransporting);
-        }
     }
 }
