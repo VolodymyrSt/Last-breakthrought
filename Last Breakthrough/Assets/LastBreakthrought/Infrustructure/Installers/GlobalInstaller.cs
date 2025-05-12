@@ -78,7 +78,7 @@ namespace LastBreakthrought.Infrustructure.Installers
             //else
             //    Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
 
-            Container.Bind<IInputService>().To<ComputerInput>().AsSingle();
+            Container.Bind<IInputService>().To<StandeloneInput>().AsSingle();
         }
 
         private void BindAudioService() =>

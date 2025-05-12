@@ -142,7 +142,7 @@ namespace LastBreakthrought.Infrustructure.Installers
         private void BindUI()
         {
             BindGamePlayHub();
-            //BindJoyStick();
+            BindJoyStick();
             BindHomePoint();
             BindHomeDistanceInformer();
             BindRobotMenuPanel();
@@ -368,8 +368,9 @@ namespace LastBreakthrought.Infrustructure.Installers
 
         private void BindJoyStick()
         {
-            if (SystemInfo.deviceType == DeviceType.Handheld)
-                Container.InstantiatePrefab(_joyStickPrefab, _gameplayHub.transform);
+            //if (SystemInfo.deviceType == DeviceType.Handheld)
+            //     Container.InstantiatePrefab(_joyStickPrefab, _gameplayHub.transform);
+            Container.InstantiatePrefab(_joyStickPrefab, _gameplayHub.transform);
         }
 
         private void BindGamePlayHub()

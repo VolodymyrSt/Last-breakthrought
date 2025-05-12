@@ -20,8 +20,6 @@ namespace LastBreakthrought.UI.Other.Joystick
 
         private void OnEnable()
         {
-            gameObject.SetActive(true);
-
             _eventBus.SubscribeEvent((OnGameEndedSignal signal) => gameObject.SetActive(false));
             _eventBus.SubscribeEvent((OnGameWonSignal signal) => gameObject.SetActive(false));
             _eventBus.SubscribeEvent((OnPlayerDiedSignal signal) => gameObject.SetActive(false));
